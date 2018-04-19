@@ -1,0 +1,23 @@
+{
+  "name": "prosleeves",
+  "description": "Theme for the Prosleevs website",
+  "main": "index.js",
+  "authors": [
+    "David Olson"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/david-olson/prosleeves",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "foundation-sites": "^6.4.3",
+    "select2": "^4.0.5",
+    "motion-ui": "^1.2.3"
+  }
+}

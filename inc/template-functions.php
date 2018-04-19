@@ -35,3 +35,17 @@ function prosleeves_pingback_header() {
 	}
 }
 add_action( 'wp_head', 'prosleeves_pingback_header' );
+
+
+if (function_exists('acf_add_options_page')) {
+	$args = array(
+		'page_title' => 'Mega Menu',
+		'menu_title' => 'Mega Menu',
+		'menu_slug' => 'mega-menu',
+		'capability' => 'edit_posts',
+		'position' => 4,
+		'icon_url' => 'dashicons-editor-insertmore'
+	);
+	acf_add_options_page($args);
+
+}

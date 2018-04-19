@@ -15,45 +15,44 @@
 get_header();
 ?>
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
-
-		<?php
-		if ( have_posts() ) :
-
-			if ( is_home() && ! is_front_page() ) :
-				?>
-				<header>
-					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
-				</header>
-				<?php
-			endif;
-
-			/* Start the Loop */
-			while ( have_posts() ) :
-				the_post();
-
-				/*
-				 * Include the Post-Type-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', get_post_type() );
-
-			endwhile;
-
-			the_posts_navigation();
-
-		else :
-
-			get_template_part( 'template-parts/content', 'none' );
-
-		endif;
-		?>
-
-		</main><!-- #main -->
-	</div><!-- #primary -->
+	<main id="content">
+		<section class="hero">
+			<img src="http://placehold.it/1900x500" alt="">
+			<!-- <div class="grid-x">
+				<div class="large-4 cell">
+					<img src="http://placehold.it/600x400" alt="">
+				</div>
+				<div class="large-8 cell">
+					<img src="http://placehold.it/800x275" alt="">
+				</div>
+			</div> -->
+		</section>
+		<section class="promo-bar" id="promo_bar">
+			<h3 class="text-center">Free Shipping | Ends Monday, March 5th</h3>
+		</section>
+		<section class="featured-products-menu" id="featured_products_menu">
+			<div class="grid-container">
+				<div class="grid-x grid-padding-x">
+					<div class="large-12 cell">
+						<ul class="menu horizontal expanded">
+							<li class="menu-text">View Featured Products</li>
+							<li><a href="#">Jerseys</a></li>
+							<li><a href="#">Jerseys</a></li>
+							<li><a href="#">Jerseys</a></li>
+							<li><a href="#">Jerseys</a></li>
+							<li><a href="#">Jerseys</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="products" id="products">
+			
+		</section>
+		<section class="top-ten" id="top_ten">
+			<h2 class="text-center">Weekly Top 10</h2>
+		</section>
+	</main>
 
 <?php
-get_sidebar();
 get_footer();

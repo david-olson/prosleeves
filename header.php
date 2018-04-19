@@ -10,7 +10,7 @@
  */
 
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
@@ -21,38 +21,78 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'prosleeves' ); ?></a>
-
-	<header id="masthead" class="site-header">
-		<div class="site-branding">
-			<?php
-			the_custom_logo();
-			if ( is_front_page() && is_home() ) :
+<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'prosleeves' ); ?></a>
+<div class="off-canvas-wrapper">
+<div class="off-canvas position-right" id="sidebar_menu" data-off-canvas>
+	asdf
+</div>
+<div class="off-canvas-content" data-off-canvas-content>
+<header class="site-header" id="header">
+	<div class="header-top">
+		<div class="grid-container">
+			<div class="grid-x grid-padding-x">
+				<div class="large-4 cell">
+					<?php echo get_search_form(); ?>
+						
+				</div>
+				<div class="large-8 cell text-right">
+					<ul class="menu horizontal align-right">
+						<li><a href="/login">Log In</a></li>
+						<li><a href="/signup">Sign Up</a></li>
+						<li><a href="/cart">Cart</a></li>
+						<li><a href="#" data-toggle="sidebar_menu"><i class="fas fa-bars"></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="header-logo-tagline">
+		<div class="grid-container">
+			<div class="grid-x grid-padding-x align-middle">
+				<div class="large-4 cell">
+					<a href="/"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt=""></a>
+				</div>
+				<div class="large-8 cell">
+					<h2 class="tagline">Price History, Price Alerts and Coupons for All Your Favorite Licensed Gear</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+	<nav>
+		<div class="grid-container">
+			<ul class="menu horizontal expanded dropdown" data-dropdown-menu>
+				<?php 
+				// Foundation menu here 
+				$taxes = array();
+				$mega_menu = get_field('menu_items', 'options');
+				foreach ($mega_menu as $mm) :
+					$tax = get_taxonomy($mm['item']);
+					array_push($taxes, $tax);
+					?>
+					<li class="mega-menu">
+						<?php //var_dump($mm); ?>
+						<a href="#" data-toggle="<?php echo $tax->name; ?>"><img class="league-logo" src="<?php echo $mm['menu_logo']['sizes']['thumbnail']; ?>" alt=""> <?php echo $tax->label; ?></a>
+						<div class="dropdown-pane bottom" id="<?php echo $tax->name; ?>" data-dropdown data-options="closeOnClick:true; hover: true; hoverPane: true;">
+							<?php $tax_terms = get_terms(array(
+								'taxonomy' => $tax->name,
+								'hide_empty' => false
+								)); ?>
+							<ul class="menu col-3">
+								<?php foreach ($tax_terms as $tt) : ?>
+									<?php //var_dump($tt); ?>
+									<?php $team_logo = get_field('team_logo', 'category_'.$tt->term_id); ?>
+									<li><a href="/<?php echo $tax->rewrite['slug']; ?>/<?php echo $tt->slug; ?>"><img class="team-logo" src="<?php echo $team_logo['sizes']['thumbnail']; ?>" alt=""><?php echo $tt->name; ?></a></li>
+								<?php endforeach; ?>		
+							</ul>
+						</div>
+					</li>
+					<?php
+				endforeach;
 				?>
-				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-				<?php
-			else :
-				?>
-				<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-				<?php
-			endif;
-			$prosleeves_description = get_bloginfo( 'description', 'display' );
-			if ( $prosleeves_description || is_customize_preview() ) :
-				?>
-				<p class="site-description"><?php echo $prosleeves_description; /* WPCS: xss ok. */ ?></p>
-			<?php endif; ?>
-		</div><!-- .site-branding -->
+				<li><a href="#">Our Products</a></li>
+			</ul>
+		</div>
+	</nav>
+</header>
 
-		<nav id="site-navigation" class="main-navigation">
-			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'prosleeves' ); ?></button>
-			<?php
-			wp_nav_menu( array(
-				'theme_location' => 'menu-1',
-				'menu_id'        => 'primary-menu',
-			) );
-			?>
-		</nav><!-- #site-navigation -->
-	</header><!-- #masthead -->
-
-	<div id="content" class="site-content">
+	

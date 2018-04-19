@@ -1,0 +1,37 @@
+.screen-reader-text {
+	display: none;
+}
+
+.mega-menu {
+  .dropdown-pane {
+    width: 100%;
+    max-width: 85rem;
+    margin: 0 auto !important;
+    left: 0% !important;
+    right: 0% !important;
+  }
+
+  .menu {
+    background: none;
+  }
+
+  > a::after {
+    // display: inline-block;
+    // vertical-align: middle;
+    // width: 0;
+    // height: 0;
+    // border: inset 6px;
+    // content: '';
+    // border-bottom-width: 0;
+    // border-top-style: solid;
+    // border-color: #1779ba transparent transparent;
+    // margin-left: 10px;
+    // margin-top: 0;
+  }
+}
+
+// Fonts
+
+body, h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p {
+	font-family: 'Roboto Condensed', sans-serif;
+}

@@ -1,0 +1,87 @@
+/**
+* Table of Contents
+* - Header
+* - Footer
+* - Homepage
+* - Product Archives
+* - Product Taxonomies
+*
+*/
+
+// Header 
+
+header {
+	div.header-top {
+		background-color: $gray;
+		padding: 0.5rem 0;
+		form {
+			input[type="text"] {
+				font-size: 0.75rem;
+				padding: 5px 0;
+				line-height: 1;
+				background-color: transparent;
+				margin-bottom: 0;
+				border: 0;
+				border-bottom: 1px solid $white;
+				height: auto;
+			}
+			input[type="submit"] {
+				margin-bottom: 0;
+			}
+		}
+		.menu {
+			margin-bottom: 0;
+			a {
+				color: $white;
+				font-size: 0.75rem;
+			}
+		}
+	}
+	.tagline {
+		font-weight: bold;
+		font-style: italic;
+		color: $red;
+		font-size: 1.5rem;
+		text-align: right;
+	}
+	.header-logo-tagline {
+		padding: $global-padding 0;
+	}
+	nav {
+		background: $light-gray;
+		ul.menu {
+			li {
+				a {
+					display: inline-block;
+					vertical-align: middle;
+					margin-bottom: 0;
+					line-height: 0.8;
+					font-weight: bold;
+					font-style: italic;
+					color: $red;
+					text-align: center;
+					.league-logo, .team-logo {
+						max-width: 16px;
+						line-height: 0.8;
+						margin-bottom: 0;
+						height: auto;
+						display: inline-block;
+						margin-right: 5px;
+						vertical-align: middle;
+					}
+				}
+				// position: relative;
+				&:after {
+					// content: '';
+					// display: inline-block;
+					// width: 1px;
+					// height: 10px;
+					// background-color: $dark-gray;
+					// margin: 0 auto;
+					// position: absolute;
+					// transform: translateY(-50%);
+				}
+			}
+		}
+	}
+}
