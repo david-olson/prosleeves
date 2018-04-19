@@ -71,7 +71,7 @@ gulp.task('browser-sync', function() {
 		'**/*.{png,jpg,gif,svg}'
 	];
 	browserSync.init(files, {
-		port: 8181,
+		port: 8182,
 		proxy: url,
 		injectChanges: true
 	});

@@ -37,9 +37,9 @@
 				</div>
 				<div class="large-8 cell text-right">
 					<ul class="menu horizontal align-right">
-						<li><a href="/login">Log In</a></li>
-						<li><a href="/signup">Sign Up</a></li>
-						<li><a href="/cart">Cart</a></li>
+						<li><a href="<?php echo get_home_url(); ?>/ login">Log In</a></li>
+						<li><a href="<?php echo get_home_url(); ?>/signup">Sign Up</a></li>
+						<li><a href="<?php echo get_home_url(); ?>/cart">Cart</a></li>
 						<li><a href="#" data-toggle="sidebar_menu"><i class="fas fa-bars"></i></a></li>
 					</ul>
 				</div>
@@ -50,7 +50,7 @@
 		<div class="grid-container">
 			<div class="grid-x grid-padding-x align-middle">
 				<div class="large-4 cell">
-					<a href="/"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt=""></a>
+					<a href="<?php echo get_home_url(); ?>/"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt=""></a>
 				</div>
 				<div class="large-8 cell">
 					<h2 class="tagline">Price History, Price Alerts and Coupons for All Your Favorite Licensed Gear</h2>
@@ -81,7 +81,7 @@
 								<?php foreach ($tax_terms as $tt) : ?>
 									<?php //var_dump($tt); ?>
 									<?php $team_logo = get_field('team_logo', 'category_'.$tt->term_id); ?>
-									<li><a href="/<?php echo $tax->rewrite['slug']; ?>/<?php echo $tt->slug; ?>"><img class="team-logo" src="<?php echo $team_logo['sizes']['thumbnail']; ?>" alt=""><?php echo $tt->name; ?></a></li>
+									<li><a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>/<?php echo $tt->slug; ?>"><img class="team-logo" src="<?php echo $team_logo['sizes']['thumbnail']; ?>" alt=""><?php echo $tt->name; ?></a></li>
 								<?php endforeach; ?>		
 							</ul>
 						</div>

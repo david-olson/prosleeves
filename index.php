@@ -36,11 +36,13 @@ get_header();
 					<div class="large-12 cell">
 						<ul class="menu horizontal expanded">
 							<li class="menu-text">View Featured Products</li>
-							<li><a href="#">Jerseys</a></li>
-							<li><a href="#">Jerseys</a></li>
-							<li><a href="#">Jerseys</a></li>
-							<li><a href="#">Jerseys</a></li>
-							<li><a href="#">Jerseys</a></li>
+							<?php $product_cat = get_terms(array(
+								'taxonomy' => 'product_cat',
+								'hide_empty' => false
+								)); ?>
+							<?php foreach ($product_cat as $cat) : ?>
+								<li><a href="<?php echo get_home_url(); ?>/products/<?php echo $cat->slug; ?>"><?php echo $cat->name; ?></a></li>
+							<?php endforeach; ?>
 						</ul>
 					</div>
 				</div>
