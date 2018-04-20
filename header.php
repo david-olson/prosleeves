@@ -37,7 +37,7 @@
 				</div>
 				<div class="large-8 cell text-right">
 					<ul class="menu horizontal align-right">
-						<li><a href="<?php echo get_home_url(); ?>/ login">Log In</a></li>
+						<li><a href="<?php echo get_home_url(); ?>/login">Log In</a></li>
 						<li><a href="<?php echo get_home_url(); ?>/signup">Sign Up</a></li>
 						<li><a href="<?php echo get_home_url(); ?>/cart">Cart</a></li>
 						<li><a href="#" data-toggle="sidebar_menu"><i class="fas fa-bars"></i></a></li>

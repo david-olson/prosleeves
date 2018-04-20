@@ -49,7 +49,25 @@ get_header();
 			</div>
 		</section>
 		<section class="products" id="products">
-			
+			<div class="grid-container">
+				<?php $args = array(
+					'post_type' => 'product',
+				'posts_per_page' => 10,
+				); ?>
+				<?php $product_loop = new WP_Query($args); ?>
+				<?php if ($product_loop->have_posts()) : ?>
+					<div class="grid-x grid-padding-x medium-up-4 large-up-4">
+					<?php while ($product_loop->have_posts()) : $product_loop->the_post(); ?>
+						<?php get_template_part('template-parts/products/home-loop'); ?>
+					<?php endwhile; ?>
+					</div>
+				<?php endif; ?>
+				<div class="grid-x grid-padding-x">
+					<div class="large-12 cell text-center">
+						<a href="/products" class="button outline">View All</a>
+					</div>
+				</div>
+			</div>
 		</section>
 		<section class="top-ten" id="top_ten">
 			<h2 class="text-center">Weekly Top 10</h2>
