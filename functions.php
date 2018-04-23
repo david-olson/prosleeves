@@ -161,6 +161,10 @@ require get_template_directory() . '/inc/template-functions.php';
  * Customizer additions.
  */
 require get_template_directory() . '/inc/customizer.php';
+/**
+ * Team additions.
+ */
+require get_template_directory() . '/inc/teams.php';
 
 /**
  * Load Jetpack compatibility file.

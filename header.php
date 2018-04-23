@@ -71,17 +71,17 @@
 					?>
 					<li class="mega-menu">
 						<?php //var_dump($mm); ?>
-						<a href="#" data-toggle="<?php echo $tax->name; ?>"><img class="league-logo" src="<?php echo $mm['menu_logo']['sizes']['thumbnail']; ?>" alt=""> <?php echo $tax->label; ?></a>
+						<a href="#" data-toggle="<?php echo $tax->name; ?>"><img class="league-logo" src="<?php echo $mm['menu_logo']['sizes']['team_menu_icon']; ?>" alt=""> <?php echo $tax->label; ?></a>
 						<div class="dropdown-pane bottom" id="<?php echo $tax->name; ?>" data-dropdown data-options="closeOnClick:true; hover: true; hoverPane: true;">
 							<?php $tax_terms = get_terms(array(
 								'taxonomy' => $tax->name,
 								'hide_empty' => false
 								)); ?>
-							<ul class="menu col-3">
+							<ul class="menu vertical align-left col-3">
 								<?php foreach ($tax_terms as $tt) : ?>
 									<?php //var_dump($tt); ?>
 									<?php $team_logo = get_field('team_logo', 'category_'.$tt->term_id); ?>
-									<li><a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>/<?php echo $tt->slug; ?>"><img class="team-logo" src="<?php echo $team_logo['sizes']['thumbnail']; ?>" alt=""><?php echo $tt->name; ?></a></li>
+									<li><a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>/<?php echo $tt->slug; ?>"><img class="team-logo" src="<?php echo $team_logo['sizes']['team_menu_icon']; ?>" alt=""><?php echo $tt->name; ?></a></li>
 								<?php endforeach; ?>		
 							</ul>
 						</div>
