@@ -125,3 +125,34 @@ function RGBToHSL($RGB) {
   		echo 'dark';
   	}
   }
+
+/**
+ * Add permastructs for interpreting products and taxonomy names
+ */
+
+function custom_query_vars_filter($vars) {
+  $vars[] = 'team';
+  $vars[] .= 'league';
+  return $vars;
+}
+
+add_filter('query_vars', 'custom_query_vars_filter');
+
+add_action('init', 'permalinks_init');
+
+function permalinks_init() {
+  $perma_struct = get_option( 'permalink_structure' );
+
+  add_rewrite_rule('^(.*)/(.*)/products/(.*)?$', 'index.php?league=$matches[1]&team=$matches[2]&product_cat=$matches[3]', 'top');
+
+}
+
+function rewrite_team_templates() {
+  if (get_query_var('league')) :
+    add_filter('template_include', function() {
+      return get_template_directory() . '/template-league-products.php';
+    });
+  endif;
+}
+
+add_action('template_redirect', 'rewrite_team_templates');
