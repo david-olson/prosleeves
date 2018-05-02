@@ -32,21 +32,6 @@ get_header( 'shop' );
 do_action( 'woocommerce_before_main_content' );
 
 ?>
-<header class="woocommerce-products-header">
-	<?php if ( apply_filters( 'woocommerce_show_page_title', true ) ) : ?>
-		<h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
-	<?php endif; ?>
-
-	<?php
-	/**
-	 * Hook: woocommerce_archive_description.
-	 *
-	 * @hooked woocommerce_taxonomy_archive_description - 10
-	 * @hooked woocommerce_product_archive_description - 10
-	 */
-	do_action( 'woocommerce_archive_description' );
-	?>
-</header>
 <?php
 
 if ( have_posts() ) {
@@ -59,25 +44,41 @@ if ( have_posts() ) {
 	 * @hooked woocommerce_catalog_ordering - 30
 	 */
 	do_action( 'woocommerce_before_shop_loop' );
-
-	woocommerce_product_loop_start();
-
-	if ( wc_get_loop_prop( 'total' ) ) {
-		while ( have_posts() ) {
-			the_post();
-
-			/**
-			 * Hook: woocommerce_shop_loop.
-			 *
-			 * @hooked WC_Structured_Data::generate_product_data() - 10
-			 */
-			do_action( 'woocommerce_shop_loop' );
-
-			wc_get_template_part( 'content', 'product' );
-		}
-	}
-
-	woocommerce_product_loop_end();
+	?>
+	<section class="promo-banner">
+		<h2 class="h5">Free shipping on all prosleeves products over $50 | Ends Monday</h2>
+	</section>
+	 <section class="products"> 
+	 	<div class="grid-container">
+	 		<div class="grid-x grid-margin-x">
+	 			<div class="large-3 cell">
+	 				<?php get_sidebar('teams'); ?>
+	 			</div>
+	 			<div class="large-9 cell"><?php
+	 			woocommerce_product_loop_start();
+	 		
+	 			if ( wc_get_loop_prop( 'total' ) ) { 
+	 				while ( have_posts() ) {
+	 					the_post();
+	 		
+	 					/**
+	 					 * Hook: woocommerce_shop_loop.
+	 					 *
+	 					 * @hooked WC_Structured_Data::generate_product_data() - 10
+	 					 */
+	 					do_action( 'woocommerce_shop_loop' );
+	 		
+	 					wc_get_template_part( 'content', 'product' );
+	 				}
+	 			}
+	 		
+	 			woocommerce_product_loop_end();
+	 			?>
+	 				</div>
+	 			</div>
+	 	</div>
+	</section>
+	<?php 
 
 	/**
 	 * Hook: woocommerce_after_shop_loop.

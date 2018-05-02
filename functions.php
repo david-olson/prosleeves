@@ -127,9 +127,10 @@ add_action( 'widgets_init', 'prosleeves_widgets_init' );
  * Enqueue scripts and styles.
  */
 
-$cache_buster = date('YmdHis');
+
 
 function prosleeves_scripts() {
+	$cache_buster = date('YmdHis');
 	wp_enqueue_style( 'prosleeves-style', get_template_directory_uri() . '/assets/css/build/app.min.css' );
 
 	wp_enqueue_script( 'prosleeves-vendors', get_template_directory_uri() . '/assets/js/build/vendors.min.js', array(), $cache_buster, true );

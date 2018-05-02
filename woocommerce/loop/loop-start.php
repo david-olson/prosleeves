@@ -20,5 +20,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<div class="grid-container">
-<div class="grid-x grid-padding-x large-up-4 medium-up-4 products columns-<?php echo esc_attr( wc_get_loop_prop( 'columns' ) ); ?>">
+
+<div class="grid-x grid-padding-x large-up-3 medium-up-3 products columns-<?php echo esc_attr( wc_get_loop_prop( 'columns' ) ); ?>">

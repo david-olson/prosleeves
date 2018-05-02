@@ -12,7 +12,7 @@
 var project 		= 'prosleeves',
 	url				= 'pro-sleeves:5555',
 	bower			= 'bower_components',
-	build			= '../sparketh_production',
+	build			= '../prosleeves_production',
 	buildInclude	= [
 		'**/*.php',
 		'**/*.html',

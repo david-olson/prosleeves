@@ -27,8 +27,8 @@ get_header();
 				</div>
 			</div> -->
 		</section>
-		<section class="promo-bar" id="promo_bar">
-			<h3 class="text-center">Free Shipping | Ends Monday, March 5th</h3>
+		<section class="promo-banner" id="promo_bar">
+			<h2 class="h5">Free shipping on all prosleeves products over $50 | Ends Monday</h2>
 		</section>
 		<section class="featured-products-menu" id="featured_products_menu">
 			<div class="grid-container">

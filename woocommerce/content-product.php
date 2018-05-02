@@ -28,43 +28,21 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 }
 ?>
 <div <?php post_class('cell'); ?>>
-	<?php
-	/**
-	 * woocommerce_before_shop_loop_item hook.
-	 *
-	 * @hooked woocommerce_template_loop_product_link_open - 10
-	 */
-	do_action( 'woocommerce_before_shop_loop_item' );
+	<?php $product = wc_get_product($post->ID); ?>
+	<article <?php post_class(); ?>>
+		<div class="pad-full-small">
+			<h2 class="h5"><?php the_title(); ?></h2>
+			<img src="<?php the_post_thumbnail_url( ); ?>" alt="">
+			<p class="price">$<?php echo $product->get_regular_price(); ?></p>
+		</div>
+		<div class="grid-x">
+			<div class="medium-6 cell">
+				<a href="<?php the_permalink(); ?>" class="button expanded">More Details</a>
+			</div>
+			<div class="medium-6 cell">
+				<a href="<?php echo $product->get_product_url(); ?>" class="button secondary expanded">Buy Now</a>
+			</div>
+		</div>
 
-	/**
-	 * woocommerce_before_shop_loop_item_title hook.
-	 *
-	 * @hooked woocommerce_show_product_loop_sale_flash - 10
-	 * @hooked woocommerce_template_loop_product_thumbnail - 10
-	 */
-	do_action( 'woocommerce_before_shop_loop_item_title' );
-
-	/**
-	 * woocommerce_shop_loop_item_title hook.
-	 *
-	 * @hooked woocommerce_template_loop_product_title - 10
-	 */
-	do_action( 'woocommerce_shop_loop_item_title' );
-
-	/**
-	 * woocommerce_after_shop_loop_item_title hook.
-	 *
-	 * @hooked woocommerce_template_loop_rating - 5
-	 * @hooked woocommerce_template_loop_price - 10
-	 */
-	do_action( 'woocommerce_after_shop_loop_item_title' );
-
-	/**
-	 * woocommerce_after_shop_loop_item hook.
-	 *
-	 * @hooked woocommerce_template_loop_product_link_close - 5
-	 * @hooked woocommerce_template_loop_add_to_cart - 10
-	 */
-	do_action( 'woocommerce_after_shop_loop_item' );
-	?>
+	</article>
 </div>

@@ -6,6 +6,8 @@
 * - Product Archives
 * - Product Taxonomies
 *
+* - Modules
+*
 */
 
 // Header 
@@ -47,6 +49,9 @@ header {
 	.header-logo-tagline {
 		padding: $global-padding 0;
 	}
+	.logo {
+		max-height: 46px;
+	}
 	nav {
 		background: $light-gray;
 		ul.menu {
@@ -56,9 +61,10 @@ header {
 					vertical-align: middle;
 					margin-bottom: 0;
 					line-height: 0.8;
-					font-weight: bold;
+					// font-weight: bold;
 					font-style: italic;
 					color: $red;
+					font-size: 1rem;
 					text-align: center;
 					.league-logo, .team-logo {
 						max-width: 16px;
@@ -86,10 +92,25 @@ header {
 	}
 
 	ul.col-3 {
+		-moz-column-count: 3;
+		columns: 3;
 		column-count: 3;
 		column-fill: auto;
 		display: block;
 		width: 100%;
+		max-height: 315px;
+		li {
+			display: block;
+		}
+	}
+	ul.col-4 {
+		-moz-column-count: 4;
+		column-count: 4;
+		columns: 4;
+		column-fill: auto;
+		display: block;
+		width: 100%;
+		max-height: 315px;
 		li {
 			display: block;
 		}
@@ -98,17 +119,183 @@ header {
 
 // Team Taxonomy
 
-.team-color-intro {
-	// background-color: #fefdff;
-	background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='rgba(0,0,0,0.25)' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
-	&.dark {
-		h1 {
-			color: $white;
-		}
-	}
-	&.light {
-		h1 {
-			color: $black;
-		}
-	}
-}
+// .team-color-intro {
+// 	// background-color: #fefdff;
+// 	background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='rgba(0,0,0,0.25)' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+// 	h1 {
+// 		margin-left: 200px;
+// 	}
+// 	&.dark {
+// 		h1 {
+// 			color: $white;
+// 		}
+// 	}
+// 	&.light {
+// 		h1 {
+// 			color: $black;
+// 		}
+// 	}
+// }
+
+
+
+/**
+ * Modules
+ */
+
+/**
+* Promo Banner
+*/
+
+ section.promo-banner {
+ 	background-color: $black;
+ 	color: $white;
+ 	font-weight: bold;
+ 	text-align: center;
+ 	text-transform: uppercase;
+ 	padding: $global-padding * 0.5 0;
+ 	h1, h2, h3, h4, h5, h6 {
+ 		margin-bottom: 0;
+ 		letter-spacing: 2px;
+ 	}
+ }
+
+ /**
+  * Product Background
+  */
+
+ section.products {
+ 	background-color: $light-gray;
+ 	padding: $global-padding * 2 0;
+
+ 	article.product {
+ 		background-color: $white;
+ 		margin-bottom: $global-margin;
+ 		a.button {
+ 			margin-bottom: 0;
+ 		}
+ 	}
+ }
+
+ /**
+  * Filter
+  */
+
+ aside.team.sidebar {
+ 	p {
+ 		color: $white;
+ 		margin-bottom: 0;
+ 	}
+ 	span.label {
+ 		background-color: $light-gray;
+ 		color: $dark-gray;
+ 		margin-bottom: $global-margin;
+ 	}
+ 	h3 {
+ 		background-color: $black;
+ 		color: $white;
+ 		padding: $global-padding * 0.5;
+ 		font-size: 1.125rem;
+ 		margin-bottom: 0;
+ 		font-style: italic;
+
+ 	}
+ 	background-color: lighten($black, 20%);
+ 	h4 {
+		color: $white;
+		margin-bottom: 0;
+		font-size: 1rem;
+ 	}
+ 	hr {
+ 		border-color: $white;
+ 		margin-top: 0;
+ 		margin-bottom: $global-margin;
+ 	}
+ 	li label {
+ 		color: $white;
+ 	}
+ 	ul {
+ 		margin-bottom: $global-margin * 2;
+ 	}
+ }
+
+ /**
+  * Team Title Bar
+  */
+
+ section.team-color-intro {
+ 	overflow: hidden;
+ 	position: relative;
+ 	padding: $global-padding * 2 0;
+ 	background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='rgba(0,0,0,0.25)' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+ 	h1 {
+ 		text-transform: uppercase;
+ 		letter-spacing: 5px;
+ 		font-weight: bold;
+ 		margin-bottom: 0;
+ 		font-size: 2.5rem;
+ 		margin-left: 150px;
+
+ 	}
+ 	&.dark {
+ 		h1 {
+ 			color: $white;
+ 		}
+ 	}
+ 	&.light {
+ 		h1 {
+ 			color: $black;
+ 		}
+ 	}
+ 	.team-logo {
+		position: absolute;
+		bottom: 0;
+		left: -90px;
+		// width: 400px;
+		// height: auto;
+		height: 320%;
+		width: auto;
+		bottom: 20px;
+		transform: translateY(54%);
+ 	}
+ }
+
+ article.taxonomy-product_cat {
+ 	background-color: $white;
+ 	img {
+ 		padding: $global-padding;
+ 	}
+ 	h2 {
+ 		text-transform: uppercase;
+ 		font-size: 1.25rem;
+ 		letter-spacing: 4px;
+ 		margin: 10px 0;
+ 	}
+ 	a.button {
+ 		&.dark {
+ 			color: $white;
+ 			&:after {
+ 				content: '';
+ 				position: absolute;
+ 				top: 0;
+ 				right: 0;
+ 				bottom: 0;
+ 				left: 0;
+ 				background-color: rgba($black, 0.1);
+ 				opacity: 0;
+ 				cursor: pointer;
+ 				transition: opacity ease-out 0.25s;
+ 			}
+ 		}
+ 		&.light {
+ 			color: $black;
+ 		}
+ 		position: relative;
+ 		
+ 		&:hover {
+ 			&:after {
+ 				opacity: 1;
+ 			}
+ 		}
+ 	}
+ }

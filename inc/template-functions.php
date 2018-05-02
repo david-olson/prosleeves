@@ -50,7 +50,8 @@ if (function_exists('acf_add_options_page')) {
 
 }
 
-add_image_size( 'team_menu_icon', 10, 10, false );
+add_image_size( 'team_menu_icon', 20, 20, false );
+add_image_size('team_topbar_icon', 400, 400, false);
 
 function HTMLToRGB($htmlCode)
   {
@@ -116,7 +117,7 @@ function RGBToHSL($RGB) {
   }
 
   function check_background_color($hex) {
-  	$rgb = HTMLToRGB($color);
+  	$rgb = HTMLToRGB($hex);
   	$hsl = RGBToHSL($rgb);
 
   	if ($hsl->lightness > 200) {
@@ -156,3 +157,13 @@ function rewrite_team_templates() {
 }
 
 add_action('template_redirect', 'rewrite_team_templates');
+
+function price_range_slider() {
+  ?>
+    <div class="slider" data-slider data-initial-start="0" data-end="350">
+      <span class="slider-handle" data-slider-handle role="slider" tabindex="1"></span>
+      <span class="slider-fill" data-slider-fill></span>
+      <input type="hidden" name="price_range">
+    </div>
+  <?php
+}

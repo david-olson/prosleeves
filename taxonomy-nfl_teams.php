@@ -1,22 +1,17 @@
 <?php get_header(); ?>
+<?php 
+	$term = get_queried_object();
+?>
 
-<section class="intro team-color-intro <?php check_background_color(get_field('team_primary_color')); ?>" style="background-color: <?php the_field('team_primary_color'); ?>">
-	<div class="grid-container">
-		<div class="grid-x grid-padding-x">
-			<div class="large-12 cell">
-				<h1><?php single_term_title(); ?></h1>
+	<?php team_topbar($term); ?>
+	<section class="promo-banner">
+		<h2 class="h5">Free shipping on all prosleeves products over $50 | Ends Monday</h2>
+	</section>
+	<section class="products">
+		<div class="grid-container">
+			<div class="grid-x grid-margin-x large-up-4 medium-up-3">
+				<?php get_team_product_categories($term); ?>		
 			</div>
 		</div>
-	</div>
-</section>
-<section class="promo-banner">
-	
-</section>
-<section class="products">
-	<div class="grid-container">
-		<div class="grid-x grid-margin-x large-up-4 medium-up-3">
-			<?php get_team_product_categories(); ?>		
-		</div>
-	</div>
-</section>
+	</section>
 <?php get_footer(); ?>

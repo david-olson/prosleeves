@@ -5,7 +5,7 @@
 .mega-menu {
   .dropdown-pane {
     width: 100%;
-    max-width: 85rem;
+    // max-width: 85rem;
     margin: 0 auto !important;
     left: 0% !important;
     right: 0% !important;
@@ -34,4 +34,38 @@
 
 body, h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p {
 	font-family: 'Roboto Condensed', sans-serif;
+}
+
+// Padding
+
+.pad-full-small {
+  padding: $global-padding;
+}
+
+.pad-full-medium {
+  padding: $global-padding * 4;
+}
+
+.pad-full-large {
+  padding: $global-padding * 8;
+}
+
+//Margins
+
+.margin-bottom-small {
+  margin-bottom: $global-margin;
+}
+
+.margin-bottom-medium {
+  margin-bottom: $global-margin * 4;
+}
+
+.margin-bottom-large {
+  margin-bottom: $global-margin * 8;
+}
+
+// Backgrounds 
+
+.white-bg {
+  background-color: $white;
 }

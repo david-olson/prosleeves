@@ -32,8 +32,7 @@
 		<div class="grid-container">
 			<div class="grid-x grid-padding-x">
 				<div class="large-4 cell">
-					<?php echo get_search_form(); ?>
-						
+					<?php echo get_search_form(); ?>		
 				</div>
 				<div class="large-8 cell text-right">
 					<ul class="menu horizontal align-right">
@@ -50,7 +49,7 @@
 		<div class="grid-container">
 			<div class="grid-x grid-padding-x align-middle">
 				<div class="large-4 cell">
-					<a href="<?php echo get_home_url(); ?>/"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt=""></a>
+					<a href="<?php echo get_home_url(); ?>/"><img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt="Prosleeves - We've got you covered"></a>
 				</div>
 				<div class="large-8 cell">
 					<h2 class="tagline">Price History, Price Alerts and Coupons for All Your Favorite Licensed Gear</h2>
@@ -59,7 +58,6 @@
 		</div>
 	</div>
 	<nav>
-		<div class="grid-container">
 			<ul class="menu horizontal expanded dropdown" data-dropdown-menu>
 				<?php 
 				// Foundation menu here 
@@ -73,17 +71,24 @@
 						<?php //var_dump($mm); ?>
 						<a href="#" data-toggle="<?php echo $tax->name; ?>"><img class="league-logo" src="<?php echo $mm['menu_logo']['sizes']['team_menu_icon']; ?>" alt=""> <?php echo $tax->label; ?></a>
 						<div class="dropdown-pane bottom" id="<?php echo $tax->name; ?>" data-dropdown data-options="closeOnClick:true; hover: true; hoverPane: true;">
-							<?php $tax_terms = get_terms(array(
-								'taxonomy' => $tax->name,
-								'hide_empty' => false
-								)); ?>
-							<ul class="menu vertical align-left col-3">
-								<?php foreach ($tax_terms as $tt) : ?>
-									<?php //var_dump($tt); ?>
-									<?php $team_logo = get_field('team_logo', 'category_'.$tt->term_id); ?>
-									<li><a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>/<?php echo $tt->slug; ?>"><img class="team-logo" src="<?php echo $team_logo['sizes']['team_menu_icon']; ?>" alt=""><?php echo $tt->name; ?></a></li>
-								<?php endforeach; ?>		
-							</ul>
+							<div class="grid-x grid-padding-x">
+								<div class="large-8 cell">
+									<?php $tax_terms = get_terms(array(
+										'taxonomy' => $tax->name,
+										'hide_empty' => false
+										)); ?>
+									<ul class="menu vertical align-left col-4">
+										<?php foreach ($tax_terms as $tt) : ?>
+											<?php //var_dump($tt); ?>
+											<?php $team_logo = get_field('team_logo', 'category_'.$tt->term_id); ?>
+											<li><a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>/<?php echo $tt->slug; ?>"><img class="team-logo" src="<?php echo $team_logo['sizes']['team_menu_icon']; ?>" alt=""><?php echo $tt->name; ?></a></li>
+										<?php endforeach; ?>		
+									</ul>
+								</div>
+								<div class="large-4 cell">
+									Slider Here
+								</div>
+							</div>
 						</div>
 					</li>
 					<?php
@@ -91,7 +96,6 @@
 				?>
 				<li><a href="#">Our Products</a></li>
 			</ul>
-		</div>
 	</nav>
 </header>
 
