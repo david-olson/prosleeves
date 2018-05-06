@@ -145,11 +145,22 @@ function permalinks_init() {
   $perma_struct = get_option( 'permalink_structure' );
 
   add_rewrite_rule('^(.*)/(.*)/products/(.*)?$', 'index.php?league=$matches[1]&team=$matches[2]&product_cat=$matches[3]', 'top');
+  $mega_menu_leagues = get_field('menu_items', 'options');
+  foreach ($mega_menu_leagues as $mm_l) :
+    $tax = get_taxonomy($mm_l['item']);
+    $slug = explode('_', $tax->name);
+    add_rewrite_rule("^($slug[0])?$", 'index.php?league=$matches[1]', 'top');
+  endforeach;
 
 }
 
 function rewrite_team_templates() {
   if (get_query_var('league')) :
+    add_filter('template_include', function() {
+      return get_template_directory() . '/template-league-overview.php';
+    });
+  endif;
+  if (get_query_var('league') && get_query_var('team')) :
     add_filter('template_include', function() {
       return get_template_directory() . '/template-league-products.php';
     });

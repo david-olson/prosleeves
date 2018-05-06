@@ -137,11 +137,103 @@ header {
 // 	}
 // }
 
+/**
+ * Footer
+*/
+
+footer {
+
+	section.categories {
+		background: darken($dark-gray, 25%);
+		padding: $global-padding * 3;
+		.cell {
+			background-color: $white;
+			min-height: 250px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+			padding: $global-padding;
+			p {
+				position: absolute;
+				width: 95%;
+				left: 50%;
+				bottom: $global-padding * 0.5;
+				transform: translateX(-50%);
+				font-weight: bold;
+				color: $black;
+				text-transform: uppercase;
+				letter-spacing: 2px;
+			}
+		}
+		img {
+			max-width: 125px;
+			max-height: 125px;
+			height: auto;
+			width: auto;
+			padding-bottom: $global-padding;
+		}
+
+	}
+
+	section.company-info {
+		background-color: $red;
+		padding: $global-padding * 2;
+		color: $white;
+		a {
+			color: $white;
+		}
+		h4 {
+			font-size: 1.125rem;
+		}
+		p {
+			font-size: 0.75rem;
+		}
+		ul.menu {
+			li:first-of-type {
+				a {
+					padding-left: 0;
+				}
+			}
+		}
+		ul.menu.vertical {
+			li {
+				a {
+					font-size: 0.75rem;
+					padding-left: 0;
+					padding-right: 0;
+				}
+			}
+		}
+	}
+	section.sub-footer {
+		background-color: darken($red, 10%);
+		color: $white;
+		padding: $global-padding;
+		p {
+			text-transform: uppercase;
+			margin-bottom: 0;
+			letter-spacing: 2px;
+		}
+	}
+}
+
 
 
 /**
  * Modules
  */
+
+ /**
+ * Account Pages
+ */
+
+ body.woocommerce-account {
+ 	main {
+ 		border-top: 4px solid $red;
+ 		background-color: $light-gray;
+ 	}
+ }
 
 /**
 * Promo Banner
@@ -297,5 +389,31 @@ header {
  				opacity: 1;
  			}
  		}
+ 	}
+ }
+
+ // Product Thumbnails
+
+ .flex-control-nav {
+ 	display: flex;
+ 	list-style: none;
+ 	text-align: center;
+ 	align-items: center;
+ 	justify-content: center;
+ 	li {
+ 		display: inline-block;
+ 		max-width: 150px;
+ 	}
+ }
+
+ /**
+ * Hover Up
+ */
+
+ .hover-up {
+ 	transition: transform ease 0.33s, box-shadow ease-out 0.25s;
+ 	&:hover {
+ 		transform: translateY(-10px);
+ 		box-shadow: 0px 10px 10px -5px rgba(0,0,0,0.25);
  	}
  }

@@ -24,7 +24,13 @@
 <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'prosleeves' ); ?></a>
 <div class="off-canvas-wrapper">
 <div class="off-canvas position-right" id="sidebar_menu" data-off-canvas>
-	asdf
+	<ul class="menu vertical">
+		<li><a href="/about">About Us</a></li>
+		<li><a href="/legal">Legal</a></li>
+		<li><a href="/privacy-policy">Privacy Policy</a></li>
+		<li><a href="/site-map">Site Map</a></li>
+		<li><a href="/blog">Blog</a></li>
+	</ul>
 </div>
 <div class="off-canvas-content" data-off-canvas-content>
 <header class="site-header" id="header">
@@ -32,12 +38,11 @@
 		<div class="grid-container">
 			<div class="grid-x grid-padding-x">
 				<div class="large-4 cell">
-					<?php echo get_search_form(); ?>		
+					<?php echo do_shortcode('[wcas-search-form]'); ?>		
 				</div>
 				<div class="large-8 cell text-right">
 					<ul class="menu horizontal align-right">
-						<li><a href="<?php echo get_home_url(); ?>/login">Log In</a></li>
-						<li><a href="<?php echo get_home_url(); ?>/signup">Sign Up</a></li>
+						<li><a href="<?php echo get_home_url(); ?>/my-account">Log In / Sign Up</a></li>
 						<li><a href="<?php echo get_home_url(); ?>/cart">Cart</a></li>
 						<li><a href="#" data-toggle="sidebar_menu"><i class="fas fa-bars"></i></a></li>
 					</ul>

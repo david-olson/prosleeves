@@ -30,6 +30,15 @@
   }
 }
 
+// Buttons
+
+.button {
+  background-color: $red;
+  &:hover, &:focus, &:active {
+    background-color: darken($red, 10%);
+  }
+}
+
 // Fonts
 
 body, h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p {
@@ -37,6 +46,18 @@ body, h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p {
 }
 
 // Padding
+
+.pad-small {
+  padding: $global-padding 0;
+}
+
+.pad-medium {
+  padding: $global-padding * 4 0;
+}
+
+.pad-large {
+  padding: $global-padding * 8 0;
+}
 
 .pad-full-small {
   padding: $global-padding;
@@ -62,6 +83,10 @@ body, h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, p {
 
 .margin-bottom-large {
   margin-bottom: $global-margin * 8;
+}
+
+.no-mb {
+  margin-bottom: 0;
 }
 
 // Backgrounds 
