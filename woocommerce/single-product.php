@@ -115,8 +115,7 @@ get_header(); ?>
 							<hr>
 							<?php echo do_shortcode( '[content-egg-block template=offers_logo]' ); ?>
 						</div>
-						
-						<a href="#" class="button secondary expanded"><i class="fas fa-list-ul"></i> Add to Wishlist</a>
+						<?php echo do_shortcode('[ti_wishlists_addtowishlist]'); ?>
 										</div>
 					</div>
 			</div>

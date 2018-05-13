@@ -10,7 +10,24 @@
  */
 
 ?>
-
+	
+	<?php if (!is_home()) : ?>
+		<section class="promo-blog">
+			<div class="grid-x">
+				<div class="large-7 cell">
+					<?php $deal_image = get_field('background_image', 'options'); ?>
+					<div class="deal-banner footer" style="background-image: url('<?php echo $deal_image['sizes']['large']; ?>');">
+						<h3><?php the_field('pre_headline', 'options'); ?></h3>
+						<h2><?php the_field('main_headline', 'options'); ?></h2>
+						<a href="<?php the_field('cta_link', 'options'); ?>"><?php the_field('call_to_action', 'options'); ?></a>
+					</div>
+				</div>
+				<div class="large-5 cell">
+					
+				</div>
+			</div>
+		</section>
+	<?php endif; ?>
 
 	<footer id="colophon" class="site-footer">
 		<section class="categories">

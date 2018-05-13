@@ -48,6 +48,28 @@ if (function_exists('acf_add_options_page')) {
 	);
 	acf_add_options_page($args);
 
+  $args_promo_banner = array(
+    'page_title' => 'Promo Banner',
+    'menu_title' => 'Promo Banner',
+    'menu_slug' => 'promo-banner',
+    'capability' => 'edit_posts',
+    'position' => 4,
+    'icon_url' => 'dashicons-pressthis'
+  );
+
+  acf_add_options_page($args_promo_banner);
+
+  $deal_banner_area_args = array(
+    'page_title' => 'Deal Banner',
+    'menu_title' => 'Deal Banner',
+    'menu_slug' => 'deal-banner',
+    'capability' => 'edit_posts',
+    'position' => 4,
+    'icon_url' => 'dashicons-align-right'
+  );
+
+  acf_add_options_page($deal_banner_area_args);
+
 }
 
 add_image_size( 'team_menu_icon', 20, 20, false );
@@ -155,6 +177,13 @@ function permalinks_init() {
 }
 
 function rewrite_team_templates() {
+
+  if (is_tax('nfl_teams') || is_tax('college_teams') || is_tax('nhl_teams') || is_tax('nba_teams') || is_tax('mlb_teams')) :
+    add_filter('template_include', function() {
+      return get_template_directory() . '/taxonomy-nfl_teams.php';
+    });
+  endif;
+
   if (get_query_var('league')) :
     add_filter('template_include', function() {
       return get_template_directory() . '/template-league-overview.php';
@@ -176,5 +205,214 @@ function price_range_slider() {
       <span class="slider-fill" data-slider-fill></span>
       <input type="hidden" name="price_range">
     </div>
+  <?php
+}
+
+/**
+ * Add Price Alerts to My Account Area
+ * 
+ */
+
+function prosleeves_account_menu_items($items) {
+  $items['price-alerts'] = __('Price Alerts', 'price-alerts');
+
+  return $items;
+}
+
+add_filter('woocommerce_account_menu_items', 'prosleeves_account_menu_items', 10, 1);
+
+/**
+ * Add Price Alerts End Point
+ */
+
+function prosleeves_add_my_account_endpoint() {
+  add_rewrite_endpoint( 'price-alerts', EP_PAGES );
+}
+
+add_action('init', 'prosleeves_add_my_account_endpoint');
+
+/**
+ * Add Price Alerts Content
+ */
+
+function prosleeves_price_alert_content() {
+  global $wpdb;
+
+  $user = wp_get_current_user();
+
+  $price_alerts = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}cegg_price_alert WHERE email = '{$user->user_email}'");
+  $_pf = new WC_Product_Factory();
+  ob_start();
+
+  ?>
+  
+  <p>Here are the price alerts you have set up.</p>
+  <?php if (count($price_alerts) > 0) : ?>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th class="text-right">Desired Price</th>
+          <th class="text-right">Alert Created</th>
+          <th class="text-right">Alert Sent On</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($price_alerts as $alert) : ?>
+          <?php $product = $_pf->get_product($alert->post_id); ?>
+          <tr>
+            <td><a href="<?php echo get_home_url(); ?>/products/<?php echo $product->get_slug(); ?>"><?php echo $product->get_name(); ?></a></td>
+            <td class="text-right"><?php echo $alert->price; ?></td>
+            <td class="text-right"><?php echo $alert->create_date; ?></td>
+            <td class="text-right"><?php echo $alert->complet_date; ?></td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  <?php else : ?>
+    <p>You have not set up any price alerts yet.</p>
+  <?php endif; ?>
+
+  <?php
+
+  echo ob_get_clean();
+
+}
+
+add_action('woocommerce_account_price-alerts_endpoint', 'prosleeves_price_alert_content');
+
+/**
+ * Favorite teams
+ */
+
+add_action('woocommerce_edit_account_form', 'add_favorite_teams_to_form');
+
+function add_favorite_teams_to_form() {
+  $user_id = get_current_user_id();
+  $fav_nfl = get_field('favorite_nfl_team', 'user_' . $user_id);
+  $fav_ncaa = get_field('favorite_ncaa_team', 'user_' . $user_id);
+  $fav_nhl = get_field('favorite_nhl_team', 'user_' . $user_id);
+  $fav_nba = get_field('favorite_nba_team', 'user_' . $user_id);
+  $fav_mlb = get_field('favorite_mlb_team', 'user_' . $user_id);
+
+  $all_nfl = get_terms(array(
+    'taxonomy' => 'nfl_teams',
+    'hide_empty' => false
+  ));
+  $all_ncaa = get_terms(array(
+    'taxonomy' => 'college_teams',
+    'hide_empty' => false
+  ));
+  $all_nhl = get_terms(array(
+    'taxonomy' => 'nhl_teams',
+    'hide_empty' => false
+  ));
+  $all_nba = get_terms(array(
+    'taxonomy' => 'nba_teams',
+    'hide_empty' => false
+  ));
+  $all_mlb = get_terms(array(
+    'taxonomy' => 'mlb_teams',
+    'hide_empty' => false
+  ));
+  ?>
+    
+    <fieldset class="margin-bottom-small">
+      <legend>Favorite Teams</legend>
+      <div class="grid-x grid-padding-x">
+        <div class="large-6 cell">
+          <label for="fav_nfl">Favorite NFL Team
+            <select name="fav_nfl" id="fav_nfl">
+              <option value="0">Select a Team</option>
+              <?php foreach ($all_nfl as $team) : ?>
+                <option value="<?php echo $team->name; ?>" <?php if ($team->name == $fav_nfl) : ?>selected<?php endif; ?> ><?php echo $team->name; ?></option>
+              <?php endforeach; ?>
+            </select></label>
+        </div>
+        <?php if (!empty($all_ncaa)) : ?>
+          <div class="large-6 cell">
+            <label for="fav_ncaa">Favorite NCAA Team
+              <select name="fav_ncaa" id="fav_ncaa">
+                <option value="0">Select a Team</option>
+                <?php foreach ($all_ncaa as $team) : ?>
+                  <option value="<?php echo $team->name; ?>" <?php if ($team->name == $fav_ncaa) : ?>selected<?php endif; ?>><?php echo $team->name; ?></option>
+                <?php endforeach; ?>
+              </select>
+            </label>
+          </div>
+        <?php endif; ?>
+        <div class="large-6 cell">
+          <label for="fav_nhl">Favorite NHL Team
+            <select name="fav_nhl" id="fav_nhl">
+              <option value="0">Select a Team</option>
+              <?php foreach ($all_nhl as $team) : ?>
+                <option value="<?php echo $team->name; ?>" <?php if ($team->name == $fav_nhl) : ?>selected<?php endif; ?>><?php echo $team->name; ?></option>
+              <?php endforeach; ?>
+            </select></label>
+        </div>
+        <div class="large-6 cell">
+          <label for="fav_nba">Favorite NBA Team
+            <select name="fav_nba" id="fav_nba">
+              <option value="0">Select a Team</option>
+              <?php foreach ($all_nba as $team) : ?>
+                <option value="<?php echo $team->name; ?>" <?php if ($team->name == $fav_nba) : ?>selected<?php endif; ?>><?php echo $team->name; ?></option>
+              <?php endforeach; ?>
+            </select></label>
+        </div>
+        <div class="large-6 cell">
+          <label for="fav_mlb">Favorite MLB Team
+            <select name="fav_mlb" id="fav_mlb">
+              <option value="0">Select a Team</option>
+              <?php foreach ($all_nfl as $team) : ?>
+                <option value="<?php echo $team->name; ?>" <?php if ($team->name == $fav_mlb) : ?>selected<?php endif; ?>><?php echo $team->name; ?></option>
+              <?php endforeach; ?>
+            </select></label>
+        </div>
+      </div>
+    </fieldset>
+
+  <?php
+
+}
+
+add_action('woocommerce_save_account_details', 'save_favorite_teams');
+
+function save_favorite_teams($user_id) {
+  if (isset($_POST['fav_nfl'])) : 
+    $fav_nfl = htmlentities($_POST['fav_nfl']);
+    update_field('favorite_nfl_team', $fav_nfl, 'user_'.$user_id);
+  endif;
+  if (isset($_POST['fav_ncaa'])) : 
+    $fav_ncaa = htmlentities($_POST['fav_ncaa']);
+    update_field('favorite_ncaa_team', $fav_ncaa, 'user_'.$user_id);
+  endif;
+  if (isset($_POST['fav_nhl'])) : 
+    $fav_nhl = htmlentities($_POST['fav_nhl']);
+    update_field('favorite_nhl_team', $fav_nhl, 'user_'.$user_id);
+  endif;
+  if (isset($_POST['fav_nba'])) : 
+    $fav_nba = htmlentities($_POST['fav_nba']);
+    update_field('favorite_nba_team', $fav_nba, 'user_'.$user_id);
+  endif;
+  if (isset($_POST['fav_mlb'])) : 
+    $fav_mlb = htmlentities($_POST['fav_mlb']);
+    update_field('favorite_mlb_team', $fav_mlb, 'user_'.$user_id);
+  endif;
+
+}
+
+/**
+ * Display Promo Banner
+ *
+ */
+
+function promo_banner() {
+  $message = get_field('promo_message', 'options');
+  $expiration_date = get_field('promo_end_date', 'options');
+
+  ?>
+  <section class="promo-banner" id="promo_bar">
+    <h2 class="h5"><?php echo $message; ?> | Ends <?php echo $expiration_date; ?></h2>
+  </section>
   <?php
 }

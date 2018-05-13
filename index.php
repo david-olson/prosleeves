@@ -27,9 +27,7 @@ get_header();
 				</div>
 			</div> -->
 		</section>
-		<section class="promo-banner" id="promo_bar">
-			<h2 class="h5">Free shipping on all prosleeves products over $50 | Ends Monday</h2>
-		</section>
+		<?php promo_banner(); ?>
 		<section class="featured-products-menu" id="featured_products_menu">
 			<div class="grid-container">
 				<div class="grid-x grid-padding-x">
@@ -38,7 +36,8 @@ get_header();
 							<li class="menu-text">View Featured Products</li>
 							<?php $product_cat = get_terms(array(
 								'taxonomy' => 'product_cat',
-								'hide_empty' => false
+								'hide_empty' => false,
+								'number' => 5
 								)); ?>
 							<?php foreach ($product_cat as $cat) : ?>
 								<li><a href="<?php echo get_home_url(); ?>/products/<?php echo $cat->slug; ?>"><?php echo $cat->name; ?></a></li>
@@ -52,13 +51,25 @@ get_header();
 			<div class="grid-container">
 				<?php $args = array(
 					'post_type' => 'product',
-				'posts_per_page' => 10,
+					'posts_per_page' => 10,
 				); ?>
 				<?php $product_loop = new WP_Query($args); ?>
 				<?php if ($product_loop->have_posts()) : ?>
-					<div class="grid-x grid-padding-x medium-up-4 large-up-4">
+					<div class="grid-x grid-padding-x medium-up-4 large-up-4 align-stretch">
+					<?php $n = 0; ?>
 					<?php while ($product_loop->have_posts()) : $product_loop->the_post(); ?>
 						<?php get_template_part('template-parts/products/home-loop'); ?>
+						<?php if ($n == 5) : ?>
+							<?php $deal_image = get_field('background_image', 'options'); ?>
+							<div class="cell large-4 deal-banner-cell margin-bottom-small">
+								<div class="deal-banner text-center" style="background-image: url('<?php echo $deal_image['sizes']['large']; ?>');">
+									<h3><?php the_field('pre_headline', 'options'); ?></h3>
+									<h2><?php the_field('main_headline', 'options'); ?></h2>
+									<a href="<?php the_field('cta_link', 'options'); ?>"><?php the_field('call_to_action', 'options'); ?></a>
+								</div>
+							</div>
+						<?php endif; ?>
+						<?php ++$n; ?>
 					<?php endwhile; ?>
 					</div>
 				<?php endif; ?>

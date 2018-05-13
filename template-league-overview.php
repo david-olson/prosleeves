@@ -6,7 +6,7 @@
 	'hide_empty' => false
 )); 
 ?>
-
+<?php promo_banner(); ?>
 <main id="content">
 	<section class="products">
 		<div class="grid-container">

@@ -1,4 +1,4 @@
-<div class="cell product">
+<div class="cell product margin-bottom-small">
 	<?php $product = wc_get_product($post->ID); ?>
 	<article <?php post_class(); ?>>
 		<div class="pad-full-small">
@@ -8,10 +8,10 @@
 		</div>
 		<div class="grid-x">
 			<div class="medium-6 cell">
-				<a href="<?php the_permalink(); ?>" class="button expanded">More Details</a>
+				<a href="<?php the_permalink(); ?>" class="button expanded no-mb">More Details</a>
 			</div>
 			<div class="medium-6 cell">
-				<a href="<?php //echo $product->get_product_url(); ?>" class="button secondary expanded">Buy Now</a>
+				<a href="<?php //echo $product->get_product_url(); ?>" class="button secondary expanded no-mb">Buy Now</a>
 			</div>
 		</div>
 
