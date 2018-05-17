@@ -36,6 +36,13 @@ if ($taxonomies) :
 	endforeach;
 endif; 
 
+global $wpdb, $post;
+
+$content_egg = $wpdb->get_results("SELECT * FROM {$wpdb->postmeta} WHERE post_id = $post->ID and meta_key LIKE '_cegg%data%'");
+$egg_data = unserialize( $content_egg[0]->meta_value );
+
+$egg_data = array_values($egg_data);
+
 get_header(); ?>
 <?php team_topbar($team[0]); ?>
 <?php while ( have_posts() ) : the_post(); ?>
@@ -46,7 +53,13 @@ get_header(); ?>
 					<div class="pad-full-small">
 						<div class="grid-x grid-padding-x align-middle">
 							<div class="large-auto cell">
-								<h1 class="h3"><?php the_title(); ?></h1>
+								<h1 class="h4">
+									<?php if (count($content_egg) > 0) : ?>
+										<?php echo $egg_data[0]['title']; ?>
+									<?php else : ?>
+										<?php the_title(); ?>
+									<?php endif; ?>
+								</h1>
 							</div>
 							<div class="large-shrink cell text-right">
 								<?php if ($average = $product->get_average_rating()) : ?>
@@ -60,7 +73,15 @@ get_header(); ?>
 			<div class="grid-x grid-margin-x margin-bottom-medium">
 				<div class="large-6 cell " id="main_content">
 					<div class="pad-full-small white-bg margin-bottom-small">
-						<?php wc_get_template_part('woocommerce/single-product/product-image'); ?>
+						<?php if (count($content_egg) > 0) : ?>
+							<div class="" data-columns="" style="transition: opacity .25s ease-in-out;">
+								<figure class="woocommerce-product-gallery__wrapper">
+									<img src="<?php echo $egg_data[0]['extra']['largeImage']; ?>" class="wp-post-image" alt="" title="" data-caption="" data-src="<?php echo $egg_data[0]['extra']['largeImage']; ?>" data-large_image="<?php echo $egg_data[0]['extra']['largeImage']; ?>" data-large_image_width="500" data-large_image_height="500">
+								</figure>
+							</div>
+						<?php else : ?>
+							<?php wc_get_template_part('woocommerce/single-product/product-image'); ?>
+						<?php endif; ?>
 					</div>
 					<div class="pad-full-small white-bg margin-bottom-small">
 						<ul class="menu">
@@ -77,7 +98,7 @@ get_header(); ?>
 						$brands = get_the_terms($post, 'brands');
 						$category = get_the_terms($post, 'product_cat');
 						?>
-						<p class="taxonomies"><?php if ($brands) : ?><span class="brands">Brand: <?php foreach ($brands as $brand) : echo $brand->name; endforeach; ?></span><?php endif; ?><?php if ($category) : ?> | Category: <span class="categories"><?php foreach ($category as $cat) : echo $cat->name; endforeach; ?><?php endif; ?></span></p>
+						<p class="taxonomies"><?php if (count($content_egg) > 0) : ?>Brand: <?php echo $egg_data[0]['extra']['itemAttributes']['Brand']; ?><?php else : ?><?php if ($brands) : ?><span class="brands">Brand: <?php foreach ($brands as $brand) : echo $brand->name; endforeach; ?></span><?php endif; ?><?php endif; ?><?php if ($category) : ?> | Category: <span class="categories"><?php foreach ($category as $cat) : echo $cat->name; endforeach; ?></span><?php endif; ?></p>
 						<?php the_excerpt(); ?>
 						<hr>
 						<ul class="menu horizontal">
@@ -101,15 +122,31 @@ get_header(); ?>
 					<div class="sticky" data-sticky data-margin-top="1" data-anchor="main_content">
 						<div class="pad-full-small white-bg " >
 							<?php wc_get_template_part('woocommerce/single-product/rating'); ?>
-							<h1><?php the_title(); ?></h1>
+							<?php if (count($content_egg) > 0) : ?>
+								<h1 class="h4">
+									<?php echo $egg_data[0]['title']; ?>
+											
+								</h1>
+								<p><small>Sold by <?php echo $egg_data[0]['merchant']; ?></small></p>
+							<?php else : ?>
+								<h1 class="h4"><?php the_title(); ?></h1>
+							<?php endif; ?>
 							<hr>
 							<div class="grid-x grid-padding-x">
 								<div class="large-4 cell">
-									<?php get_template_part('woocommerce/single-product/price'); ?>
+									<?php if (count($content_egg) > 0) : ?>
+										<h2 class="price"><?php echo $egg_data[0]['currency']; ?><?php echo $egg_data[0]['price']; ?></h2>
+									<?php else : ?>
+										<?php get_template_part('woocommerce/single-product/price'); ?>
+									<?php endif; ?>
 								</div>
 								<div class="large-8 cell">
-									<?php $affiliate_link = get_post_meta( get_the_ID(), '_product_url', true ); ?>
-									<a href="<?php echo $affiliate_link; ?>" class="button expanded">Buy Now</a>
+									<?php if (count($content_egg) > 0) : ?>
+										<a href="<?php echo $egg_data[0]['url']; ?>" target="_blank" class="button expanded">Buy Now</a>
+									<?php else :?>
+										<?php $affiliate_link = get_post_meta( get_the_ID(), '_product_url', true ); ?>
+										<a href="<?php echo $affiliate_link; ?>" class="button expanded">Buy Now</a>
+									<?php endif; ?>
 								</div>
 							</div>
 							<hr>
@@ -119,6 +156,7 @@ get_header(); ?>
 										</div>
 					</div>
 			</div>
+			<?php var_dump($egg_dump); ?>
 			<div class="grid-x grid-margin-x margin-bottom-small">
 				<div class="large-12 cell">
 					<h3 class="text-center"><b>Related Products</b></h3>
