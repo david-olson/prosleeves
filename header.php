@@ -52,7 +52,7 @@
 							<li><a href="<?php echo get_home_url(); ?>/my-account">Log In / Sign Up</a></li>
 						<?php endif; ?>
 						<?php $count = WC()->cart->cart_contents_count; ?>
-						<li><a href="<?php echo get_home_url(); ?>/cart"><i class="fas fa-shopping-cart fa-lg"></i>&nbsp; &nbsp;Cart <?php if ($count > 0) : echo $count; endif; ?></a></li>
+						<li><a href="<?php echo get_home_url(); ?>/cart" class="cart"><i class="fas fa-shopping-cart fa-lg"></i>&nbsp; &nbsp;Cart <?php if ($count > 0) : echo '('.$count.')'; endif; ?></a></li>
 						<li><a href="#" data-toggle="sidebar_menu"><i class="fas fa-bars fa-lg"></i></a></li>
 					</ul>
 				</div>
@@ -119,7 +119,7 @@
 					<?php
 				endforeach;
 				?>
-				<li><a href="/products/prosleeves">Our Products</a></li>
+				<li><a href="/product-category/prosleeves">Our Products</a></li>
 			</ul>
 	</nav>
 </header>

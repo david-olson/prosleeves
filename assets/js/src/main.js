@@ -16,6 +16,17 @@ $(document).ready(function() {
 		infinite: true,
 		arrows: true,
 		dots: true,
-	})
+	});
+
+	/**
+	 * Top Ten Product Slider Blog
+	 */
+	
+	$('.top-ten-slider').slick({
+		slidesToShow: 1,
+		infinite: true,
+		arrows: true,
+		dots: false,
+	});
 
 })

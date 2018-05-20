@@ -416,3 +416,27 @@ function promo_banner() {
   </section>
   <?php
 }
+
+/**
+ * Ensure cart contents update on ajax add to cart
+ * 
+ */
+
+function header_add_to_cart($fragments) {
+  ob_start();
+
+  $count = WC()->cart->cart_contents_count;
+
+  ?>
+
+  <a href="<?php echo get_home_url(); ?>/cart" class="cart"><i class="fas fa-shopping-cart fa-lg"></i>&nbsp; &nbsp;Cart (<?php echo $count; ?>)</a>
+  
+  <?php
+
+  $fragments['a.cart'] = ob_get_clean();
+
+  return $fragments;
+
+}
+
+add_filter('woocommerce_add_to_cart_fragments', 'header_add_to_cart');
