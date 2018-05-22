@@ -166,7 +166,16 @@ add_action('init', 'permalinks_init');
 function permalinks_init() {
   $perma_struct = get_option( 'permalink_structure' );
 
+  add_rewrite_rule('^(.*)/(.*)/products/(.*)/page/(.*)?$', 'index.php?league=$matches[1]&team=$matches[2]&product_cat=$matches[3]&paged=$matches[4]', 'top');
+  add_rewrite_rule('^(.*)/(.*)/products/page/(.*)', 'index.php?league=$matches[1]&team=$matches[2]&paged=$matches[3]', 'top');
   add_rewrite_rule('^(.*)/(.*)/products/(.*)?$', 'index.php?league=$matches[1]&team=$matches[2]&product_cat=$matches[3]', 'top');
+
+  add_rewrite_rule('^(.*)/(.*)/products', 'index.php?league=$matches[1]&team=$matches[2]', 'top');
+  
+  
+  
+  
+
   $mega_menu_leagues = get_field('menu_items', 'options');
   foreach ($mega_menu_leagues as $mm_l) :
     $tax = get_taxonomy($mm_l['item']);
@@ -191,9 +200,17 @@ function rewrite_team_templates() {
   endif;
   if (get_query_var('league') && get_query_var('team')) :
     add_filter('template_include', function() {
+      return get_template_directory() . '/template-team-products.php';
+    });
+  endif;
+  if (get_query_var('league') && get_query_var('team') && get_query_var('product_cat')) :
+    add_filter('template_include', function() {
       return get_template_directory() . '/template-league-products.php';
     });
   endif;
+  
+
+
 }
 
 add_action('template_redirect', 'rewrite_team_templates');
@@ -440,3 +457,65 @@ function header_add_to_cart($fragments) {
 }
 
 add_filter('woocommerce_add_to_cart_fragments', 'header_add_to_cart');
+
+/**
+ * Footer top ten preview
+ */
+
+function the_top_ten_preview() {
+  $args = array(
+    'post_type' => 'post',
+    'posts_per_page' => 3,
+    'meta_query' => array(
+      array(
+        'key' => 'top_ten_post',
+        'compare' => '=',
+        'value' => '1'
+      ),
+    ),
+  );
+
+  $query = new WP_Query($args);
+
+  if ($query->have_posts()) :
+    ob_start();
+
+    ?>
+
+    <h3 class="text-center top-ten-title">Recent Top Ten Posts</h3>
+    
+    <?php
+
+    while ($query->have_posts()) : $query->the_post();
+
+      ?>
+      <article class="white-bg margin-bottom-small pad-full-small">
+        <div class="grid-x grid-padding-x align-middle">
+          <div class="medium-3 cell">
+            <div class="date">
+              <?php echo get_the_date(); ?>
+            </div>
+          </div>
+          <div class="medium-6 cell">
+            <h3 class="h5 no-mb"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+          </div>
+          <div class="medium-3 cell text-right">
+            <a href="<?php the_permalink(); ?>" class="button no-mb">Read More</a>
+          </div>
+        </div>
+      </article> 
+      <?php
+
+    endwhile; 
+    ?>
+      <div class="text-center">
+        <a href="<?php echo get_home_url(); ?>/blog" class="text-center">View More &gt;</a>
+      </div>
+    <?php
+
+  endif;
+
+  $results = ob_get_clean();
+
+  echo $results;
+}

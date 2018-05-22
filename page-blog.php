@@ -7,7 +7,7 @@
  * 
  */
 
-$paged = (get_query_var('paged') ) ? absint(get_query_var('paged')) : 1;
+$paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
 
 $args = array(
 	'post_type' => 'post',
@@ -28,20 +28,22 @@ $query = new WP_Query($args);
 						<?php get_template_part('template-parts/blog-main'); ?>		
 					</div>
 				<?php endwhile; ?>
-				<?php $big = 999999999999;
+				<?php 
+				$big = 999999999;
 				
 				$links = paginate_links(array(
-					'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+					'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
 					'format' => '?paged=%#%',
-					'current' => max(1, get_query_var('paged')),
+					'type' => 'list',
+					'current' => max( 1, get_query_var('paged') ),
 					'total' => $query->max_num_pages 
 				));
 				
 				?>
 				
 				<div class="grid-x grid-padding-x">
-					<div class="large-12 cell">
-						<ul class="pagination">
+					<div class="large-12 cell text-center">
+						<ul class="pagination align-center pad-medium">
 							<?php echo $links; ?>
 						</ul>
 					</div>

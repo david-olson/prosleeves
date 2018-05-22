@@ -1,10 +1,10 @@
 <?php
 	$league = get_query_var( 'league' );
 	$team = get_query_var('team');
-	$product_cat = get_query_var('product_cat');
+	$product_cat = array();
+	$product_cat[] = get_query_var('product_cat');
 
 	$team_object = get_term_by( 'slug', $team, $league.'_teams' );
-
 	
 ?>
 <?php get_header(); ?>
@@ -18,9 +18,7 @@
 			</div>
 			<div class="large-9 cell">
 				<main>
-					<div class="grid-x grid-margin-x large-up-3">
-						<?php team_category_products($team_object, $product_cat); ?>		
-					</div>
+					<?php team_category_products($team_object, $product_cat); ?>		
 				</main>
 			</div>
 		</div>
