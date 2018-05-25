@@ -5,6 +5,51 @@
 	$product_cat[] = get_query_var('product_cat');
 
 	$team_object = get_term_by( 'slug', $team, $league.'_teams' );
+
+	$additional_queries = array();
+
+	if (isset($_GET['taxonomy_product_cat']) && !empty($_GET['taxonomy_product_cat'])) :
+		$pc_terms = array();
+		foreach ($_GET['taxonomy_product_cat'] as $tax_pc) :
+			array_push($pc_terms, $tax_pc);
+		endforeach;
+		$tax_product_cat_query = array(
+			'taxonomy' => 'product_cat',
+			'field' => 'id',
+			'terms' => $pc_terms
+		); 
+		array_push($additional_queries, $tax_product_cat_query);
+	else :
+		$product_cat = array();
+		$product_cat[] = get_query_var('product_cat');
+	endif; 
+	
+	if (isset($_GET['taxonomy_shop_for']) && !empty($_GET['taxonomy_shop_for'])) : 
+		$sf_terms = array();
+		foreach ($_GET['taxonomy_shop_for'] as $tax_sf) :
+			array_push($sf_terms, $tax_sf);
+		endforeach;
+		$tax_shop_for_query = array(
+			'taxonomy' => 'shop_for',
+			'field' => 'id',
+			'terms' => $sf_terms
+		);
+		array_push($additional_queries, $tax_shop_for_query);
+	endif;
+
+	if (isset($_GET['taxonomy_brand']) && !empty($_GET['taxonomy_brand'])) : 
+		$brand_terms = array();
+		foreach ($_GET['taxonomy_brand'] as $tax_brand) : 
+			array_push($brand_terms, $tax_brand);
+		endforeach;
+		$tax_brand_query = array(
+			'taxonomy' => 'shop_for',
+			'field' => 'id',
+			'terms' => $brand_terms
+		);
+		array_push($additional_queries, $tax_brand_query);
+	endif;
+
 	
 ?>
 <?php get_header(); ?>
@@ -18,7 +63,7 @@
 			</div>
 			<div class="large-9 cell">
 				<main>
-					<?php team_category_products($team_object, $product_cat); ?>		
+					<?php team_category_products($team_object, $product_cat, $additional_queries); ?>		
 				</main>
 			</div>
 		</div>

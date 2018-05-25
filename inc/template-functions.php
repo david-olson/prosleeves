@@ -70,6 +70,17 @@ if (function_exists('acf_add_options_page')) {
 
   acf_add_options_page($deal_banner_area_args);
 
+  $hero_slider_args = array(
+    'page_title' => 'Hero Slider',
+    'menu_title' => 'Hero Slider',
+    'menu_slug' => 'hero-slider',
+    'capability' => 'edit_posts',
+    'position' => 4,
+    'icon_url' => 'dashicons-slides'
+  );
+
+  acf_add_options_page($hero_slider_args);
+
 }
 
 add_image_size( 'team_menu_icon', 20, 20, false );
@@ -518,4 +529,250 @@ function the_top_ten_preview() {
   $results = ob_get_clean();
 
   echo $results;
+}
+
+/**
+ * Top Ten Main Post for homepage footer
+ * 
+ */
+
+function top_ten_main_post() {
+  $args = array(
+    'post_type' => 'post',
+    'posts_per_page' => 1,
+    'meta_query' => array(
+      array(
+        'key' => 'top_ten_post',
+        'compare' => '=',
+        'value' => '1'
+      )
+    )
+  );
+
+  $query = new WP_Query($args);
+
+  if ($query->have_posts()) :
+    ob_start();
+
+    while ($query->have_posts()) : $query->the_post();
+      get_template_part('template-parts/top-ten-home');
+    endwhile;
+
+    $results = ob_get_clean();
+  endif;
+  echo $results;
+
+}
+
+/**
+ * Top Ten List for homepage footer
+ * 
+ */
+
+function top_ten_home_list() {
+  $args = array(
+    'post_type' => 'post',
+    'posts_per_page' => 4,
+    'meta_query' => array(
+      array(
+        'key' => 'top_ten_post',
+        'compare' => '=',
+        'value' => '1'
+      )
+    ),
+    'offset' => 1
+  );
+  $query = new WP_Query($args);
+
+  if ($query->have_posts()) :
+    ob_start();
+
+    while ($query->have_posts()) : $query->the_post();
+      get_template_part('template-parts/top-ten-home-list');
+    endwhile;
+
+    $results = ob_get_clean();
+  endif;
+  echo $results;
+}
+
+/**
+ * Filtering for WooCommerce Template
+ * 
+ */
+
+function prosleeves_get_filtering($q) {
+  if (isset($_GET['taxonomy_product_cat']) || isset($_GET['taxonomy_shop_for']) || isset($_GET['taxonomy_brand'])) :
+    $tax_query = array(
+      'relation' => 'AND'
+    );
+    if (isset($_GET['taxonomy_shop_for'])) : 
+      $tax_sf = array(
+        'taxonomy' => 'shop_for',
+        'field' => 'id',
+        'terms' => $_GET['taxonomy_shop_for']
+      );
+      array_push($tax_query, $tax_sf);
+    endif;
+
+    if (isset($_GET['taxonomy_product_cat'])) :
+      $tax_pc = array(
+        'taxonomy' => 'product_cat',
+        'field' => 'id',
+        'terms' => $_GET['taxonomy_product_cat'],
+      );
+      array_push($tax_query, $tax_pc);
+    endif;
+
+    if (isset($_GET['taxonomy_brand'])) : 
+      $tax_brand = array(
+        'taxonomy' => 'brand',
+        'field' => 'id',
+        'terms' => $_GET['taxonomy_brand'],
+      );
+      array_push($tax_query, $tax_brand);
+    endif;
+    $q->set('tax_query', $tax_query);
+  endif;
+  
+}
+
+add_action('woocommerce_product_query', 'prosleeves_get_filtering');
+
+/**
+ * Get homepage hero area
+ * 
+ */
+
+function the_homepage_hero() {
+  $layout = get_field('layout', 'options');
+
+  if ($layout == 1) :
+
+  elseif ($layout == 2) :
+      ob_start();
+
+      ?>
+        <div class="hero-area">
+        <div class="grid-x">
+          <div class="medium-7 cell">
+            <div class="grid-x grid-padding-x">
+              <?php if ($products['product_1_layout'] == 'left') : ?>
+                <div class="medium-6 cell">
+                  <img src="<?php echo $products['product_1_image']['sizes']['large']; ?>">
+                </div>
+                <div class="medium-6 cell text-right">
+                  <h2><?php echo $products['product_1_headline']; ?></h2>
+                  <p><?php echo $products['product_1_body_copy']; ?></p>
+                  <a href="<?php echo $products['product_1_button_link']; ?>" class="button"><?php echo $products['product_1_button_text']; ?></a>
+                </div>
+              <?php elseif ($products['product_1_layout'] == 'center') : ?>
+                <div class="large-12 cell text-center">
+                  <h2><?php echo $products['product_1_headline']; ?></h2>
+                  <img src="<?php echo $products['product_1_image']['sizes']['large']; ?>" alt="">
+                  <p><?php echo $products['product_1_body_copy']; ?></p>
+                  <a href="<?php echo $products['product_1_button_link']; ?>" class="button"><?php echo $products['product_1_button_text']; ?></a>
+                </div>
+              <?php elseif ($products['product_1_layout'] == 'right') : ?>
+                <div class="medium-6 cell">
+                  <h2><?php echo $products['product_1_headline']; ?></h2>
+                  <p><?php echo $products['product_1_body_copy']; ?></p>
+                  <a href="<?php echo $products['product_1_button_link']; ?>" class="button"><?php echo $products['product_1_button_text']; ?></a>
+                </div>
+                <div class="medium-6 cell text-right">
+                  <img src="<?php echo $products['product_1_image']['sizes']['large']; ?>">
+                </div>
+              <?php endif; ?>
+              
+            </div>
+          </div>
+          <div class="medium-5 cell">
+            
+          </div>
+        </div>
+      </div>
+      <?php
+
+      $result = ob_get_clean();
+  elseif ($layout == 3) : 
+    $products = get_field('two_products', 'options'); 
+
+    ob_start();
+
+    ?>
+      <div class="hero-area">
+        <div class="grid-x align-middle">
+          <div class="medium-5 cell align-self-stretch" style="background-color: <?php echo $products['product_1_background_color']; ?>">
+            <div class="pad-full-small">
+              <div class="grid-x grid-padding-x align-middle">
+                <?php if ($products['product_1_layout'] == 'left') : ?>
+                  <div class="medium-6 cell">
+                    <img src="<?php echo $products['product_1_image']['sizes']['large']; ?>">
+                  </div>
+                  <div class="medium-6 cell text-right">
+                    <h2><?php echo $products['product_1_headline']; ?></h2>
+                    <p><?php echo $products['product_1_body_copy']; ?></p>
+                    <a href="<?php echo $products['product_1_button_link']; ?>" class="button"><?php echo $products['product_1_button_text']; ?></a>
+                  </div>
+                <?php elseif ($products['product_1_layout'] == 'center') : ?>
+                  <div class="large-12 cell text-center">
+                    <h2><?php echo $products['product_1_headline']; ?></h2>
+                    <img src="<?php echo $products['product_1_image']['sizes']['large']; ?>" alt="">
+                    <p><?php echo $products['product_1_body_copy']; ?></p>
+                    <a href="<?php echo $products['product_1_button_link']; ?>" class="button"><?php echo $products['product_1_button_text']; ?></a>
+                  </div>
+                <?php elseif ($products['product_1_layout'] == 'right') : ?>
+                  <div class="medium-6 cell">
+                    <h2><?php echo $products['product_1_headline']; ?></h2>
+                    <p><?php echo $products['product_1_body_copy']; ?></p>
+                    <a href="<?php echo $products['product_1_button_link']; ?>" class="button"><?php echo $products['product_1_button_text']; ?></a>
+                  </div>
+                  <div class="medium-6 cell text-right">
+                    <img src="<?php echo $products['product_1_image']['sizes']['large']; ?>">
+                  </div>
+                <?php endif; ?>
+                
+              </div>
+            </div>
+          </div>
+          <div class="medium-7 cell align-self-stretch" style="background-color: <?php echo $products['product_2_background_color']; ?>">
+            <div class="pad-full-small">
+              <div class="grid-x grid-padding-x align-middle">
+                <?php if ($products['product_2_layout'] == 'left') : ?>
+                  <div class="medium-6 cell">
+                    <img src="<?php echo $products['product_2_image']['sizes']['large']; ?>">
+                  </div>
+                  <div class="medium-6 cell text-right">
+                    <h2><?php echo $products['product_2_headline']; ?></h2>
+                    <p><?php echo $products['product_2_body_copy']; ?></p>
+                    <a href="<?php echo $products['product_2_button_link']; ?>" class="button"><?php echo $products['product_2_button_text']; ?></a>
+                  </div>
+                <?php elseif ($products['product_2_layout'] == 'center') : ?>
+                  <div class="large-12 cell text-center">
+                    <h2><?php echo $products['product_2_headline']; ?></h2>
+                    <img src="<?php echo $products['product_2_image']['sizes']['large']; ?>" alt="">
+                    <p><?php echo $products['product_2_body_copy']; ?></p>
+                    <a href="<?php echo $products['product_2_button_link']; ?>" class="button"><?php echo $products['product_2_button_text']; ?></a>
+                  </div>
+                <?php elseif ($products['product_2_layout'] == 'right') : ?>
+                  <div class="medium-6 cell">
+                    <h2><?php echo $products['product_2_headline']; ?></h2>
+                    <p><?php echo $products['product_2_body_copy']; ?></p>
+                    <a href="<?php echo $products['product_2_button_link']; ?>" class="button"><?php echo $products['product_2_button_text']; ?></a>
+                  </div>
+                  <div class="medium-6 cell text-right">
+                    <img src="<?php echo $products['product_2_image']['sizes']['large']; ?>">
+                  </div>
+                <?php endif; ?>
+                
+              </div>
+                        </div>
+            </div>
+        </div>
+      </div>
+    <?php
+
+    $result = ob_get_clean();
+  endif;
+  echo $result;
 }

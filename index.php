@@ -17,15 +17,7 @@ get_header();
 
 	<main id="content">
 		<section class="hero">
-			<img src="http://placehold.it/1900x500" alt="">
-			<!-- <div class="grid-x">
-				<div class="large-4 cell">
-					<img src="http://placehold.it/600x400" alt="">
-				</div>
-				<div class="large-8 cell">
-					<img src="http://placehold.it/800x275" alt="">
-				</div>
-			</div> -->
+			<?php the_homepage_hero(); ?>
 		</section>
 		<?php promo_banner(); ?>
 		<section class="featured-products-menu" id="featured_products_menu">
@@ -37,7 +29,8 @@ get_header();
 							<?php $product_cat = get_terms(array(
 								'taxonomy' => 'product_cat',
 								'hide_empty' => false,
-								'number' => 5
+								'number' => 5,
+								'exclude' => 15
 								)); ?>
 							<?php foreach ($product_cat as $cat) : ?>
 								<li><a href="<?php echo get_home_url(); ?>/products/<?php echo $cat->slug; ?>"><?php echo $cat->name; ?></a></li>
@@ -75,13 +68,28 @@ get_header();
 				<?php endif; ?>
 				<div class="grid-x grid-padding-x">
 					<div class="large-12 cell text-center">
-						<a href="/products" class="button outline">View All</a>
+						<div class="pad-medium">
+							<a href="/products" class="button large outline no-mb">View All</a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</section>
 		<section class="top-ten" id="top_ten">
-			<h2 class="text-center">Weekly Top 10</h2>
+			<div class="grid-container">
+				<h2 class="text-center top-ten-title">Weekly Top 10</h2>
+				<div class="grid-x grid-padding-x">
+					<div class="large-8 cell">
+						<?php top_ten_main_post(); ?>
+					</div>
+					<div class="large-4 cell">
+						<?php top_ten_home_list(); ?>
+						<div class="text-center pad-small">
+							<a href="/blog" class="button white outline">View More</a>
+						</div>
+					</div>
+				</div>
+			</div>
 		</section>
 	</main>
 

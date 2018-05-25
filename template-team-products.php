@@ -65,8 +65,6 @@
 
 					$paged = get_query_var( 'paged' );
 
-					var_dump($paged);
-
 					?>
 					<?php team_category_products($team_object, array(), $additional_queries); ?>		
 				</main>

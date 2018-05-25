@@ -67,27 +67,45 @@ global $wpdb, $post;
 	?>
 	<div class="cell product margin-bottom-small">
 		<?php $product = wc_get_product($post->ID); ?>
-		<article <?php post_class(); ?>>
+		<article <?php post_class('match-height'); ?>>
 			<div class="pad-full-small">
 				<h2 class="h6">
-					<?php if (isset($product_title)) : ?>
-						<?php echo $product_title; ?>
-					<?php else : ?>
-						<?php the_title(); ?>
-					<?php endif; ?>		
+					<?php the_title(); ?>
 				</h2>
-				<?php if (isset($product_image_url)) : ?>
-					<img src="<?php echo $product_image_url; ?>" alt="Image of <?php echo $product_title; ?>">
-				<?php else : ?>
-					<img src="<?php the_post_thumbnail_url(); ?>" alt="Image of <?php the_title(); ?>">
-				<?php endif; ?>
+				<div class="text-center">
+					<?php if (isset($product_image_url)) : ?>
+						<img src="<?php echo $product_image_url; ?>" alt="Image of <?php echo $product_title; ?>">
+					<?php else : ?>
+						<?php if (has_post_thumbnail()) : ?>
+							<img src="<?php the_post_thumbnail_url(); ?>" alt="Image of <?php the_title(); ?>">
+						<?php else : ?>
+							<?php 
+							$product_leagues = array();
+							$leagues = get_field('menu_items', 'options');
+							foreach ($leagues as $league) :
+								$tax = get_taxonomy($league['item']);
+								array_push($product_leagues, $tax);
+							endforeach;
+							$product_teams = array();
+							foreach ($product_leagues as $p_league) : 
+								$team = get_the_terms(get_the_ID(), $p_league->name);
+								if ($team) :
+									array_push($product_teams, $team);
+								endif;	
+							endforeach;
+							$team_logo = get_field('team_logo', $product_teams[0][0]);
+							?>
+							<img class="text-center" src="<?php echo $team_logo['sizes']['large']; ?>" alt="Team logo for <?php echo $product_teams[0][0]->name; ?>">
+						<?php endif; ?>
+					<?php endif; ?>
+				</div>
 				<?php if (isset($product_price)) : ?>
 					<p class="price"><?php echo $currency . $product_price; ?></p>
 				<?php else : ?>
 					<p class="price">$<?php echo $product->get_regular_price(); ?></p>
 				<?php endif; ?>
 			</div>
-			<div class="grid-x">
+			<div class="grid-x button-row">
 				<div class="medium-6 cell">
 					<a href="<?php the_permalink(); ?>" class="button expanded no-mb">More Details</a>
 				</div>

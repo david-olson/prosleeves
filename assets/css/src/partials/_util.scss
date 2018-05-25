@@ -37,6 +37,23 @@
   &:hover, &:focus, &:active {
     background-color: darken($red, 10%);
   }
+  &.outline {
+    background-color: rgba($red, 0);
+    border: 2px solid $red;
+    color: $red;
+    font-weight: bold;
+    &:hover {
+      background-color: rgba($red, 0.125);
+    }
+    &.white {
+      background-color: rgba($white, 0);
+      color: $white;
+      border: 2px solid $white;
+      &:hover {
+        background-color: rgba($white, 0.125);
+      }
+    }
+  }
 }
 
 // Fonts

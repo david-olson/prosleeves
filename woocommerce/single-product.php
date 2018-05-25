@@ -86,9 +86,9 @@ get_header(); ?>
 
 		if (array_key_exists('description', $egg_data[0]) && !empty($egg_data[0]['description'])) :
 			$product_description = $egg_data[0]['description'];
-		elseif (array_key_exists('Feature', $egg_data['extra']['itemAttributes'])) :
+		elseif (array_key_exists('itemAttributes', $egg_data[0]['extra']) && array_key_exists('Feature', $egg_data[0]['extra']['itemAttributes'])) :
 			$product_description = "<ul>\n";
-			foreach ($egg_data['extra']['itemAttributes']['Feature'] as $feature) :
+			foreach ($egg_data[0]['extra']['itemAttributes']['Feature'] as $feature) :
 				$product_description .= "<li>".$feature."</li>\n";
 			endforeach;
 			$product_description .= '</ul>';
@@ -107,11 +107,7 @@ get_header(); ?>
 						<div class="grid-x grid-padding-x align-middle">
 							<div class="large-auto cell">
 								<h1 class="h4">
-									<?php if (isset($product_title)) :?>
-										<?php echo $product_title; ?>
-									<?php else : ?>
-										<?php the_title(); ?>
-									<?php endif; ?>
+									<?php the_title(); ?>
 								</h1>
 							</div>
 							<div class="large-shrink cell text-right">
@@ -177,7 +173,7 @@ get_header(); ?>
 							<?php wc_get_template_part('woocommerce/single-product/rating'); ?>
 							<?php if (count($content_egg) > 0) : ?>
 								<h1 class="h4">
-									<?php echo $product_title; ?>											
+									<?php the_title(); ?>											
 								</h1>
 								<p><small>Sold by <?php echo $egg_data[0]['merchant']; ?></small></p>
 							<?php else : ?>
@@ -225,7 +221,8 @@ get_header(); ?>
 				<?php $related_products = wc_get_related_products($post->ID, 4); ?>
 					<?php $product = get_posts(array(
 						'post__in' => $related_products,
-						'post_type' => 'product'
+						'post_type' => 'product',
+						'posts' => 4
 						)); ?>
 					<?php foreach ($product as $p) :
 						$post = $p;

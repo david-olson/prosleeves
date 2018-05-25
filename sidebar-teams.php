@@ -26,9 +26,11 @@
 <aside class="sidebar team">
 	<h3>More Filters</h3>
 	<form action="<?php echo home_url($wp->request); ?>" method="GET">
-		<div class="pad-full-small">		
-			<p>Viewing:</p> 
-			<span class="label"><a href="/shop"><i class="fas fa-times-circle"></i></a> <?php echo $team_object->name; ?></span>
+		<div class="pad-full-small">
+			<?php if (isset($team_object)) : ?>		
+				<p>Viewing:</p> 
+				<span class="label"><a href="<?php echo get_home_url(); ?>/shop"><i class="fas fa-times-circle"></i></a> <?php echo $team_object->name; ?></span>
+			<?php endif; ?>
 			<h4>Shop For</h4>
 			<hr>
 			<?php $args = array(

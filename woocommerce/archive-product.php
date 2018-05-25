@@ -45,9 +45,7 @@ if ( have_posts() ) {
 	 */
 	do_action( 'woocommerce_before_shop_loop' );
 	?>
-	<section class="promo-banner">
-		<h2 class="h5">Free shipping on all prosleeves products over $50 | Ends Monday</h2>
-	</section>
+	<?php promo_banner(); ?>
 	 <section class="products"> 
 	 	<div class="grid-container">
 	 		<div class="grid-x grid-margin-x">

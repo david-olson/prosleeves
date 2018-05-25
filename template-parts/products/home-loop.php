@@ -40,14 +40,10 @@ global $wpdb, $post;
 	?>
 	<div class="cell product margin-bottom-small">
 		<?php $product = wc_get_product($post->ID); ?>
-		<article <?php post_class(); ?>>
+		<article <?php post_class('match-height'); ?>>
 			<div class="pad-full-small">
 				<h2 class="h6">
-					<?php if (isset($product_title)) : ?>
-						<?php echo $product_title; ?>
-					<?php else : ?>
-						<?php the_title(); ?>
-					<?php endif; ?>		
+					<?php the_title(); ?>	
 				</h2>
 				<div class="text-center">
 					<?php if (isset($product_image_url)) : ?>
@@ -82,7 +78,7 @@ global $wpdb, $post;
 					<p class="price">$<?php echo $product->get_regular_price(); ?></p>
 				<?php endif; ?>
 			</div>
-			<div class="grid-x">
+			<div class="grid-x button-row">
 				<div class="medium-6 cell">
 					<a href="<?php the_permalink(); ?>" class="button expanded no-mb">More Details</a>
 				</div>

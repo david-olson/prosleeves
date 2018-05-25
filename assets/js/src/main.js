@@ -29,4 +29,22 @@ $(document).ready(function() {
 		dots: false,
 	});
 
+	/**
+	 * Match Height
+	 * 
+	 */
+	
+	$('.match-height').matchHeight({
+		byRow: false
+	});
+
+	/**
+	 * Add padding on products for buttons
+	 * 
+	 */
+	
+	$('article.product').css({
+		paddingBottom: $(this).find('.button').first().outerHeight() + 'px'
+	});
+
 })

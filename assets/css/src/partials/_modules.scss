@@ -37,6 +37,15 @@ header {
 				color: $white;
 				font-size: 0.75rem;
 			}
+			.cart-holder {
+				background-color: $red;
+				padding: 10px 0;
+				margin: -10px 0;
+				transition: background-color ease-out 0.25s;
+				&:hover {
+					background-color: darken($red, 5%);
+				}
+			}
 		}
 	}
 	.tagline {
@@ -50,42 +59,100 @@ header {
 		padding: $global-padding 0;
 	}
 	.logo {
-		max-height: 46px;
+		max-height: 50px;
 	}
 	nav {
 		background: $light-gray;
 		ul.menu {
+			&.leagues-menu {
+				@extend .align-center;
+			}
+			&.teams-menu {
+				justify-content: flex-start !important;
+				li {
+					justify-content: flex-start !important;
+				}
+			}
 			li {
 				a {
 					display: inline-block;
 					vertical-align: middle;
+					font-weight: bold;
 					margin-bottom: 0;
-					line-height: 0.8;
+					line-height: 1.75;
 					// font-weight: bold;
 					font-style: italic;
 					color: $red;
 					font-size: 1rem;
 					text-align: center;
 					.league-logo, .team-logo {
-						max-width: 16px;
+						max-width: 22px;
 						line-height: 0.8;
 						margin-bottom: 0;
 						height: auto;
 						display: inline-block;
-						margin-right: 5px;
+						margin-right: 8px;
 						vertical-align: middle;
 					}
 				}
-				// position: relative;
-				&:after {
-					// content: '';
-					// display: inline-block;
-					// width: 1px;
-					// height: 10px;
-					// background-color: $dark-gray;
-					// margin: 0 auto;
-					// position: absolute;
-					// transform: translateY(-50%);
+				&.top-level {
+					& > a {
+						position: relative;
+						z-index: 13; 
+						width: 100%;
+						display: block;
+						span {
+							position: relative;
+							z-index: 13;
+						}
+						&:before {
+							content: '';
+							display: none;
+							z-index: 12;
+							width: 40px;
+							height: 40px;
+							background-color: $light-gray;
+							transform: rotate(45deg) translateX(-50%);
+							position: absolute;
+							left: 50%;
+							bottom: -25px;
+						}
+						&.hover:before {
+							display: block;
+						}
+						&:after {
+							content: '';
+							display: inline-block;
+							width: 2px;
+							height: 60%;
+							background-color: rgba($dark-gray, 0.5);
+							margin: 0 auto;
+							position: absolute;
+							transform: translateY(-50%);
+							left: 0;
+							top: 50%;
+						}	
+					}
+					&:first-of-type > a:after {
+						display: none;
+					}
+						
+				}
+				
+
+				&.our-products {
+					background-color: $red;
+					transition: background-color ease-out 0.25s;
+					a {
+						color: $white;
+						font-weight: bold;
+						&:after {
+							display: none;
+						}
+					}
+					&:hover {
+						background-color: darken($red, 5%);
+					}
 				}
 			}
 		}
@@ -98,7 +165,8 @@ header {
 		column-fill: auto;
 		display: block;
 		width: 100%;
-		max-height: 315px;
+		max-height: 280px;
+		padding-top: 25px;
 		li {
 			display: block;
 		}
@@ -110,10 +178,30 @@ header {
 		column-fill: auto;
 		display: block;
 		width: 100%;
-		max-height: 315px;
+		max-height: 280px;
+		padding-top: 25px;
 		li {
 			display: block;
+			a {
+				line-height: 0.8 !important;
+				padding-top: 3px !important;
+				padding-bottom: 3px !important;
+			}
 		}
+	}
+}
+
+section.featured-products-menu {
+	padding: $global-padding 0;
+	.menu-text {
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		font-weight: bold;
+	}
+	a {
+		color: $red;
+		text-transform: uppercase;
+		letter-spacing: 2px;
 	}
 }
 
@@ -285,8 +373,15 @@ footer {
  	article.product {
  		background-color: $white;
  		// margin-bottom: $global-margin;
+ 		position: relative;
  		a.button {
  			margin-bottom: 0;
+ 		}
+ 		.button-row {
+ 			position: absolute;
+ 			width: 100%;
+ 			bottom: 0;
+ 			left: 0;
  		}
  	}
  }
@@ -458,7 +553,17 @@ footer {
  
  .featured-product-slider {
  	position: relative;
- 	padding: 0 50px 50px 50px;
+ 	padding: 0 20px 20px 20px;
+ 	.slide {
+ 		img {
+ 			max-height: 150px;
+ 			display: block;
+ 			margin: 0 auto;
+ 		}
+ 		h2 {
+ 			font-size: 0.75rem;
+ 		}
+ 	}
  	.slick-arrow {
 		position: absolute;
 		top: 50%;
@@ -466,7 +571,7 @@ footer {
 		z-index: 9;
 		font-size: 0;
 		cursor: pointer;
-		padding: 18px;
+		padding: 16px;
 		background-size: contain;
 		background-position: center center;
 		background-repeat: no-repeat;
@@ -659,5 +764,29 @@ footer {
  	}
  	100% {
  		opacity: 1;
+ 	}
+ }
+
+ /**
+  * Top Ten Home Footer
+  * 
+  */
+ 
+ section.top-ten {
+ 	background: $red;
+ 	padding: $global-padding * 2;
+ 	color: $white;
+ 	.top-ten-title {
+ 		margin: $global-margin 0 $global-margin * 2 0;
+ 		text-transform: uppercase;
+ 		letter-spacing: 3px;
+ 		font-weight: bold;
+ 	}
+ 	.white-bg {
+ 		color: $black;
+ 	}
+ 	.product-cell {
+ 		border: 1px solid $dark-gray;
+ 		padding: $global-padding * 0.5;
  	}
  }

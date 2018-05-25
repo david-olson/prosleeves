@@ -52,7 +52,7 @@
 							<li><a href="<?php echo get_home_url(); ?>/my-account">Log In / Sign Up</a></li>
 						<?php endif; ?>
 						<?php $count = WC()->cart->cart_contents_count; ?>
-						<li><a href="<?php echo get_home_url(); ?>/cart" class="cart"><i class="fas fa-shopping-cart fa-lg"></i>&nbsp; &nbsp;Cart <?php if ($count > 0) : echo '('.$count.')'; endif; ?></a></li>
+						<li class="cart-holder"><a href="<?php echo get_home_url(); ?>/cart" class="cart"><i class="fas fa-shopping-cart fa-lg"></i>&nbsp; &nbsp;Cart <?php if ($count > 0) : echo '('.$count.')'; endif; ?></a></li>
 						<li><a href="#" data-toggle="sidebar_menu"><i class="fas fa-bars fa-lg"></i></a></li>
 					</ul>
 				</div>
@@ -72,7 +72,7 @@
 		</div>
 	</div>
 	<nav>
-			<ul class="menu horizontal expanded dropdown" data-dropdown-menu>
+			<ul class="menu leagues-menu horizontal expanded dropdown" data-dropdown-menu>
 				<?php 
 				// Foundation menu here 
 				$taxes = array();
@@ -81,9 +81,9 @@
 					$tax = get_taxonomy($mm['item']);
 					array_push($taxes, $tax);
 					?>
-					<li class="mega-menu">
+					<li class="mega-menu top-level">
 						<?php //var_dump($mm); ?>
-						<a href="#" data-toggle="<?php echo $tax->name; ?>"><img class="league-logo" src="<?php echo $mm['menu_logo']['sizes']['team_menu_icon']; ?>" alt=""> <?php echo $tax->label; ?></a>
+						<a href="#" data-toggle="<?php echo $tax->name; ?>"><span><img class="league-logo" src="<?php echo $mm['menu_logo']['sizes']['team_menu_icon']; ?>" alt=""> <?php echo $tax->label; ?></span></a>
 						<div class="dropdown-pane bottom" id="<?php echo $tax->name; ?>" data-dropdown data-options="closeOnClick:true; hover: true; hoverPane: true;">
 							<div class="grid-x grid-padding-x">
 								<div class="large-8 cell">
@@ -91,7 +91,7 @@
 										'taxonomy' => $tax->name,
 										'hide_empty' => false
 										)); ?>
-									<ul class="menu vertical align-left col-4">
+									<ul class="menu vertical align-left col-4 teams-menu">
 										<?php foreach ($tax_terms as $tt) : ?>
 											<?php //var_dump($tt); ?>
 											<?php $team_logo = get_field('team_logo', 'category_'.$tt->term_id); ?>
@@ -105,9 +105,29 @@
 										<?php foreach($mm['featured_products'] as $product) : ?>
 											<div class="slide text-center">
 												<?php $image = get_the_post_thumbnail_url( $product['product']->ID, 'team_topbar_icon' ); ?>
-												<a href="<?php the_permalink($product['product']->ID); ?>" title="View <?php echo $product['product']->post_title; ?>">
-													<img src="<?php echo $image; ?>" alt="Product photo of <?php echo $product['product']->post_title; ?>">
-													<h2 class="text-center h4"><?php echo $product['product']->post_title; ?></h2>
+												<a class="text-center" href="<?php the_permalink($product['product']->ID); ?>" title="View <?php echo $product['product']->post_title; ?>">
+													<?php if (has_post_thumbnail($product['product']->ID)) : ?>
+														<img src="<?php echo $image; ?>" alt="Image of <?php echo get_the_title($product['product']->ID); ?>">
+													<?php else : ?>
+														<?php 
+														$product_leagues = array();
+														$leagues = get_field('menu_items', 'options');
+														foreach ($leagues as $league) :
+															$tax = get_taxonomy($league['item']);
+															array_push($product_leagues, $tax);
+														endforeach;
+														$product_teams = array();
+														foreach ($product_leagues as $p_league) : 
+															$team = get_the_terms($product['product']->ID, $p_league->name);
+															if ($team) :
+																array_push($product_teams, $team);
+															endif;	
+														endforeach;
+														$team_logo = get_field('team_logo', $product_teams[0][0]);
+														?>
+														<img class="text-center" src="<?php echo $team_logo['sizes']['large']; ?>" alt="Team logo for <?php echo $product_teams[0][0]->name; ?>">
+													<?php endif; ?>
+													<h2 class="text-center"><?php echo $product['product']->post_title; ?></h2>
 												</a>
 											</div>
 										<?php endforeach; ?>
@@ -119,7 +139,7 @@
 					<?php
 				endforeach;
 				?>
-				<li><a href="/product-category/prosleeves">Our Products</a></li>
+				<li class="our-products top-level"><a href="<?php echo get_home_url(); ?>/product-category/prosleeves"><img class="league-logo" src="<?php echo get_template_directory_uri(); ?>/assets/images/prosleeves-icon.svg" > Our Products</a></li>
 			</ul>
 	</nav>
 </header>
