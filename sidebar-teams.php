@@ -39,12 +39,12 @@
 			); 
 			?>
 			<?php $shop_for = get_terms($args); ?>
-			<ul class="menu vertical">
+			<ul class="menu vertical shop-for">
 				<?php foreach ($shop_for as $sf) : ?>
 					<li><label for="shop_for_<?php echo $sf->slug; ?>"><input id="shop_for_<?php echo $sf->slug; ?>" <?php if (in_array($sf->term_id, $shop_for_terms)) : ?>checked<?php endif; ?> type="checkbox" name="taxonomy_shop_for[]" value="<?php echo $sf->term_id; ?>"><?php echo $sf->name; ?></label></li>
 				<?php endforeach; ?>
-					
 			</ul>
+			<a href="#" class="shop-for-view-more margin-bottom-small"><i class="plus-minus"></i> <span>View More</span></a>
 			<h4>Departments</h4>
 			<hr>
 			<?php
@@ -56,14 +56,16 @@
 			$departments = get_terms($args);
 			
 			?>
-			<ul class="menu vertical">
+			<ul class="menu vertical departments">
 				<?php foreach ($departments as $dept) : ?>
 					<li><label for="department_<?php echo $dept->slug; ?>">
 						<input type="checkbox" name="taxonomy_product_cat[]" id="department_<?php echo $dept->slug; ?>" value="<?php echo $dept->term_id; ?>"
 						// <?php if (is_array($product_cat)) : if (in_array($dept->term_id, $product_cat)) : ?>checked<?php endif; ?><?php else : ?> <?php if ($product_cat == $dept->slug) : ?>checked<?php endif; endif; ?>> <?php echo $dept->name; ?></label>
 					</li>
-				<?php endforeach;?>		
+				<?php endforeach;?>	
+				
 			</ul>
+			<a href="#" class="departments-view-more"><i class="plus-minus"></i>  <span>View More</span></a>
 			<h4>Brands</h4>
 			<hr>
 			<?php 
@@ -75,11 +77,12 @@
 				$brands = get_terms($args);
 			?>
 			
-			<ul class="menu vertical">
+			<ul class="menu vertical brands">
 				<?php foreach ($brands as $brand) : ?>
 					<li><label for="brands_<?php echo $brand->slug; ?>"><input value="<?php echo $brand->term_id; ?>" id="brands_<?php echo $brand->slug; ?>" type="checkbox" <?php if (in_array($brand->term_id, $brand_terms)) : ?>checked<?php endif; ?> name="taxonomy_brand[]"> <?php echo $brand->name; ?></label></li>
 				<?php endforeach; ?>		
 			</ul>
+			<a href="#" class="brands-view-more"><i class="plus-minus"></i>  <span>View More</span></a>
 			<h4>Price Range</h4>
 			<hr>
 			<?php price_range_slider(); ?>	

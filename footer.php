@@ -52,7 +52,7 @@
 					<div class="cell hover-up">
 						<?php //var_dump($tax); ?>
 						<a href="<?php echo get_home_url(); ?>/<?php echo $slug[0]; ?>">	
-							<img src="<?php echo $menu_item['menu_logo']['sizes']['team_menu_icon']; ?>" alt="">
+							<img src="<?php echo $menu_item['menu_logo']['sizes']['team_topbar_icon']; ?>" alt="">
 							<p class="text-center">Shop Now</p>
 						</a>
 					</div>

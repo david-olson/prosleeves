@@ -59,7 +59,7 @@ function get_team_product_categories($team) {
 			global $wp_query;
 			?>
 				<div class="cell">
-					<article class="taxonomy taxonomy-product_cat taxonomy-<?php echo $cat->slug; ?> text-center">
+					<article class="taxonomy taxonomy-product_cat match-height margin-bottom-small taxonomy-<?php echo $cat->slug; ?> text-center">
 						<?php get_first_product_image($cat->slug, $team); ?>
 						<h2><?php echo $cat->name; ?></h2>
 						<a href="<?php bloginfo( 'url' ) ?>/<?php echo $league[0]; ?>/<?php echo $team->slug; ?>/products/<?php echo $cat->slug; ?>" class="<?php check_background_color(get_field('team_primary_color', $team)); ?> button expanded" style="background-color: <?php the_field('team_primary_color', $team); ?>">Shop All <?php echo $wp_query->found_posts; ?> <?php echo $cat->name; ?></a>
@@ -67,6 +67,16 @@ function get_team_product_categories($team) {
 				</div>
 			<?php
 		endforeach;
+		?>
+			<div class="cell">
+				<article class="taxonomy taxonomy-product_cat match-height margin-bottom-small taxonomy-<?php echo $cat->slug; ?> text-center">
+					<?php $team_image = get_field('team_logo', $team);	?>
+					<img src="<?php echo $team_image['sizes']['team_topbar_icon']; ?>" alt="<?php echo $team->name; ?> Logo">
+					<h2>View All</h2>
+					<a href="<?php bloginfo( 'url' ) ?>/<?php echo $league[0]; ?>/<?php echo $team->slug; ?>/products/" class="<?php check_background_color(get_field('team_primary_color', $team)); ?> button expanded" style="background-color: <?php the_field('team_primary_color', $team); ?>">View All Products</a>
+				</article>
+			</div>
+		<?php
 	else :
 		echo '<div class="cell"><h3>No Products Found.</h3></div>';
 	endif;

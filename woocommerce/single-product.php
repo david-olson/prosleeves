@@ -122,15 +122,7 @@ get_header(); ?>
 			<div class="grid-x grid-margin-x margin-bottom-medium">
 				<div class="large-6 cell " id="main_content">
 					<div class="pad-full-small white-bg margin-bottom-small">
-						<?php if (count($content_egg) > 0) : ?>
-							<div class="" data-columns="" style="transition: opacity .25s ease-in-out;">
-								<figure class="woocommerce-product-gallery__wrapper">
-									<img src="<?php echo $product_image_url; ?>" class="wp-post-image" alt="" title="" data-caption="" data-src="<?php echo $egg_data[0]['extra']['largeImage']; ?>" data-large_image="<?php echo $egg_data[0]['extra']['largeImage']; ?>" data-large_image_width="500" data-large_image_height="500">
-								</figure>
-							</div>
-						<?php else : ?>
-							<?php wc_get_template_part('woocommerce/single-product/product-image'); ?>
-						<?php endif; ?>
+						<?php wc_get_template_part('woocommerce/single-product/product-image'); ?>
 					</div>
 					<div class="pad-full-small white-bg margin-bottom-small">
 						<ul class="menu">

@@ -23,13 +23,13 @@
 <body <?php body_class(); ?>>
 <a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'prosleeves' ); ?></a>
 <div class="off-canvas-wrapper">
-<div class="off-canvas position-right" id="sidebar_menu" data-off-canvas>
+<div class="off-canvas position-right side-nav" id="sidebar_menu" data-off-canvas>
 	<ul class="menu vertical">
-		<li><a href="/about">About Us</a></li>
-		<li><a href="/legal">Legal</a></li>
-		<li><a href="/privacy-policy">Privacy Policy</a></li>
-		<li><a href="/site-map">Site Map</a></li>
-		<li><a href="/blog">Blog</a></li>
+		<li><a href="<?php echo get_home_url(); ?>/about">About Us</a></li>
+		<li><a href="<?php echo get_home_url(); ?>/legal">Legal</a></li>
+		<li><a href="<?php echo get_home_url(); ?>/privacy-policy">Privacy Policy</a></li>
+		<li><a href="<?php echo get_home_url(); ?>/site-map">Site Map</a></li>
+		<li><a href="<?php echo get_home_url(); ?>/blog">Blog</a></li>
 		<?php //if (is_user_logged_in()) : ?>
 			<li><?php echo do_shortcode('[ti_wishlist_products_counter]'); ?></li>
 		<?php //endif; ?>
@@ -62,10 +62,10 @@
 	<div class="header-logo-tagline">
 		<div class="grid-container">
 			<div class="grid-x grid-padding-x align-middle">
-				<div class="large-4 cell">
+				<div class="large-3 cell">
 					<a href="<?php echo get_home_url(); ?>/"><img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt="Prosleeves - We've got you covered"></a>
 				</div>
-				<div class="large-8 cell">
+				<div class="large-9 cell">
 					<h2 class="tagline">Price History, Price Alerts and Coupons for All Your Favorite Licensed Gear</h2>
 				</div>
 			</div>
@@ -99,7 +99,7 @@
 										<?php endforeach; ?>		
 									</ul>
 								</div>
-								<div class="large-4 cell">
+								<div class="large-4 cell vertical-rule-left">
 									<h3 class="h5 red text-center">Featured Products</h3>
 									<div class="featured-product-slider slick">
 										<?php foreach($mm['featured_products'] as $product) : ?>

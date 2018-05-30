@@ -24,7 +24,7 @@ get_header();
 			<div class="grid-container">
 				<div class="grid-x grid-padding-x">
 					<div class="large-12 cell">
-						<ul class="menu horizontal expanded">
+						<ul class="menu horizontal expanded align-center">
 							<li class="menu-text">View Featured Products</li>
 							<?php $product_cat = get_terms(array(
 								'taxonomy' => 'product_cat',
