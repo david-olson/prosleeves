@@ -55,8 +55,14 @@
 <?php get_header(); ?>
 <?php team_topbar($team_object); ?>
 <?php promo_banner(); ?>
+<?php $category_overview = get_term_by('slug', $product_cat[0], 'product_cat'); ?>
 <section class="products">
 	<div class="grid-container">
+		<div class="grid-x grid-padding-x">
+			<div class="large-12 cell">
+				<p class="breadcrumbs"><a href="<?php echo get_home_url(); ?>/<?php echo $league; ?>"><?php echo strtoupper($league); ?></a> / <a href="<?php echo get_home_url(); ?>/<?php echo $league; ?>/<?php echo $team; ?>"><?php echo $team_object->name; ?></a> / <a href="<?php echo get_home_url(); ?>/<?php echo $league; ?>/<?php echo $team; ?>/products/<?php echo $category_overview->slug; ?>"><?php echo $team_object->name; ?> <?php echo $category_overview->name; ?></a></p>
+			</div>
+		</div>
 		<div class="grid-x grid-margin-x">
 			<div class="large-3 cell">
 				<?php get_sidebar('teams'); ?>

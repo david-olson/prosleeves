@@ -13,11 +13,13 @@
 			<div class="grid-x grid-margin-x large-up-6 align-center">
 				<?php foreach ($teams as $team) : ?>
 					<div class="cell white-bg margin-bottom-small text-center hover-up">
-						<article class="pad-full-small">
-							<?php $team_image = get_field('team_logo', $team); ?>
-							<img src="<?php echo $team_image['sizes']['team_topbar_icon']; ?>" alt="<?php echo $team->name; ?> Logo">
-						</article>
-						<a class="button expanded no-mb" href="/<?php echo $league; ?>/<?php echo $team->slug; ?>"><?php echo $team->name; ?></a>
+						<a href="<?php echo get_home_url(); ?>/<?php echo $league; ?>/<?php echo $team->slug; ?>">
+							<article class="pad-full-small">
+								<?php $team_image = get_field('team_logo', $team); ?>
+								<img src="<?php echo $team_image['sizes']['team_topbar_icon']; ?>" alt="<?php echo $team->name; ?> Logo">
+							</article>
+							<button class="button expanded no-mb" type="button"><?php echo $team->name; ?></button>
+						</a>
 					</div>
 				<?php endforeach; ?>		
 			</div>

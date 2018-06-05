@@ -55,6 +55,11 @@
 <?php promo_banner(); ?>
 <section class="products">
 	<div class="grid-container">
+		<div class="grid-x grid-padding-x">
+			<div class="large-12 cell">
+				<p class="breadcrumbs"><a href="<?php echo get_home_url(); ?>/<?php echo $league; ?>"><?php echo strtoupper($league); ?></a> / <a href="<?php echo get_home_url(); ?>/<?php echo $league; ?>/<?php echo $team; ?>"><?php echo $team_object->name; ?></a></p>
+			</div>
+		</div>
 		<div class="grid-x grid-margin-x">
 			<div class="large-3 cell">
 				<?php get_sidebar('teams'); ?>

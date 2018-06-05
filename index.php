@@ -69,7 +69,7 @@ get_header();
 				<div class="grid-x grid-padding-x">
 					<div class="large-12 cell text-center">
 						<div class="pad-medium">
-							<a href="/products" class="button large outline no-mb">View All</a>
+							<a href="<?php echo get_home_url(); ?>/products" class="button large outline no-mb">View All</a>
 						</div>
 					</div>
 				</div>
@@ -77,7 +77,7 @@ get_header();
 		</section>
 		<section class="top-ten" id="top_ten">
 			<div class="grid-container">
-				<h2 class="text-center top-ten-title">Weekly Top 10</h2>
+				<h2 class="text-center top-ten-title">Top Ten Lists</h2>
 				<div class="grid-x grid-padding-x">
 					<div class="large-8 cell">
 						<?php top_ten_main_post(); ?>
@@ -85,7 +85,7 @@ get_header();
 					<div class="large-4 cell">
 						<?php top_ten_home_list(); ?>
 						<div class="text-center pad-small">
-							<a href="/blog" class="button white outline">View More</a>
+							<a href="<?php echo get_home_url(); ?>/blog" class="button white outline">View More</a>
 						</div>
 					</div>
 				</div>

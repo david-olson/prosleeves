@@ -70,14 +70,14 @@ global $wpdb, $post;
 		<article <?php post_class('match-height'); ?>>
 			<div class="pad-full-small">
 				<h2 class="h6">
-					<?php the_title(); ?>
+					<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 				</h2>
 				<div class="text-center">
 					<?php if (isset($product_image_url)) : ?>
-						<img src="<?php echo $product_image_url; ?>" alt="Image of <?php echo $product_title; ?>">
+						<a href="<?php the_permalink(); ?>"><img src="<?php echo $product_image_url; ?>" alt="Image of <?php echo $product_title; ?>"></a>
 					<?php else : ?>
 						<?php if (has_post_thumbnail()) : ?>
-							<img src="<?php the_post_thumbnail_url(); ?>" alt="Image of <?php the_title(); ?>">
+							<a href="<?php the_permalink(); ?>"><img src="<?php the_post_thumbnail_url(); ?>" alt="Image of <?php the_title(); ?>"></a>
 						<?php else : ?>
 							<?php 
 							$product_leagues = array();
@@ -95,7 +95,7 @@ global $wpdb, $post;
 							endforeach;
 							$team_logo = get_field('team_logo', $product_teams[0][0]);
 							?>
-							<img class="text-center" src="<?php echo $team_logo['sizes']['large']; ?>" alt="Team logo for <?php echo $product_teams[0][0]->name; ?>">
+							<a href="<?php the_permalink(); ?>"><img class="text-center" src="<?php echo $team_logo['sizes']['large']; ?>" alt="Team logo for <?php echo $product_teams[0][0]->name; ?>"></a>
 						<?php endif; ?>
 					<?php endif; ?>
 				</div>

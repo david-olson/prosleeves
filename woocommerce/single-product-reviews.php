@@ -28,12 +28,12 @@ if ( ! comments_open() ) {
 ?>
 <div id="reviews" class="woocommerce-Reviews">
 	<div id="comments">
-		<h2 class="woocommerce-Reviews-title h4"><?php
+		<h2 class="woocommerce-Reviews-title h5"><?php
 			if ( get_option( 'woocommerce_enable_review_rating' ) === 'yes' && ( $count = $product->get_review_count() ) ) {
 				/* translators: 1: reviews count 2: product name */
-				printf( esc_html( _n( '%1$s review for %2$s', '%1$s reviews for %2$s', $count, 'woocommerce' ) ), esc_html( $count ), '<span>' . get_the_title() . '</span>' );
+				printf( esc_html( _n( '%1$s opinion or comment for %2$s', '%1$s opinion and comments for %2$s', $count, 'woocommerce' ) ), esc_html( $count ), '<span>' . get_the_title() . '</span>' );
 			} else {
-				_e( 'Reviews', 'woocommerce' );
+				_e( 'Product Opinions &amp; Comments', 'woocommerce' );
 			}
 		?></h2>
 
@@ -55,7 +55,7 @@ if ( ! comments_open() ) {
 
 		<?php else : ?>
 
-			<p><strong><?php _e( 'There are no reviews yet.', 'woocommerce' ); ?></strong></p>
+			<p><strong><?php _e( 'There are no opinions or comments yet.', 'woocommerce' ); ?></strong></p>
 
 		<?php endif; ?>
 	</div>
@@ -68,7 +68,7 @@ if ( ! comments_open() ) {
 					$commenter = wp_get_current_commenter();
 
 					$comment_form = array(
-						'title_reply'          => have_comments() ? __( 'Add a review', 'woocommerce' ) : sprintf( __( 'Be the first to review &ldquo;%s&rdquo;', 'woocommerce' ), get_the_title() ),
+						'title_reply'          => have_comments() ? __( 'Add an opinion or comment', 'woocommerce' ) : sprintf( __( 'Tell other fans what you think of &ldquo;%s&rdquo;', 'woocommerce' ), get_the_title() ),
 						'title_reply_to'       => __( 'Leave a Reply to %s', 'woocommerce' ),
 						'title_reply_before'   => '<span id="reply-title" class="comment-reply-title">',
 						'title_reply_after'    => '</span>',
@@ -89,7 +89,7 @@ if ( ! comments_open() ) {
 					}
 
 					if ( get_option( 'woocommerce_enable_review_rating' ) === 'yes' ) {
-						$comment_form['comment_field'] = '<div class="comment-form-rating"><label for="rating">' . esc_html__( 'Your rating', 'woocommerce' ) . '</label><select name="rating" id="rating" aria-required="true" required>
+						$comment_form['comment_field'] = '<div class="comment-form-rating"><label for="rating">' . esc_html__( 'Fan Style Rating', 'woocommerce' ) . '</label><p><small>Would you wear this? Rate it from 1 star (No Way) to 5 stars (Heck yea).</small></p><select name="rating" id="rating" aria-required="true" required>
 							<option value="">' . esc_html__( 'Rate&hellip;', 'woocommerce' ) . '</option>
 							<option value="5">' . esc_html__( 'Perfect', 'woocommerce' ) . '</option>
 							<option value="4">' . esc_html__( 'Good', 'woocommerce' ) . '</option>
@@ -99,7 +99,7 @@ if ( ! comments_open() ) {
 						</select></div>';
 					}
 
-					$comment_form['comment_field'] .= '<p class="comment-form-comment"><label for="comment">' . esc_html__( 'Your review', 'woocommerce' ) . ' <span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true" required></textarea></p>';
+					$comment_form['comment_field'] .= '<p class="comment-form-comment"><label for="comment">' . esc_html__( 'Your opinion or comment', 'woocommerce' ) . ' <span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="8" aria-required="true" required></textarea></p>';
 
 					comment_form( apply_filters( 'woocommerce_product_review_comment_form_args', $comment_form ) );
 				?>

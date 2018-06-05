@@ -105,14 +105,27 @@ get_header(); ?>
 				<div class="large-12 cell white-bg">
 					<div class="pad-full-small">
 						<div class="grid-x grid-padding-x align-middle">
-							<div class="large-auto cell">
+							<div class="medium-auto cell large-order-1 medium-order-1 small-order-2">
 								<h1 class="h4">
 									<?php the_title(); ?>
 								</h1>
 							</div>
-							<div class="large-shrink cell text-right">
+							<div class="medium-shrink cell text-right large-order-2 medium-order-2 small-order-1">
 								<?php if ($average = $product->get_average_rating()) : ?>
-								    <?php echo '<div class="star-rating" title="'.sprintf(__( 'Rated %s out of 5', 'woocommerce' ), $average).'"><span style="width:'.( ( $average / 5 ) * 100 ) . '%"><strong itemprop="ratingValue" class="rating">'.$average.'</strong> '.__( 'out of 5', 'woocommerce' ).'</span></div>'; ?>
+									<div class="grid-x grid-padding-x">
+										<div class="large-shrink cell">
+											<h3 class="h5">Fan Style Rating:</h3>
+										</div>
+										<div class="large-auto cell">
+											 <?php echo '<div class="star-rating" title="'.sprintf(__( 'Rated %s out of 5', 'woocommerce' ), $average).'"><span style="width:'.( ( $average / 5 ) * 100 ) . '%"><strong itemprop="ratingValue" class="rating">'.$average.'</strong> '.__( 'out of 5', 'woocommerce' ).'</span></div>'; ?>
+										</div>
+									</div>
+								<?php else : ?>
+									<div class="grid-x grid-padding-x">
+										<div class="large-12 cell">
+											<h3 class="h5">No opinions or comments yet.</h3>
+										</div>
+									</div>		
 								<?php endif; ?>
 							</div>
 						</div>
@@ -120,7 +133,7 @@ get_header(); ?>
 				</div>
 			</div>
 			<div class="grid-x grid-margin-x margin-bottom-medium">
-				<div class="large-6 cell " id="main_content">
+				<div class="medium-6 cell " id="main_content">
 					<div class="pad-full-small white-bg margin-bottom-small">
 						<?php wc_get_template_part('woocommerce/single-product/product-image'); ?>
 					</div>
@@ -133,7 +146,8 @@ get_header(); ?>
 							<li><a href="#reviews">Reviews/Comments</a></li>
 						</ul>
 					</div>
-					<div class="pad-full-small white-bg margin-bottom-small">
+					<div class="pad-full-small white-bg margin-bottom-small" id="description">
+						<h3 class="h5">Description</h3>
 						<?php 
 						$id = get_the_ID();
 						$brands = get_the_terms($post, 'brands');
@@ -149,17 +163,19 @@ get_header(); ?>
 							<li><a href="#"><i class="fab fa-pinterest"></i></a></li>
 						</ul>
 					</div>
-					<div class="pad-full-small white-bg margin-bottom-small">
+					<div class="pad-full-small white-bg margin-bottom-small" id="price-alerts">
+						<h3 class="h5">Price Alerts</h3>
 						<?php echo do_shortcode( '[content-egg-block template=price_alert]' ); ?>
 					</div>
-					<div class="pad-full-small white-bg margin-bottom-small">
+					<div class="pad-full-small white-bg margin-bottom-small" id="price-history">
+						<h3 class="h5">Price History</h3>
 						<?php echo do_shortcode( '[content-egg-block template=price_history]' ); ?>
 					</div>
-					<div class="pad-full-small white-bg margin-bottom-small">
+					<div class="pad-full-small white-bg margin-bottom-small" id="reviews">
 						<?php comments_template(); ?>
 					</div>
 				</div>
-				<div class="large-6 cell " data-sticky-container>
+				<div class="medium-6 cell " data-sticky-container>
 					<div class="sticky" data-sticky data-margin-top="1" data-anchor="main_content">
 						<div class="pad-full-small white-bg " >
 							<?php wc_get_template_part('woocommerce/single-product/rating'); ?>
@@ -171,24 +187,21 @@ get_header(); ?>
 							<?php else : ?>
 								<h1 class="h4"><?php the_title(); ?></h1>
 							<?php endif; ?>
-							<hr>
-							<div class="grid-x grid-padding-x">
-								<div class="large-4 cell">
-									<?php if (count($content_egg) > 0) : ?>
-										<h2 class="price"><?php echo $currency . $product_price; ?></h2>
-									<?php else : ?>
-										<?php get_template_part('woocommerce/single-product/price'); ?>
-									<?php endif; ?>
-								</div>
-								<div class="large-8 cell">
-									<?php if (count($content_egg) > 0) : ?>
-										<a href="<?php echo $product_url; ?>" target="_blank" class="button expanded">Buy Now</a>
-									<?php else :?>
-										<?php $affiliate_link = get_post_meta( get_the_ID(), '_product_url', true ); ?>
-										<a href="<?php echo $affiliate_link; ?>" class="button expanded">Buy Now</a>
-									<?php endif; ?>
-								</div>
-							</div>
+							<?php
+							//<div class="grid-x grid-padding-x">	 
+								//<div class="medium-4 cell">
+								//	<?php get_template_part('woocommerce/single-product/price');
+								//</div>
+								//<div class="medium-8 cell">
+								//	<?php if (count($content_egg) > 0) : 
+										//<a href="<?php echo $product_url; " target="_blank" class="button expanded">Buy Now</a>
+									//<?php else :
+										//<?php $affiliate_link = get_post_meta( get_the_ID(), '_product_url', true ); 
+										//<a href="<?php echo $affiliate_link; " class="button expanded">Buy Now</a>
+									//<?php endif; 
+								//</div>
+							//</div>
+							//?>
 							<hr>
 							<?php echo do_shortcode( '[content-egg-block template=offers_logo]' ); ?>
 						</div>
@@ -209,7 +222,7 @@ get_header(); ?>
 					<h3 class="text-center"><b>Related Products</b></h3>
 				</div>
 			</div>
-			<div class="grid-x grid-padding-x align-center large-up-4">
+			<div class="grid-x grid-padding-x align-center medium-up-3 large-up-4">
 				<?php $related_products = wc_get_related_products($post->ID, 4); ?>
 					<?php $product = get_posts(array(
 						'post__in' => $related_products,
@@ -262,6 +275,7 @@ get_header(); ?>
 		?>
 			
 	</div>
+	<?php var_dump($egg_data); ?>
 	</section>
 	<?php endwhile; // end of the loop. ?>
 <?php get_footer();

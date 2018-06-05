@@ -84,7 +84,11 @@ header {
 					font-style: italic;
 					color: $red;
 					font-size: 1rem;
-					text-align: center;
+					
+					text-align: left;
+					@media only screen and (max-width: 1380px) {
+						font-size: 0.75rem;
+					} 
 					.league-logo, .team-logo {
 						max-width: 22px;
 						line-height: 0.8;
@@ -93,6 +97,9 @@ header {
 						display: inline-block;
 						margin-right: 8px;
 						vertical-align: middle;
+						@media only screen and (max-width: 1380px) {
+							max-width: 14px;
+						}
 					}
 				}
 				&.top-level {
@@ -101,6 +108,8 @@ header {
 						z-index: 13; 
 						width: 100%;
 						display: block;
+						text-align: center;
+						font-size: 1rem;
 						span {
 							position: relative;
 							z-index: 13;
@@ -252,6 +261,12 @@ section.featured-products-menu {
 		text-transform: uppercase;
 		letter-spacing: 2px;
 	}
+	li:not(.menu-text) {
+		border-right: 1px solid $light-gray;
+	}
+	li:last-of-type {
+		border-right:0;
+	}
 }
 
 /**
@@ -273,6 +288,17 @@ section.featured-products-menu {
 }
 
 .hero-area {
+	a:not(.button) {
+		display: flex;
+		width: 100%;
+		height: 100%;
+		position: relative;
+		justify-content: center;
+		align-items: center;
+		.pad-full-small {
+
+		}
+	}
 	img {
 		padding: $global-padding * 3 0;
 	}
@@ -539,7 +565,6 @@ footer {
  			left: 0;
  		}
  		img {
- 			padding-bottom: 30px;
  			max-height: 260px;
  		}
  		p.price {
@@ -800,12 +825,12 @@ footer {
  	}
  	.slick-prev {
  		left: 0;
- 		background-image: url('../../images/icon-prev.svg');
+ 		background-image: url('../../images/icon-left.svg');
  		
  	}
  	.slick-next {
  		right: 0;
- 		background-image: url('../../images/icon-next.svg');
+ 		background-image: url('../../images/icon-right.svg');
  	}
  	.slick-dots {
  		display: flex;
@@ -870,12 +895,12 @@ footer {
  	}
  	.slick-prev {
  		left: 0;
- 		background-image: url('../../images/icon-prev.svg');
+ 		background-image: url('../../images/icon-left.svg');
  		
  	}
  	.slick-next {
  		right: 0;
- 		background-image: url('../../images/icon-next.svg');
+ 		background-image: url('../../images/icon-right.svg');
  	}
 }
 
@@ -1012,5 +1037,20 @@ footer {
  		padding: $global-padding * 0.5;
  		max-height: 100px;
  		overflow: hidden;
+ 	}
+ }
+
+ /**
+  * Comment Form
+  * 
+  */
+ 
+ form.comment-form {
+ 	.submit {
+ 		@include button-style($red, darken($red, 10%), $white);
+ 		display: block;
+ 		border: 0;
+ 		width: 100%;
+ 		padding: 5px 20px
  	}
  }

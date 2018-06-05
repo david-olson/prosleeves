@@ -82,8 +82,8 @@
 					array_push($taxes, $tax);
 					?>
 					<li class="mega-menu top-level">
-						<?php //var_dump($mm); ?>
-						<a href="#" data-toggle="<?php echo $tax->name; ?>"><span><img class="league-logo" src="<?php echo $mm['menu_logo']['sizes']['team_menu_icon']; ?>" alt=""> <?php echo $tax->label; ?></span></a>
+						<?php //var_dump($tax); ?>
+						<a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>" data-toggle="<?php echo $tax->name; ?>"><span><img class="league-logo" src="<?php echo $mm['menu_logo']['sizes']['team_menu_icon']; ?>" alt=""> <?php echo strtoupper($tax->rewrite['slug']); ?></span></a>
 						<div class="dropdown-pane bottom" id="<?php echo $tax->name; ?>" data-dropdown data-options="closeOnClick:true; hover: true; hoverPane: true;">
 							<div class="grid-x grid-padding-x">
 								<div class="large-8 cell">

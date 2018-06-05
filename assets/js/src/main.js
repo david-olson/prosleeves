@@ -46,9 +46,9 @@ $(document).ready(function() {
 	 * Add padding on products for buttons
 	 * 
 	 */
-	
+		
 	$('article.product').css({
-		paddingBottom: $(this).find('.button').first().outerHeight() + 'px'
+		paddingBottom: ($(this).find('.button').first().outerHeight() + $(this).find('p.price').outerHeight()) + 'px'
 	});
 
 	/**
