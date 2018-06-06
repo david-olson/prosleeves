@@ -34,13 +34,59 @@ global $wpdb, $post;
 			$product_url = $egg_data[0]['url']; 
 		endif;
 
+		if ($egg_data[0]['priceOld'] > $egg_data[0]['price']) :
+			$price_drop = true;
+		else :
+			$price_drop = false;
+		endif;
 
+		$product_attributes = array();
+
+		if ($egg_data[0]['merchant'] == 'Fanatics') :
+			if ($egg_data[0]['extra']['powerranktop100'] == 'Yes' ) :
+				$temp_array = array();
+				$temp_array['icon'] = 'fa-fire';
+				$temp_array['message'] = 'Hot Now!';
+				array_push($product_attributes, $temp_array);
+			endif;
+		elseif ($egg_data[0]['merchant'] == 'Amazon.com') :
+
+			if ($egg_data[0]['extra']['IsEligibleForSuperSaverShipping'] == 1) :
+				$temp_array = array();
+				$temp_array['icon'] = 'fa-truck';
+				$temp_array['message'] = 'Value Shipping';
+				array_push($product_attributes, $temp_array);
+			endif;
+
+		elseif ($egg_data[0]['domain'] == 'walmart.com') :
+			if ($egg_data[0]['extra']['standardShipRate'] < 4) :
+				$temp_array = array();
+				$temp_array['icon'] = 'fa-truck';
+				$temp_array['message'] = 'Value Shipping';
+				array_push($product_attributes, $temp_array);
+			endif;
+
+			if ($egg_data[0]['extra']['shipToStore'] == 1) :
+				$temp_array = array();
+				$temp_array['icon'] = 'fa-box';
+				$temp_array['message'] = 'Easy Store Pickup';
+				array_push($product_attributes, $temp_array);
+			endif;
+		endif;
+
+	else :
+		$price_drop = false;
 	endif;
 
 	?>
-	<div class="cell product margin-bottom-small">
+	<div class="cell product margin-bottom-small <?php if ($price_drop) : ?>price-drop<?php endif; ?>">
 		<?php $product = wc_get_product($post->ID); ?>
 		<article <?php post_class('match-height'); ?>>
+			<?php if ($price_drop) : ?>
+				<div class="price-drop-banner">
+					<h2>Price Drop</h2>
+				</div>
+			<?php endif; ?>
 			<div class="pad-full-small">
 				<h2 class="h6">
 					<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
@@ -72,7 +118,24 @@ global $wpdb, $post;
 						<?php endif; ?>
 					<?php endif; ?>
 				</div>
-				<p class="price">$<?php echo $product->get_regular_price(); ?></p>
+				<div class="grid-x grid-padding-x price-row align-middle">
+					<div class="medium-shrink cell">
+						<p class="price">$<?php echo $product->get_regular_price(); ?></p>
+					</div>
+					<div class="medium-auto cell">
+						<?php if (!empty($product_attributes)) : ?>
+							<ul class="menu horizontal product-benefits">
+								<?php foreach ($product_attributes as $pa) : ?>
+									<li class="menu-text">
+										<span class="has-tip" data-tooltip tabindex="1" title="<?php echo $pa['message']; ?>">
+											<i class="fa-sm fas <?php echo $pa['icon']; ?>"></i>
+										</span>
+									</li>
+								<?php endforeach; ?>
+							</ul>
+						<?php endif; ?>
+					</div>
+				</div>
 			</div>
 			<div class="grid-x button-row">
 				<div class="medium-6 cell">

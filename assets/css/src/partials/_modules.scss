@@ -551,9 +551,18 @@ footer {
  		background-color: $white;
  		// margin-bottom: $global-margin;
  		position: relative;
+ 		overflow: hidden;
  		h2 {
  			margin-bottom: $global-margin;
  			font-weight: bold;
+ 			&.price-drop-pad {
+ 				padding-right: 65px;
+ 			}
+ 		}
+ 		&.price-drop {
+ 			h2 {
+ 				padding-right: 65px;
+ 			}
  		}
  		a.button {
  			margin-bottom: 0;
@@ -567,14 +576,55 @@ footer {
  		img {
  			max-height: 260px;
  		}
- 		p.price {
+ 		.price-row {
  			position: absolute;
- 			width: 95%;
- 			left: $global-padding;
+ 			width: 90%;
+ 			left: 50%;
+ 			transform: translateX(-50%);
  			bottom: 40px;
  			font-weight: bold;
  			font-size: 1.25rem;
+ 			p {
+ 				margin-bottom: 0;
+ 			}
  		}
+ 		.price-drop-banner {
+ 			position: absolute;
+ 			top: 30px;
+ 			right: -35px;
+ 			background: $red;
+ 			padding: 3px 30px;
+ 			transform: rotate(45deg);
+ 			h2 {
+ 				font-size: 0.8rem;
+ 				color: $white;
+ 				padding: 0;
+ 				margin-bottom: 0;
+ 				font-weight: normal;
+ 				text-transform: uppercase;
+ 				letter-spacing: 3px;
+ 			}
+ 		}
+ 		ul.product-benefits {
+ 			padding: 10px 0;
+ 			li.menu-text {
+ 				background-color: darken($dark-gray, 20%);
+ 				color: $white;
+ 				border-radius: 40px;
+ 				max-width: 40px;
+ 				overflow: hidden;
+ 				text-align: center;
+ 				padding: $global-padding * 0.5;
+ 				margin-right: $global-padding;
+ 				font-size: 1rem;
+ 				position: relative;
+ 				svg {
+ 					display: block;
+ 					min-width: 14px;
+ 				}
+ 			}
+ 		}
+
  	}
  }
 
@@ -1052,5 +1102,53 @@ footer {
  		border: 0;
  		width: 100%;
  		padding: 5px 20px
+ 	}
+ }
+
+ /**
+  * Top Ten List
+  * 
+  */
+ 
+ .top-ten-list {
+ 	.date {
+ 		background-color: $red;
+ 		color: $white;
+ 		text-align: center;
+ 		width: 70px;
+ 		height: 70px;
+ 		position: relative;
+ 		border-radius: 50%;
+ 		span {
+ 			position: absolute;
+ 			&:first-of-type {
+				top: 10px;
+				left: 20px;
+ 			}
+ 			&:last-of-type {
+				bottom: 10px;
+				right: 20px;
+ 			}		
+ 		}
+ 		&:after {
+ 			content: '';
+ 			position: absolute;
+ 			width: 1px;
+ 			height: 70%;
+ 			top: 50%;
+			background-color: $white;
+			left: 50%;
+			transform: translate(-50%, -50%) rotate(45deg);
+ 		}
+ 	}
+ 	a.button {
+
+ 		background: rgba($dark-gray, 0);
+ 		border: 2px solid $dark-gray;
+ 		img {
+ 			min-width: 14px;
+ 			height: auto;
+ 			max-height: 20px;
+ 		}
  	}
  }

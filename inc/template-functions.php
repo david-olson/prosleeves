@@ -500,18 +500,19 @@ function the_top_ten_preview() {
     while ($query->have_posts()) : $query->the_post();
 
       ?>
-      <article class="white-bg margin-bottom-small pad-full-small">
+      <article class="white-bg margin-bottom-small pad-full-small top-ten-list">
         <div class="grid-x grid-padding-x align-middle">
           <div class="medium-3 cell">
             <div class="date">
-              <?php echo get_the_date(); ?>
+              <span><?php echo get_the_date('m'); ?></span>
+              <span><?php echo get_the_date('d'); ?></span>
             </div>
           </div>
           <div class="medium-6 cell">
             <h3 class="h5 no-mb"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
           </div>
           <div class="medium-3 cell text-right">
-            <a href="<?php the_permalink(); ?>" class="button no-mb">Read More</a>
+            <a href="<?php the_permalink(); ?>" class="button no-mb"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/icon-right.svg" alt=""></a>
           </div>
         </div>
       </article> 
@@ -972,3 +973,45 @@ function the_homepage_hero() {
   endif;
   echo $result;
 }
+
+/**
+ * Update the Content on save
+ * 
+ */
+
+
+
+function filter_post_data($data) {
+  global $wpdb;
+  $content_egg = $wpdb->get_results("SELECT * FROM {$wpdb->postmeta} WHERE post_id = $data and meta_key LIKE '_cegg%data%'");
+  if ( ! wp_is_post_revision( $post_id ) ){
+    remove_action('save_post', 'filter_post_data');
+    if (!empty($content_egg)) :
+      $egg_data = unserialize( $content_egg[0]->meta_value );
+      $egg_data = array_values($egg_data);
+      if ('' !== get_post($data)->post_content) :
+        $post = array();
+        $post['ID'] = $data;
+        $description = $egg_data[0]['description'];
+        $post['post_content'] = $description;
+        if ($egg_data[0]['merchant'] == 'Amazon.com') :
+          $list = '<ul>';
+          foreach ($egg_data[0]['extra']['itemAttributes']['Feature'] as $feature) :
+            $list .= "<li>$feature</li>\n"; 
+          endforeach;
+          $list .= "</ul>\n";
+          $post['post_content'] .= "\n$list";
+        endif;
+        
+        wp_update_post($post);
+        
+      endif;
+    endif;
+    add_action('save_post', 'filter_post_data');
+  }
+
+  return $data;
+  
+}
+
+add_action('save_post', 'filter_post_data');
