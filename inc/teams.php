@@ -120,7 +120,7 @@ function get_first_product_image($product_cat_slug, $team) {
 	endif;
 }
 
-function team_category_products($team, $product_cat_slug = array(), $additional_query_vars = array()) {
+function team_category_products($team, $product_cat_slug = array(), $additional_query_vars = array(),  $meta_queries = array()) {
 
 	$paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
 
@@ -156,12 +156,17 @@ function team_category_products($team, $product_cat_slug = array(), $additional_
 		endforeach;
 	endif;
 
+	if (!empty($meta_queries)) :
+		$args['meta_query'] = $meta_queries;
+	endif;
+
+	
 
 	$products_query = new WP_Query($args);
 
 	if ($products_query->have_posts()) : ?>
 
-		<div class="grid-x grid-margin-x large-up-3">
+		<div class="grid-x grid-margin-x large-up-3 medium-up-3">
 			<?php
 			while ($products_query->have_posts()) : $products_query->the_post();
 				get_template_part( 'template-parts/products/home-loop' );
@@ -207,12 +212,17 @@ function team_category_pagination() {
 }
 
 function team_topbar($term) {
+	global $post;
+	$league = get_taxonomy( $term->taxonomy );
 	?>
 		<section class="intro team-color-intro <?php check_background_color(get_field('team_primary_color', $term)); ?>" style="background-color: <?php the_field('team_primary_color', $term); ?>">
 			<div class="grid-container">
 				<div class="grid-x grid-padding-x">
 					<div class="large-12 cell">
 						<h1><?php echo $term->name; ?></h1>
+						<?php if (is_single()) : ?>
+							<p class="product-breadcrumbs"><a href="<?php echo get_home_url(); ?>/<?php echo $league->rewrite['slug']; ?>"><?php echo strtoupper($league->rewrite['slug']); ?></a> / <a href="<?php echo get_home_url(); ?>/<?php echo $league->rewrite['slug']; ?>/<?php echo $term->slug; ?>"><?php echo $term->name; ?></a> / <?php echo $post->post_title; ?></p>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>

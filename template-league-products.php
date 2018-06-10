@@ -8,6 +8,30 @@
 
 	$additional_queries = array();
 
+	$meta_queries = array(
+		'relation' => 'AND'
+	);
+
+	if (isset($_GET['price_min']) && !empty($_GET['price_min'])) :
+		$min_price_query = array(
+			'key' => '_price',
+			'value' => $_GET['price_min'],
+			'compare' => '>=',
+			'type' => 'NUMERIC'
+		);
+		array_push($meta_queries, $min_price_query);
+	endif;
+
+	if (isset($_GET['price_max']) && !empty($_GET['price_max'])) :
+		$max_price_query = array(
+			'key' => '_price',
+			'value' => $_GET['price_max'],
+			'compare' => '<=',
+			'type' => 'NUMERIC'
+		);
+		array_push($meta_queries, $max_price_query);
+	endif;
+
 	if (isset($_GET['taxonomy_product_cat']) && !empty($_GET['taxonomy_product_cat'])) :
 		$pc_terms = array();
 		foreach ($_GET['taxonomy_product_cat'] as $tax_pc) :
@@ -69,7 +93,7 @@
 			</div>
 			<div class="large-9 cell">
 				<main>
-					<?php team_category_products($team_object, $product_cat, $additional_queries); ?>		
+					<?php team_category_products($team_object, $product_cat, $additional_queries, $meta_queries); ?>		
 				</main>
 			</div>
 		</div>

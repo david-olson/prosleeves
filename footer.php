@@ -43,13 +43,13 @@
 	<footer id="colophon" class="site-footer">
 		<section class="categories">
 			<div class="grid-container">
-				<div class="grid-x grid-margin-x medium-up-5">
+				<div class="grid-x grid-margin-x large-up-5 medium-up-3 align-center">
 				<?php $mega_menu = get_field('menu_items', 'options'); ?>
 				<?php foreach ($mega_menu as $menu_item) :
 					$tax = get_taxonomy($menu_item['item']);
 					$slug = explode('_', $tax->name);
 					?>
-					<div class="cell hover-up">
+					<div class="cell hover-up margin-bottom-small">
 						<?php //var_dump($tax); ?>
 						<a href="<?php echo get_home_url(); ?>/<?php echo $slug[0]; ?>">	
 							<img src="<?php echo $menu_item['menu_logo']['sizes']['team_topbar_icon']; ?>" alt="">
@@ -63,7 +63,7 @@
 		<section class="company-info">
 			<div class="grid-container">
 				<div class="grid-x grid-padding-x">
-					<div class="large-2 cell">
+					<div class="large-2 medium-2 cell">
 						<h4>ProSleeves LLC</h4>
 						<ul class="menu vertical">
 							<li><a href="<?php echo get_home_url(); ?>/about">About Us</a></li>
@@ -73,11 +73,11 @@
 							<li><a href="<?php echo get_home_url(); ?>/blog">Blog</a></li>
 						</ul>
 					</div>
-					<div class="large-3 cell">
+					<div class="medium-3 cell">
 						<h4>From Our Blog</h4>
 						<?php //from our blog ?>
 					</div>
-					<div class="large-3 cell">
+					<div class="medium-3 cell">
 						<h4>On Social</h4>
 						<ul class="menu social">
 							<li><a href="/facebook"><i class="fab fa-facebook-f"></i></a></li>

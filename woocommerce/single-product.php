@@ -96,6 +96,40 @@ get_header(); ?>
 			$product_description = get_the_excerpt();
 		endif;
 
+		$product_attributes = array();
+
+		if ($egg_data[0]['merchant'] == 'Fanatics') :
+			if ($egg_data[0]['extra']['powerranktop100'] == 'Yes' ) :
+				$temp_array = array();
+				$temp_array['icon'] = 'fa-fire';
+				$temp_array['message'] = 'Hot Now!';
+				array_push($product_attributes, $temp_array);
+			endif;
+		elseif ($egg_data[0]['merchant'] == 'Amazon.com') :
+
+			if ($egg_data[0]['extra']['IsEligibleForSuperSaverShipping'] == 1) :
+				$temp_array = array();
+				$temp_array['icon'] = 'fa-truck';
+				$temp_array['message'] = 'Value Shipping';
+				array_push($product_attributes, $temp_array);
+			endif;
+
+		elseif ($egg_data[0]['domain'] == 'walmart.com') :
+			if ($egg_data[0]['extra']['standardShipRate'] < 4) :
+				$temp_array = array();
+				$temp_array['icon'] = 'fa-truck';
+				$temp_array['message'] = 'Value Shipping';
+				array_push($product_attributes, $temp_array);
+			endif;
+
+			if ($egg_data[0]['extra']['shipToStore'] == 1) :
+				$temp_array = array();
+				$temp_array['icon'] = 'fa-box';
+				$temp_array['message'] = 'Easy Store Pickup';
+				array_push($product_attributes, $temp_array);
+			endif;
+		endif;
+
 	endif;
 	?>
 	<?php team_topbar($team[0]); ?>
@@ -105,12 +139,12 @@ get_header(); ?>
 				<div class="large-12 cell white-bg">
 					<div class="pad-full-small">
 						<div class="grid-x grid-padding-x align-middle">
-							<div class="medium-auto cell large-order-1 medium-order-1 small-order-2">
+							<div class="large-auto cell large-order-1 medium-order-2 small-order-2">
 								<h1 class="h4">
 									<?php the_title(); ?>
 								</h1>
 							</div>
-							<div class="medium-shrink cell text-right large-order-2 medium-order-2 small-order-1">
+							<div class="large-shrink cell text-right-large large-order-2 medium-order-1 small-order-1">
 								<?php if ($average = $product->get_average_rating()) : ?>
 									<div class="grid-x grid-padding-x">
 										<div class="large-shrink cell">
@@ -133,14 +167,14 @@ get_header(); ?>
 				</div>
 			</div>
 			<div class="grid-x grid-margin-x margin-bottom-medium">
-				<div class="medium-6 cell " id="main_content">
+				<div class="medium-6 cell large-order-1 medium-order-1 small-order-2 margin-bottom-small" id="main_content">
 					<div class="pad-full-small white-bg margin-bottom-small">
 						<?php wc_get_template_part('woocommerce/single-product/product-image'); ?>
 					</div>
 					<div class="pad-full-small white-bg margin-bottom-small">
 						<ul class="menu">
 							<li><a href="#description">Description</a></li>
-							<li><a href="#coupons">Coupons</a></li>
+							<!-- <li><a href="#coupons">Coupons</a></li> -->
 							<li><a href="#price-alerts">Price Alerts</a></li>
 							<li><a href="#price-history">Price History</a></li>
 							<li><a href="#reviews">Reviews/Comments</a></li>
@@ -154,14 +188,10 @@ get_header(); ?>
 						$category = get_the_terms($post, 'product_cat');
 						?>
 						<p class="taxonomies"><?php if (count($content_egg) > 0) : ?>Brand: <?php echo $egg_data[0]['extra']['itemAttributes']['Brand']; ?><?php else : ?><?php if ($brands) : ?><span class="brands">Brand: <?php foreach ($brands as $brand) : echo $brand->name; endforeach; ?></span><?php endif; ?><?php endif; ?><?php if ($category) : ?> | Category: <span class="categories"><?php foreach ($category as $cat) : echo $cat->name; endforeach; ?></span><?php endif; ?></p>
-						<?php echo $product_description; ?>
+						<?php //echo $product_description; ?>
+						<?php the_content(); ?>
 						<hr>
-						<ul class="menu horizontal">
-							<li class="menu-text">Share this on Social:</li>
-							<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-							<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-							<li><a href="#"><i class="fab fa-pinterest"></i></a></li>
-						</ul>
+						<?php echo do_shortcode( '[ess_post]' ); ?>
 					</div>
 					<div class="pad-full-small white-bg margin-bottom-small" id="price-alerts">
 						<h3 class="h5">Price Alerts</h3>
@@ -175,7 +205,7 @@ get_header(); ?>
 						<?php comments_template(); ?>
 					</div>
 				</div>
-				<div class="medium-6 cell " data-sticky-container>
+				<div class="medium-6 cell large-order-2 medium-order-2 small-order-1 margin-bottom-small" data-sticky-container>
 					<div class="sticky" data-sticky data-margin-top="1" data-anchor="main_content">
 						<div class="pad-full-small white-bg " >
 							<?php wc_get_template_part('woocommerce/single-product/rating'); ?>
@@ -183,10 +213,27 @@ get_header(); ?>
 								<h1 class="h4">
 									<?php the_title(); ?>											
 								</h1>
-								<p><small>Sold by <?php echo $egg_data[0]['merchant']; ?></small></p>
+								<p><small>Sold by <?php echo $egg_data[0]['domain']; ?></small></p>
 							<?php else : ?>
 								<h1 class="h4"><?php the_title(); ?></h1>
 							<?php endif; ?>
+
+							<div class="grid-x grid-padding-x">
+								<div class="large-12 cell">
+									<?php if (!empty($product_attributes)) : ?>
+										<ul class="menu horizontal product-benefits">
+											<?php foreach ($product_attributes as $pa) : ?>
+												<li class="menu-text">
+													<span class="has-tip" data-tooltip tabindex="1" title="<?php echo $pa['message']; ?>">
+														<i class="fa-sm fas <?php echo $pa['icon']; ?>"></i>
+													</span>
+												</li>
+											<?php endforeach; ?>
+										</ul>
+									<?php endif; ?>
+								</div>
+							</div>
+
 							<?php
 							//<div class="grid-x grid-padding-x">	 
 								//<div class="medium-4 cell">

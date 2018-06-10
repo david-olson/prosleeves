@@ -189,6 +189,9 @@ header {
 		width: 100%;
 		max-height: 270px;
 		padding-top: 25px;
+		&.ncaa {
+			max-height: 570px;
+		}
 		li {
 			display: block !important;
 			a {
@@ -199,6 +202,59 @@ header {
 				backface-visibility: hidden;
 				&:hover {
 					transform: translateX(10px);
+				}
+			}
+		}
+	}
+}
+
+div.mobile-menu {
+	background-color: $white;
+	box-shadow: 0 0 0 !important;
+	ul.menu {
+		li {
+			a {
+				color: $black;
+				font-weight: bold;	
+				font-style: italic;	
+				.league-logo, .team-logo {
+					display: inline-block;	
+					max-width: 20px;
+					margin-right: 5px;	
+				}
+				&:after {
+					border-color: transparent transparent transparent $red;
+				}
+			}
+			&.our-products {
+				a {
+					background: $red;
+					color: $white;
+				}
+			}
+			&.js-drilldown-back {
+				a {
+					color: $red;
+					font-size: 1.25rem;
+					&:before {
+						border-right-color: $red;
+					}	
+				}
+			}
+			&.league {
+				& > a {		
+				font-weight: bold;
+				font-style: italic;	
+				text-transform: uppercase;	
+				color: $red;	
+				}
+				.team {
+					a {
+						text-transform: uppercase;
+						font-weight: bold;	
+						font-style: italic;	
+						color: $black;
+					}
 				}
 			}
 		}
@@ -539,6 +595,44 @@ footer {
  	}
  }
 
+  	/**
+  * Breadcrumbs
+  * 
+  */
+
+ p.breadcrumbs {
+ 	font-size: 1.25rem;
+ 	letter-spacing: 1px;
+ 	a {
+ 		color: $red;
+ 	}
+ }
+
+ /**
+  * Easy Social Share Buttons
+  * 
+  */
+ 
+ ul.ess-buttons {
+ 	display: flex;
+ 	list-style: none;	
+ 	width: 100%;
+ 	li {
+ 		display: block;	
+ 		margin-right: 30px;	
+ 		svg {
+ 				max-width: 20px;
+ 		height: auto;
+ 		max-height: 20px;
+ 		min-width: 20px;	
+ 		}
+ 		
+ 		span.ess-share-text {
+ 			display: none;	
+ 		}
+ 	}
+ }
+
  /**
   * Product Background
   */
@@ -633,6 +727,26 @@ footer {
   */
 
  aside.team.sidebar {
+ 	div.slider {
+ 	 		display: block;	
+ 	 		margin: 10px 0 5px 0;
+ 	 		max-width: 90%;
+ 	 		span.slider-handle {
+ 	 			background: $red;
+ 	 		}
+ 	 	}
+ 	 	.price-input {
+ 	 		background: transparent;
+ 	 		border: 0;
+ 	 		box-shadow: 0 0 0;
+ 	 		padding: 0;
+ 	 		color: $white;
+ 	 		display: inline-block;
+ 	 		width: auto;
+ 	 	}
+ 	 	span.currency {
+ 	 		color: $white;
+ 	 	}
  	p {
  		color: $white;
  		margin-bottom: 0;
@@ -722,6 +836,7 @@ footer {
  	position: relative;
  	padding: $global-padding * 2 0;
  	background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='rgba(0,0,0,0.25)' fill-opacity='0.4' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+				
  	h1 {
  		text-transform: uppercase;
  		letter-spacing: 5px;
@@ -729,10 +844,38 @@ footer {
  		margin-bottom: 0;
  		font-size: 2.5rem;
  		margin-left: 150px;
+ 		@media only screen and (max-width: 800px) {
+ 			font-size: 1.75rem;	
+ 			letter-spacing: 3px;	
+ 		}
+ 		@media only screen and (max-width: 1400px) {
+ 			margin-left: 250px;
+ 		}
+ 		@media only screen and (max-width: 600px) {
+ 			margin-left: 150px;	
+ 			font-size: 1.25rem;	
+ 			letter-spacing: 2px;	
+ 		}
 
+ 	}
+ 	p.product-breadcrumbs {
+		font-size: 1.15rem;	
+		margin-left: 150px;
+		letter-spacing: 1px;
+		@media only screen and (max-width: 1400px) {
+			margin-left: 250px;	
+			font-size: 0.75rem;
+			letter-spacing: 0;	
+		}		
+		@media only screen and (max-width: 600px) {
+			margin-left: 150px;	
+		}
  	}
  	&.dark {
  		h1 {
+ 			color: $white;
+ 		}
+ 		p.product-breadcrumbs a, p.product-breadcrumbs {
  			color: $white;
  		}
  	}
@@ -740,17 +883,26 @@ footer {
  		h1 {
  			color: $black;
  		}
+ 		p.product-breadcrumbs a, p.product-breadcrumbs {
+ 			color: $black;
+ 		}
  	}
  	.team-logo {
 		position: absolute;
-		bottom: 0;
-		left: -90px;
+		bottom: 50%;
+		left: -50px;
 		// width: 400px;
 		// height: auto;
-		height: 320%;
+		height: 180%;
 		width: auto;
-		bottom: 20px;
+		bottom: 50%;
 		transform: translateY(54%);
+		@media only screen and (max-width: 600px) {
+			height: 140%;
+			left: -80px;
+			bottom: initial;
+			bottom: 50%;
+		}
  	}
  }
 

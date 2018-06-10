@@ -48,7 +48,7 @@ get_header();
 				); ?>
 				<?php $product_loop = new WP_Query($args); ?>
 				<?php if ($product_loop->have_posts()) : ?>
-					<div class="grid-x grid-padding-x medium-up-4 large-up-4 align-stretch">
+					<div class="grid-x grid-padding-x medium-up-3 large-up-4 align-stretch">
 					<?php $n = 0; ?>
 					<?php while ($product_loop->have_posts()) : $product_loop->the_post(); ?>
 						<?php get_template_part('template-parts/products/home-loop'); ?>

@@ -23,9 +23,9 @@
 	endif;
 
 ?>
-<aside class="sidebar team">
-	<h3>More Filters</h3>
-	<form action="<?php echo home_url($wp->request); ?>" method="GET">
+<aside class="sidebar team margin-bottom-small">
+	<h3><span class="hide-for-large show-for-small show-for-medium">View </span>More Filters</h3>
+	<form action="<?php echo home_url($wp->request); ?>" method="GET" class="show-for-large">
 		<div class="pad-full-small">
 			<?php if (isset($team_object)) : ?>		
 				<p>Viewing:</p> 

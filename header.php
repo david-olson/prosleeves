@@ -35,15 +35,57 @@
 		<?php //endif; ?>
 	</ul>
 </div>
+<div class="off-canvas position-right mobile-menu" id="mobile_menu" data-off-canvas data-content-scroll="false">
+	<ul class="menu vertical drilldown" data-drilldown data-auto-height="true" data-animate-height="true">
+		<?php
+		$taxes = array();
+		$mega_menu = get_field('menu_items', 'options');
+		foreach ($mega_menu as $mm) : 
+			$tax = get_taxonomy($mm['item']);
+			array_push($taxes, $tax);
+			?>
+			<li class="league">
+				<a href="#"><img class="league-logo" src="<?php echo $mm['menu_logo']['sizes']['team_menu_icon']; ?>" alt=""> <?php echo strtoupper($tax->rewrite['slug']); ?></a>
+				<ul class="menu vertical nested">
+					<?php $tax_terms = get_terms(array(
+						'taxonomy' => $tax->name,
+						'hide_empty' => false
+						)); ?>
+						<?php foreach ($tax_terms as $tt) : ?>
+							<?php //var_dump($tt); ?>
+							<?php $team_logo = get_field('team_logo', 'category_'.$tt->term_id); ?>
+							<li class="team"><a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>/<?php echo $tt->slug; ?>"><img class="team-logo" src="<?php echo $team_logo['sizes']['team_menu_icon']; ?>" alt=""><?php echo $tt->name; ?></a></li>
+						<?php endforeach; ?>
+				</ul>
+			</li>
+		<?php endforeach;
+		 ?>
+		 <li class="our-products"><a href="<?php echo get_home_url(); ?>/product-category/prosleeves"><img class="league-logo" src="<?php echo get_template_directory_uri(); ?>/assets/images/prosleeves-icon.svg" > Our Products</a></a></li>
+		 <?php if (is_user_logged_in()) : ?>
+		 	<?php $user = wp_get_current_user(); ?>
+		 	<li class="non-league"><a href="<?php echo get_home_url(); ?>/my-account"><i class="fas fa-user fa-sm"></i>&nbsp; &nbsp;<?php echo $user->user_email; ?></a></li>
+		 <?php else : ?>
+		 	<li class="non-league"><a href="<?php echo get_home_url(); ?>/my-account">Log In / Sign Up</a></li>
+		 <?php endif; ?>
+		 <?php $count = WC()->cart->cart_contents_count; ?>
+		 <li class="cart-holder non-league"><a href="<?php echo get_home_url(); ?>/cart" class="cart"><i class="fas fa-shopping-cart fa-lg"></i>&nbsp; &nbsp;Cart <?php if ($count > 0) : echo '('.$count.')'; endif; ?></a></li>
+		 <li class="non-league"><a href="<?php echo get_home_url(); ?>/about">About Us</a></li>
+		 <li class="non-league"><a href="<?php echo get_home_url(); ?>/legal">Legal</a></li>
+		 <li class="non-league"><a href="<?php echo get_home_url(); ?>/privacy-policy">Privacy Policy</a></li>
+		 <li class="non-league"><a href="<?php echo get_home_url(); ?>/site-map">Site Map</a></li>
+		 <li class="non-league"><a href="<?php echo get_home_url(); ?>/blog">Blog</a></li>
+		 <li class="non-league"><?php echo do_shortcode('[ti_wishlist_products_counter]'); ?></li>
+	</ul>
+</div>
 <div class="off-canvas-content" data-off-canvas-content>
 <header class="site-header" id="header">
-	<div class="header-top">
+	<div class="header-top show-for-medium">
 		<div class="grid-container">
 			<div class="grid-x grid-padding-x">
-				<div class="large-4 cell">
+				<div class="large-4 medium-4 cell">
 					<?php echo do_shortcode('[wcas-search-form]'); ?>		
 				</div>
-				<div class="large-8 cell text-right">
+				<div class="large-8 medium-8 cell text-right">
 					<ul class="menu horizontal align-right">
 						<?php if (is_user_logged_in()) : ?>
 							<?php $user = wp_get_current_user(); ?>
@@ -62,16 +104,19 @@
 	<div class="header-logo-tagline">
 		<div class="grid-container">
 			<div class="grid-x grid-padding-x align-middle">
-				<div class="large-3 cell">
+				<div class="large-3 medium-4 small-8 cell">
 					<a href="<?php echo get_home_url(); ?>/"><img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt="Prosleeves - We've got you covered"></a>
 				</div>
-				<div class="large-9 cell">
+				<div class="large-9 medium-8 cell show-for-medium">
 					<h2 class="tagline">Price History, Price Alerts and Coupons for All Your Favorite Licensed Gear</h2>
+				</div>
+				<div class="small-4 cell show-for-small hide-for-medium text-right" ">
+					<button id="mobile_menu_toggle" class="hamburger hamburger--collapse" data-toggle="mobile_menu_toggle mobile_menu" data-toggler=".is-active" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<nav>
+	<nav class="show-for-medium">
 			<ul class="menu leagues-menu horizontal expanded dropdown" data-dropdown-menu>
 				<?php 
 				// Foundation menu here 
@@ -91,7 +136,7 @@
 										'taxonomy' => $tax->name,
 										'hide_empty' => false
 										)); ?>
-									<ul class="menu vertical align-left col-4 teams-menu">
+									<ul class="menu vertical align-left col-4 teams-menu <?php echo $tax->rewrite['slug']; ?>">
 										<?php foreach ($tax_terms as $tt) : ?>
 											<?php //var_dump($tt); ?>
 											<?php $team_logo = get_field('team_logo', 'category_'.$tt->term_id); ?>

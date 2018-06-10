@@ -88,7 +88,7 @@ global $wpdb, $post;
 				</div>
 			<?php endif; ?>
 			<div class="pad-full-small">
-				<h2 class="h6">
+				<h2 class="h6<?php if ($price_drop) : ?> price-drop-pad<?php endif; ?>">
 					<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 				</h2>
 				<div class="text-center">
@@ -138,10 +138,10 @@ global $wpdb, $post;
 				</div>
 			</div>
 			<div class="grid-x button-row">
-				<div class="medium-6 cell">
+				<div class="large-6 cell">
 					<a href="<?php the_permalink(); ?>" class="button expanded no-mb">More Details</a>
 				</div>
-				<div class="medium-6 cell relative">
+				<div class="large-6 cell relative">
 					<?php if (has_term('prosleeves', 'product_cat')) : ?>
 						<a href="/?add-to-cart=<?php the_ID(); ?>" data-quantity="1" data-product_id="<?php the_ID(); ?>" class="button secondary alternate ajax_add_to_cart add_to_cart_button no-mb expanded">Add to Cart</a>
 					<?php else : ?>

@@ -8,7 +8,11 @@ $(document).ready(function() {
 
 	$('.dropdown-pane').on('hide.zf.dropdown', function() {
 		$(this).removeClass('slide-in');
-	})
+	});
+
+	$('#mobile_menu').on('closed.zf.offcanvas', function() {
+		$('#mobile_menu_toggle').removeClass('is-active');
+	});
 
 	/**
 	 * Mega Nav Sliders
