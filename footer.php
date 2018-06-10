@@ -63,7 +63,7 @@
 		<section class="company-info">
 			<div class="grid-container">
 				<div class="grid-x grid-padding-x">
-					<div class="large-2 medium-2 cell">
+					<div class="large-2 medium-6 cell">
 						<h4>ProSleeves LLC</h4>
 						<ul class="menu vertical">
 							<li><a href="<?php echo get_home_url(); ?>/about">About Us</a></li>
@@ -73,11 +73,13 @@
 							<li><a href="<?php echo get_home_url(); ?>/blog">Blog</a></li>
 						</ul>
 					</div>
-					<div class="medium-3 cell">
+					<div class="large-3 medium-6 cell">
 						<h4>From Our Blog</h4>
-						<?php //from our blog ?>
+						<hr class="hide-for-large">
+						<?php from_our_blog(); ?>
+						<hr class="hide-for-large">
 					</div>
-					<div class="medium-3 cell">
+					<div class="large-3 medium-6 cell">
 						<h4>On Social</h4>
 						<ul class="menu social">
 							<li><a href="/facebook"><i class="fab fa-facebook-f"></i></a></li>
@@ -85,7 +87,7 @@
 							<li><a href="/twitter"><i class="fab fa-twitter"></i></a></li>
 						</ul>
 					</div>
-					<div class="large-4 cell">
+					<div class="large-4 medium-6 cell">
 						<h4>Mission Statement</h4>
 						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aut temporibus facilis molestias harum placeat odit soluta maiores officia praesentium? Provident asperiores quas quisquam quibusdam nisi quos, repellat obcaecati, perferendis amet! Temporibus ratione libero praesentium repudiandae illum consequatur. Ipsum, possimus.</p>
 					</div>

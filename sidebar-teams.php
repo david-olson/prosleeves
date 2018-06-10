@@ -24,8 +24,8 @@
 
 ?>
 <aside class="sidebar team margin-bottom-small">
-	<h3><span class="hide-for-large show-for-small show-for-medium">View </span>More Filters</h3>
-	<form action="<?php echo home_url($wp->request); ?>" method="GET" class="show-for-large">
+	<h3 class="filter-toggle"><span class="hide-for-large"><div class="hamburger hamburger--collapse"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div> View </span>More Filters</h3>
+	<form action="<?php echo home_url($wp->request); ?>" method="GET" class="filter-form">
 		<div class="pad-full-small">
 			<?php if (isset($team_object)) : ?>		
 				<p>Viewing:</p> 

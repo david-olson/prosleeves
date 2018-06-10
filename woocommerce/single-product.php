@@ -213,26 +213,30 @@ get_header(); ?>
 								<h1 class="h4">
 									<?php the_title(); ?>											
 								</h1>
-								<p><small>Sold by <?php echo $egg_data[0]['domain']; ?></small></p>
+								<div class="grid-x grid-padding-x">
+									<div class="medium-shrink cell">
+										<p><small>Sold by <?php echo $egg_data[0]['domain']; ?></small></p>
+									</div>
+									<div class="medium-auto cell">
+										<?php if (!empty($product_attributes)) : ?>
+											<ul class="menu horizontal product-benefits">
+												<?php foreach ($product_attributes as $pa) : ?>
+													<li class="menu-text">
+														<span class="has-tip" data-tooltip tabindex="1" title="<?php echo $pa['message']; ?>">
+															<i class="fa-sm fas <?php echo $pa['icon']; ?>"></i>
+														</span>
+													</li>
+												<?php endforeach; ?>
+											</ul>
+										<?php endif; ?>
+									</div>
+								</div>
+								
 							<?php else : ?>
 								<h1 class="h4"><?php the_title(); ?></h1>
 							<?php endif; ?>
 
-							<div class="grid-x grid-padding-x">
-								<div class="large-12 cell">
-									<?php if (!empty($product_attributes)) : ?>
-										<ul class="menu horizontal product-benefits">
-											<?php foreach ($product_attributes as $pa) : ?>
-												<li class="menu-text">
-													<span class="has-tip" data-tooltip tabindex="1" title="<?php echo $pa['message']; ?>">
-														<i class="fa-sm fas <?php echo $pa['icon']; ?>"></i>
-													</span>
-												</li>
-											<?php endforeach; ?>
-										</ul>
-									<?php endif; ?>
-								</div>
-							</div>
+							
 
 							<?php
 							//<div class="grid-x grid-padding-x">	 
@@ -322,7 +326,6 @@ get_header(); ?>
 		?>
 			
 	</div>
-	<?php var_dump($egg_data); ?>
 	</section>
 	<?php endwhile; // end of the loop. ?>
 <?php get_footer();

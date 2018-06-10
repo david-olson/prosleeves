@@ -35,6 +35,7 @@ $(document).ready(function() {
 		infinite: true,
 		arrows: true,
 		dots: false,
+		lazyLoad: 'progressive',
 	});
 
 	/**
@@ -47,12 +48,35 @@ $(document).ready(function() {
 	});
 
 	/**
+	 * Filter Toggle
+	 * 
+	 */
+	
+	if ($(window).outerWidth() < 1024) {
+		$('.filter-toggle').click(function() {
+			$(this).find('.hamburger').toggleClass('is-active');
+			$('.filter-form').slideToggle(300)
+		});
+	}
+
+	/**
 	 * Add padding on products for buttons
 	 * 
 	 */
-		
+	
+	if ($(window).outerWidth() < 640) {
+		var multiplier = 2;
+		console.log(multiplier);
+		$('article.product .price-row').css({
+			bottom: ($('article.product').find('a.button').outerHeight() * 2) + 10 + 'px'
+		});
+	} else {
+		var multiplier = 1;
+		console.log(multiplier);
+	}
+
 	$('article.product').css({
-		paddingBottom: ($(this).find('.button').first().outerHeight() + $(this).find('p.price').outerHeight()) + 'px'
+		paddingBottom: ($(this).find('a.button').outerHeight() + $(this).find('p.price').outerHeight()) + 'px'
 	});
 
 	/**
@@ -62,10 +86,22 @@ $(document).ready(function() {
 	var shopForHeight = $('ul.menu.shop-for').children('li').first().outerHeight();
 	var totalShopForHeight = $('ul.menu.shop-for').children('li').length * shopForHeight;
 	
-	$('ul.menu.shop-for').css({
-		maxHeight: (shopForHeight * 5) + 'px',
-		overflow: 'hidden'
-	});
+	if ($(window).outerWidth() > 1024) {
+		$('ul.menu.shop-for').css({
+			maxHeight: (shopForHeight * 5) + 'px',
+			overflow: 'hidden'
+		});
+		
+		$('ul.menu.departments').css({
+			maxHeight: (departmentsHeight * 5) + 'px',
+			overflow: 'hidden'
+		});
+		
+		$('ul.menu.brands').css({
+			maxHeight: (brandsHeight * 5) + 'px',
+			overflow: 'hidden'
+		});	
+	}
 
 
 	$('.shop-for-view-more').click(function(e) {
@@ -89,10 +125,7 @@ $(document).ready(function() {
 	var departmentsHeight = $('ul.menu.departments').children('li').first().outerHeight();
 	var totalDepartmentsHeight = $('ul.menu.departments').children('li').length * departmentsHeight;
 
-	$('ul.menu.departments').css({
-		maxHeight: (departmentsHeight * 5) + 'px',
-		overflow: 'hidden'
-	});
+	
 
 	$('.departments-view-more').click(function(e) {
 		e.preventDefault();
@@ -114,11 +147,7 @@ $(document).ready(function() {
 
 	var brandsHeight = $('ul.menu.brands').children('li').first().outerHeight();
 	var totalBrandsHeight = $('ul.menu.brands').children('li').length * brandsHeight;
-
-	$('ul.menu.brands').css({
-		maxHeight: (brandsHeight * 5) + 'px',
-		overflow: 'hidden'
-	});
+	
 
 	$('.brands-view-more').click(function(e) {
 		e.preventDefault();

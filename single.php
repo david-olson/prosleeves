@@ -17,7 +17,7 @@ while ( have_posts() ) : the_post();
 
 	?>
 
-	<section class="intro" style="background-image: url('<?php the_post_thumbnail_url( 'hero' ); ?>');">
+	<section class="intro blog-intro" style="background-image: url('<?php the_post_thumbnail_url( 'hero' ); ?>');">
 		<div class="grid-container">
 			<div class="grid-x grid-padding-x">
 				<div class="large-12 cell">
@@ -47,10 +47,11 @@ while ( have_posts() ) : the_post();
 									<?php while (have_rows('top_ten')) : the_row(); ?>
 										<li>
 											<?php $product = get_sub_field('product'); ?>
-											<img src="<?php echo get_the_post_thumbnail_url( $product->ID, 'large'); ?>" alt="Photo of <?php echo $product->post_title; ?>">
+											<a href="<?php echo get_the_permalink( $product->ID ); ?>"><img src="<?php echo get_the_post_thumbnail_url( $product->ID, 'large'); ?>" alt="Photo of <?php echo $product->post_title; ?>"></a>
 											<p><small><?php echo $product->post_title; ?></small></p>
-											<h3><?php the_sub_field('headline'); ?></h3>
+											<h3><a href="<?php echo get_the_permalink( $product->ID ); ?>"><?php the_sub_field('headline'); ?></a></h3>
 											<p><?php the_sub_field('description'); ?></p>
+											<a href="<?php echo get_the_permalink( $product->ID ); ?>" class="button">View the Product</a>
 										</li>
 									<?php endwhile; ?>
 								<?php endif; ?>

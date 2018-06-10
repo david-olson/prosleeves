@@ -279,7 +279,9 @@ function price_range_slider() {
  */
 
 function prosleeves_account_menu_items($items) {
-  $items['price-alerts'] = __('Price Alerts', 'price-alerts');
+  $new = array('price-alerts' => __('Price Alerts', 'price-alerts'));
+  $items = array_slice($items, 0, 3, true) + $new + array_slice($items, 3, count($items), true);
+  // $items['price-alerts'] = __('Price Alerts', 'price-alerts');
 
   return $items;
 }
@@ -327,7 +329,7 @@ function prosleeves_price_alert_content() {
           <?php $product = $_pf->get_product($alert->post_id); ?>
           <tr>
             <td><a href="<?php echo get_home_url(); ?>/products/<?php echo $product->get_slug(); ?>"><?php echo $product->get_name(); ?></a></td>
-            <td class="text-right"><?php echo $alert->price; ?></td>
+            <td class="text-right">$<?php echo $alert->price; ?></td>
             <td class="text-right"><?php echo $alert->create_date; ?></td>
             <td class="text-right"><?php echo $alert->complet_date; ?></td>
           </tr>
@@ -428,7 +430,7 @@ function add_favorite_teams_to_form() {
           <label for="fav_mlb">Favorite MLB Team
             <select name="fav_mlb" id="fav_mlb">
               <option value="0">Select a Team</option>
-              <?php foreach ($all_nfl as $team) : ?>
+              <?php foreach ($all_mlb as $team) : ?>
                 <option value="<?php echo $team->name; ?>" <?php if ($team->name == $fav_mlb) : ?>selected<?php endif; ?>><?php echo $team->name; ?></option>
               <?php endforeach; ?>
             </select></label>
@@ -1284,3 +1286,28 @@ function filter_post_data($data) {
 }
 
 add_action('save_post', 'filter_post_data');
+
+function from_our_blog() {
+  $args = array(
+    'posts_per_page' => 3,
+  );
+
+  $blog_footer = new WP_Query($args);
+
+  if ($blog_footer->have_posts()) :
+    while ($blog_footer->have_posts()) : $blog_footer->the_post(); 
+        $categories = get_the_terms(get_the_ID(), 'category');
+        $category_list = array();
+        foreach ($categories as $category) : 
+          $category_list[] = $category->name;
+        endforeach;
+        $post_cats = join(', ', $category_list);
+      ?>
+        <article>
+          <h3 class="title h5"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+          <p><?php echo get_the_date(); ?> | <?php echo $post_cats; ?></p>
+        </article>
+      <?php
+    endwhile; 
+  endif;
+}

@@ -578,6 +578,57 @@ footer {
  	}
  }
 
+ .favorite-logos {
+ 	img {
+ 		max-width: 100px;
+ 		max-height: 90px;
+ 		width: auto;
+ 		height: auto;
+ 		margin-bottom: $global-margin;
+ 	}
+ 	h3, h2 {
+ 		font-size: 1rem;
+ 		text-transform: uppercase;
+ 		font-weight: bold;
+ 	}
+ }
+
+ .woocommerce-MyAccount-content {
+ 	padding: $global-padding * 2;
+ }
+
+ .woocommerce-MyAccount-navigation {
+ 	border-bottom: 3px solid $red;
+ 	ul {
+ 		li {
+ 			a {
+ 				color: $red;
+ 				font-weight: bold;
+ 				text-transform: uppercase;
+ 				transition: background-color ease-out 0.25s, color ease-out 0.25s; 
+ 				&:hover {
+ 					background-color: darken($red, 10%);
+ 					color: $white;
+ 				}
+
+ 			}
+ 			&.is-active {
+ 				a {
+ 					background-color: $red;
+ 				}
+ 			}
+ 		}
+ 	}
+ }
+
+ .woocommerce-info {
+ 	background-color: transparent !important;
+ 	.button {
+ 		margin-right: 10px;
+ 		vertical-align: middle;
+ 	}
+ }
+
 /**
 * Promo Banner
 */
@@ -669,13 +720,16 @@ footer {
  		}
  		img {
  			max-height: 260px;
+ 			@include breakpoint(small down) {
+ 				padding-bottom: $global-padding * 2;
+ 			}
  		}
  		.price-row {
  			position: absolute;
  			width: 90%;
  			left: 50%;
  			transform: translateX(-50%);
- 			bottom: 40px;
+ 			bottom: 60px;
  			font-weight: bold;
  			font-size: 1.25rem;
  			p {
@@ -722,11 +776,20 @@ footer {
  	}
  }
 
+ .archive section.products {
+ 	border-top: 5px solid $red;
+ }
+
  /**
   * Filter
   */
 
  aside.team.sidebar {
+ 	.filter-form {
+ 		@include breakpoint(medium down) {
+ 			display: none;
+ 		}
+ 	}
  	div.slider {
  	 		display: block;	
  	 		margin: 10px 0 5px 0;
@@ -763,7 +826,14 @@ footer {
  		font-size: 1.125rem;
  		margin-bottom: 0;
  		font-style: italic;
-
+		.hamburger {
+			padding: $global-padding;
+			vertical-align: middle;
+			.hamburger-inner, .hamburger-inner:after, .hamburger-inner:before {
+				width: 30px;
+				background-color: $white;
+			}
+		}
  	}
  	background-color: lighten($black, 20%);
  	h4 {
@@ -783,10 +853,14 @@ footer {
 		transition: max-height ease-out 0.25s;
  	}
  	a.shop-for-view-more, a.departments-view-more, a.brands-view-more {
+
  		color: $white;
  		padding-left: 0;
  		display: block;
  		margin-bottom: $global-margin * 2;
+ 		@include breakpoint(medium down) {
+ 			display: none;
+ 		}
  		span {
  			display: inline-block;
  		}
@@ -955,6 +1029,46 @@ footer {
  				opacity: 1;
  			}
  		}
+ 	}
+ }
+
+ /**
+  * Image slider
+  * 
+  */
+ 
+ .woocommerce-product-gallery__wrapper {
+ 	img {
+ 		min-width: 90%;
+ 		display: block;
+ 		margin: 0 auto;
+ 		margin-bottom: 10px;
+ 	}
+ }
+
+ /**
+  * Price Tracker Styles
+  * 
+  */
+ 
+ .cegg-price-tracker-panel {
+ 	border: 0 !important;
+ 	padding: 0;
+ 	.panel-heading {
+ 		display: none;
+ 	}
+ 	.panel-body {
+ 		padding: 0 !important;
+ 	}
+ 	input[type="email"] {
+ 		border-radius: 0 !important;
+ 	}
+ 	input[type="email"], input[type="number"] {
+ 		height: 36px;
+ 	}
+ 	button  {
+ 		background-color: $red !important;
+ 		border-radius: 0 !important;
  	}
  }
 
@@ -1301,6 +1415,96 @@ footer {
  			min-width: 14px;
  			height: auto;
  			max-height: 20px;
+ 		}
+ 	}
+ }
+
+ /**
+  * Single blog Post
+  * 
+  */
+ 
+ .blog-intro {
+ 	padding-top: 150px;
+ 	padding-bottom: 150px;
+ 	text-align: center;
+ 	color: $white;
+ 	background-position: center center;
+ 	background-size: cover;
+ 	background-repeat: no-repeat;
+ 	position: relative;
+ 	h1, h2, h3, h4, h5, h6, p {
+ 		position: relative;
+ 		z-index: 5;
+ 	}
+ 	h1 {
+ 		text-transform: uppercase;
+ 		letter-spacing: 3px;
+ 	}
+ 	&:after {
+ 		content: '';
+ 		position: absolute;
+ 		z-index: 1;
+ 		top: 0;
+ 		right: 0;
+ 		bottom: 0;
+ 		left: 0;
+ 		background-color: rgba($black, 0.75);
+ 	}
+ }
+
+ .nav-links {
+ 	margin-top: $global-margin;
+ 	display: flex;
+ 	align-items: center;
+ 	justify-content: center;
+ 	flex-wrap: row;
+ 	flex-direction: row;
+ 	.nav-previous, .nav-next {
+		width: 50%;
+		text-align: center;
+		margin: 0 40px;
+		a {
+			display: block;
+			padding: $global-padding;
+			color: $red;
+			transition: background-color ease-out 0.25s;
+			&:hover {
+				background-color: lighten($light-gray, 2%);
+			}
+		}
+ 	}
+ }
+
+ ol.top-ten-products {
+ 	list-style: none;
+ 	counter-reset: section;
+ 	margin: 0;
+ 	padding: 0;
+ 	li {
+ 		margin-top: 40px;
+ 		border-top: 1px solid $light-gray;
+ 		padding-top: 40px;
+ 		position: relative;
+ 		padding-left: 100px;
+ 		padding-right: 100px;
+		&:before {
+			position: absolute;
+			top: 40px;
+			left: 0;
+			font-size: 2rem;
+			font-weight: bold;
+			color: $red;
+			content: counter(section)'.';
+			counter-increment: section;
+		}
+ 	}
+ }
+
+ ul.page-numbers {
+ 	li {
+ 		span.current {
+ 			background-color: $red;
  		}
  	}
  }
