@@ -87,7 +87,7 @@ header {
 					
 					text-align: left;
 					@media only screen and (max-width: 1380px) {
-						font-size: 0.75rem;
+						font-size: 0.9rem;
 					} 
 					.league-logo, .team-logo {
 						max-width: 22px;
@@ -98,7 +98,7 @@ header {
 						margin-right: 8px;
 						vertical-align: middle;
 						@media only screen and (max-width: 1380px) {
-							max-width: 14px;
+							max-width: 18px;
 						}
 					}
 				}
@@ -1364,10 +1364,10 @@ footer {
  form.comment-form {
  	.submit {
  		@include button-style($red, darken($red, 10%), $white);
- 		display: block;
+ 		display: inline-block;
  		border: 0;
- 		width: 100%;
- 		padding: 5px 20px
+ 		// width: 100%;
+ 		padding: 5px 30px
  	}
  }
 
@@ -1507,4 +1507,14 @@ footer {
  			background-color: $red;
  		}
  	}
+ }
+
+ /**
+  * CE Overrides
+  * 
+  */
+ 
+ .egg-container .cegg-list-withlogos .btn {
+ 	background-color: $red !important;
+ 	border-radius: 0 !important;
  }

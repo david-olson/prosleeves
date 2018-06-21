@@ -61,7 +61,6 @@ while ( have_posts() ) : the_post();
 				</div>
 				<div class="large-3 cell">
 					<?php get_sidebar(); ?>
-					<img src="http://placehold.it/300x600?text=Ad+Space" alt="">
 				</div>
 			</div>
 			<?php the_post_navigation();?>

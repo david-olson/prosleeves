@@ -74,7 +74,7 @@
 						</ul>
 					</div>
 					<div class="large-3 medium-6 cell">
-						<h4>From Our Blog</h4>
+						<h4 class="h3">From Our Blog</h4>
 						<hr class="hide-for-large">
 						<?php from_our_blog(); ?>
 						<hr class="hide-for-large">

@@ -29,7 +29,7 @@
 		<div class="pad-full-small">
 			<?php if (isset($team_object)) : ?>		
 				<p>Viewing:</p> 
-				<span class="label"><a href="<?php echo get_home_url(); ?>/shop"><i class="fas fa-times-circle"></i></a> <?php echo $team_object->name; ?></span>
+				<span class="label"><a href="<?php echo get_home_url(); ?>/products"><i class="fas fa-times-circle"></i></a> <?php echo $team_object->name; ?></span>
 			<?php endif; ?>
 			<h4>Shop For</h4>
 			<hr>
@@ -51,6 +51,7 @@
 			$args = array(
 				'taxonomy' => 'product_cat',
 				'hide_empty' => false,
+				'exclude' => 15
 			);
 			
 			$departments = get_terms($args);

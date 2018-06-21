@@ -181,7 +181,7 @@ get_header(); ?>
 						</ul>
 					</div>
 					<div class="pad-full-small white-bg margin-bottom-small" id="description">
-						<h3 class="h5">Description</h3>
+						<h3 class="h4 red">Description</h3>
 						<?php 
 						$id = get_the_ID();
 						$brands = get_the_terms($post, 'brands');
@@ -194,11 +194,11 @@ get_header(); ?>
 						<?php echo do_shortcode( '[ess_post]' ); ?>
 					</div>
 					<div class="pad-full-small white-bg margin-bottom-small" id="price-alerts">
-						<h3 class="h5">Price Alerts</h3>
+						<h3 class="h4 red">Price Alerts</h3>
 						<?php echo do_shortcode( '[content-egg-block template=price_alert]' ); ?>
 					</div>
 					<div class="pad-full-small white-bg margin-bottom-small" id="price-history">
-						<h3 class="h5">Price History</h3>
+						<h3 class="h4 red">Price History</h3>
 						<?php echo do_shortcode( '[content-egg-block template=price_history]' ); ?>
 					</div>
 					<div class="pad-full-small white-bg margin-bottom-small" id="reviews">
@@ -215,7 +215,7 @@ get_header(); ?>
 								</h1>
 								<div class="grid-x grid-padding-x">
 									<div class="medium-shrink cell">
-										<p><small>Sold by <?php echo $egg_data[0]['domain']; ?></small></p>
+										<p><small>Available at <?php echo $egg_data[0]['domain']; ?></small></p>
 									</div>
 									<div class="medium-auto cell">
 										<?php if (!empty($product_attributes)) : ?>

@@ -58,10 +58,10 @@ function get_team_product_categories($team) {
 			$count_query = query_posts($count_args);
 			global $wp_query;
 			?>
-				<div class="cell">
-					<article class="taxonomy taxonomy-product_cat match-height margin-bottom-small taxonomy-<?php echo $cat->slug; ?> text-center">
-						<?php get_first_product_image($cat->slug, $team); ?>
-						<h2><?php echo $cat->name; ?></h2>
+				<div class="cell ">
+					<article class="hover-up taxonomy taxonomy-product_cat match-height margin-bottom-small taxonomy-<?php echo $cat->slug; ?> text-center">
+						<a href="<?php bloginfo( 'url' ) ?>/<?php echo $league[0]; ?>/<?php echo $team->slug; ?>/products/<?php echo $cat->slug; ?>"><?php get_first_product_image($cat->slug, $team); ?></a>
+						<h2><a href="<?php bloginfo( 'url' ) ?>/<?php echo $league[0]; ?>/<?php echo $team->slug; ?>/products/<?php echo $cat->slug; ?>" class="red"><?php echo $cat->name; ?></a></h2>
 						<a href="<?php bloginfo( 'url' ) ?>/<?php echo $league[0]; ?>/<?php echo $team->slug; ?>/products/<?php echo $cat->slug; ?>" class="<?php check_background_color(get_field('team_primary_color', $team)); ?> button expanded" style="background-color: <?php the_field('team_primary_color', $team); ?>">Shop All <?php echo $wp_query->found_posts; ?> <?php echo $cat->name; ?></a>
 					</article>
 				</div>
@@ -69,10 +69,10 @@ function get_team_product_categories($team) {
 		endforeach;
 		?>
 			<div class="cell">
-				<article class="taxonomy taxonomy-product_cat match-height margin-bottom-small taxonomy-<?php echo $cat->slug; ?> text-center">
+				<article class="hover-up taxonomy taxonomy-product_cat match-height margin-bottom-small taxonomy-<?php echo $cat->slug; ?> text-center">
 					<?php $team_image = get_field('team_logo', $team);	?>
-					<img src="<?php echo $team_image['sizes']['team_topbar_icon']; ?>" alt="<?php echo $team->name; ?> Logo">
-					<h2>View All</h2>
+					<a href="<?php bloginfo( 'url' ) ?>/<?php echo $league[0]; ?>/<?php echo $team->slug; ?>/products/"><img src="<?php echo $team_image['sizes']['team_topbar_icon']; ?>" alt="<?php echo $team->name; ?> Logo"></a>
+					<h2><a class="red" href="<?php bloginfo( 'url' ) ?>/<?php echo $league[0]; ?>/<?php echo $team->slug; ?>/products/">View All</a></h2>
 					<a href="<?php bloginfo( 'url' ) ?>/<?php echo $league[0]; ?>/<?php echo $team->slug; ?>/products/" class="<?php check_background_color(get_field('team_primary_color', $team)); ?> button expanded" style="background-color: <?php the_field('team_primary_color', $team); ?>">View All Products</a>
 				</article>
 			</div>
