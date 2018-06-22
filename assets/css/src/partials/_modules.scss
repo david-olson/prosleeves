@@ -357,6 +357,7 @@ section.featured-products-menu {
 	}
 	img {
 		padding: $global-padding * 3 0;
+		max-width: 300px;
 	}
 	h2 {
 		text-transform: uppercase;
@@ -505,7 +506,15 @@ footer {
 			color: $white;
 		}
 		h4 {
-			font-size: 1.125rem;
+			font-size: 1.35rem;
+			&:after {
+				content: '';
+				display: block;
+				width: 100%;
+				background-color: $white;
+				height: 2px;
+				margin: 2px auto;
+			}
 		}
 		p {
 			font-size: 0.75rem;
@@ -1517,4 +1526,26 @@ footer {
  .egg-container .cegg-list-withlogos .btn {
  	background-color: $red !important;
  	border-radius: 0 !important;
+ }
+
+ .pa-table {
+ 	border: 0;
+ 	thead {
+ 		border: 0;
+ 		border-bottom: 2px solid $dark-gray;
+ 		background-color: transparent;
+ 	}
+ 	tbody {
+ 		border: 0;
+ 		tr {
+ 			border: 0;
+ 			border-bottom: 1px solid $dark-gray;
+ 			&:last-of-type {
+ 				border-bottom: 0;
+ 			}
+ 			td {
+ 				border: 0;
+ 			}
+ 		}
+ 	}
  }

@@ -71,62 +71,65 @@ if ( ! defined( 'ABSPATH' ) ) {
 	
 
 ?>
-<div class="grid-x grid-padding-x">
-	<div class="large-12 cell">
-		<hr>
+
+<div class="pad-full-small white-bg shadow red-bd-top">
+	<div class="grid-x grid-padding-x">
+		<div class="large-12 cell">
+			<h2 class="h4 no-mb">Your Favorite Teams</h2>
+		</div>
 	</div>
-</div>
-<div class="grid-x grid-padding-x">
-	<div class="large-12 cell">
-		<h2>Your Favorite Teams</h2>
+	<div class="grid-x grid-padding-x">
+		<div class="large-12 cell">
+			<hr>
+		</div>
 	</div>
-</div>
-<div class="grid-x grid-margin-x large-up-5 align-middle favorite-logos">
-	<div class="cell text-center">
-		<?php if (isset($nfl)) : ?>		
-			<?php $team_logo = get_field('team_logo', $nfl); ?>
-			<a href="<?php echo get_home_url(); ?>/nfl/<?php echo $nfl->slug; ?>"><img src="<?php echo $team_logo['sizes']['large']; ?>" alt="">
-				<h2><?php echo $nfl->name; ?></h2></a>
-		<?php else : ?>
-			<h3>No NFL team set. Go to your account details to choose.</h3>
-		<?php endif; ?>
-	</div>
-	<div class="cell text-center">
-		<?php if (isset($ncaa)) : ?>
-			<?php $team_logo = get_field('team_logo', $ncaa); ?>
-			<a href="<?php echo get_home_url(); ?>/ncaa/<?php echo $ncaa->slug; ?>"><img src="<?php echo $team_logo['sizes']['large']; ?>" alt="">
-				<h2><?php echo $ncaa->name; ?></h2></a>
-		<?php else : ?>
-			<h3>No NCAA team set. Go to your account details to choose.</h3>
-		<?php endif; ?>
-		
-	</div>
-	<div class="cell text-center">
-		<?php if (isset($nhl)) : ?>
-			<?php $team_logo = get_field('team_logo', $nhl); ?>
-			<a href="<?php echo get_home_url(); ?>/nhl/<?php echo $nhl->slug; ?>"><img src="<?php echo $team_logo['sizes']['large']; ?>" alt="">
-				<h2><?php echo $nhl->name; ?></h2></a>
-		<?php else : ?>
-			<h3>No NHL team set. Go to your account details to choose.</h3>
-		<?php endif; ?>
-	</div>
-	<div class="cell text-center">
-		<?php if (isset($nba)) : ?>
-			<?php $team_logo = get_field('team_logo', $nba); ?>
-			<a href="<?php echo get_home_url(); ?>/nba/<?php echo $nba->slug; ?>"><img src="<?php echo $team_logo['sizes']['large']; ?>" alt="">
-				<h2><?php echo $nba->name; ?></h2></a>
-		<?php else : ?>
-			<h3>No NBA team set. Go to your account details to choose.</h3>
-		<?php endif; ?>
-	</div>
-	<div class="cell text-center">
-		<?php if (isset($mlb)) : ?>
-			<?php $team_logo = get_field('team_logo', $mlb); ?>
-			<a href="<?php echo get_home_url(); ?>/mlb/<?php echo $mlb->slug; ?>"><img src="<?php echo $team_logo['sizes']['large']; ?>" alt="">
-				<h2><?php echo $mlb->name; ?></h2></a>
-		<?php else : ?>
-			<h3>No MLB team set. Go to your account details to choose.</h3>
-		<?php endif; ?>
+	<div class="grid-x grid-margin-x large-up-5 align-middle favorite-logos">
+		<div class="cell text-center">
+			<?php if (isset($nfl)) : ?>		
+				<?php $team_logo = get_field('team_logo', $nfl); ?>
+				<a href="<?php echo get_home_url(); ?>/nfl/<?php echo $nfl->slug; ?>"><img src="<?php echo $team_logo['sizes']['large']; ?>" alt="">
+					<h2><?php echo $nfl->name; ?></h2></a>
+			<?php else : ?>
+				<h3>No NFL team set. Go to your account details to choose.</h3>
+			<?php endif; ?>
+		</div>
+		<div class="cell text-center">
+			<?php if (isset($ncaa)) : ?>
+				<?php $team_logo = get_field('team_logo', $ncaa); ?>
+				<a href="<?php echo get_home_url(); ?>/ncaa/<?php echo $ncaa->slug; ?>"><img src="<?php echo $team_logo['sizes']['large']; ?>" alt="">
+					<h2><?php echo $ncaa->name; ?></h2></a>
+			<?php else : ?>
+				<h3>No NCAA team set. Go to your account details to choose.</h3>
+			<?php endif; ?>
+			
+		</div>
+		<div class="cell text-center">
+			<?php if (isset($nhl)) : ?>
+				<?php $team_logo = get_field('team_logo', $nhl); ?>
+				<a href="<?php echo get_home_url(); ?>/nhl/<?php echo $nhl->slug; ?>"><img src="<?php echo $team_logo['sizes']['large']; ?>" alt="">
+					<h2><?php echo $nhl->name; ?></h2></a>
+			<?php else : ?>
+				<h3>No NHL team set. Go to your account details to choose.</h3>
+			<?php endif; ?>
+		</div>
+		<div class="cell text-center">
+			<?php if (isset($nba)) : ?>
+				<?php $team_logo = get_field('team_logo', $nba); ?>
+				<a href="<?php echo get_home_url(); ?>/nba/<?php echo $nba->slug; ?>"><img src="<?php echo $team_logo['sizes']['large']; ?>" alt="">
+					<h2><?php echo $nba->name; ?></h2></a>
+			<?php else : ?>
+				<h3>No NBA team set. Go to your account details to choose.</h3>
+			<?php endif; ?>
+		</div>
+		<div class="cell text-center">
+			<?php if (isset($mlb)) : ?>
+				<?php $team_logo = get_field('team_logo', $mlb); ?>
+				<a href="<?php echo get_home_url(); ?>/mlb/<?php echo $mlb->slug; ?>"><img src="<?php echo $team_logo['sizes']['large']; ?>" alt="">
+					<h2><?php echo $mlb->name; ?></h2></a>
+			<?php else : ?>
+				<h3>No MLB team set. Go to your account details to choose.</h3>
+			<?php endif; ?>
+		</div>
 	</div>
 </div>
 

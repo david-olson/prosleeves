@@ -85,6 +85,7 @@ if (function_exists('acf_add_options_page')) {
 
 add_image_size( 'team_menu_icon', 20, 20, false );
 add_image_size('team_topbar_icon', 400, 400, false);
+add_image_size('product_loop_image', 300, 300, false);
 
 function HTMLToRGB($htmlCode)
   {
@@ -313,31 +314,36 @@ function prosleeves_price_alert_content() {
 
   ?>
   
-  <p>Here are the price alerts you have set up.</p>
+  
   <?php if (count($price_alerts) > 0) : ?>
-    <table>
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th class="text-right">Desired Price</th>
-          <th class="text-right">Alert Created</th>
-          <th class="text-right">Alert Sent On</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach ($price_alerts as $alert) : ?>
-          <?php $product = $_pf->get_product($alert->post_id); ?>
+    <div class="white-bg shadow red-bd-top pad-full-small">
+      <h1 class="h5">Here are the price alerts you have set up.</h1>
+      <table class="pa-table unstriped">
+        <thead>
           <tr>
-            <td><a href="<?php echo get_home_url(); ?>/products/<?php echo $product->get_slug(); ?>"><?php echo $product->get_name(); ?></a></td>
-            <td class="text-right">$<?php echo $alert->price; ?></td>
-            <td class="text-right"><?php echo $alert->create_date; ?></td>
-            <td class="text-right"><?php echo $alert->complet_date; ?></td>
+            <th>Product</th>
+            <th class="text-right">Desired Price</th>
+            <th class="text-right">Alert Created</th>
+            <th class="text-right">Alert Sent On</th>
           </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <?php foreach ($price_alerts as $alert) : ?>
+            <?php $product = $_pf->get_product($alert->post_id); ?>
+            <tr>
+              <td><a href="<?php echo get_home_url(); ?>/products/<?php echo $product->get_slug(); ?>"><?php echo $product->get_name(); ?></a></td>
+              <td class="text-right">$<?php echo $alert->price; ?></td>
+              <td class="text-right"><?php echo date('l, M j, Y', strtotime($alert->create_date)); ?></td>
+              <td class="text-right"><?php if ($alert->complet_date > 0) : ?><?php echo date('l, M j, Y', strtotime($alert->complet_date)); ?><?php else : ?>Not Sent Yet<?php endif; ?></td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
   <?php else : ?>
-    <p>You have not set up any price alerts yet.</p>
+    <div class="white-bg shadow red-bd-left pad-full-small">
+      <p>You have not set up any price alerts yet.</p>
+      </div>
   <?php endif; ?>
 
   <?php
@@ -479,7 +485,7 @@ function promo_banner() {
 
   ?>
   <section class="promo-banner" id="promo_bar">
-    <h2 class="h5"><?php echo $message; ?> | Ends <?php echo $expiration_date; ?></h2>
+    <h2 class="h5"><?php echo $message; ?><?php if (!empty($expiration_date)) : ?> | Ends <?php echo $expiration_date; ?><?php endif; ?></h2>
   </section>
   <?php
 }
@@ -724,7 +730,7 @@ function the_homepage_hero() {
               <div class="grid-x grid-padding-x align-center align-middle">
                 <?php if ($products['alignment'] == 'left') : ?>
                   <div class="medium-6 cell text-center">
-                    <img src="<?php echo $products['image']['sizes']['large']; ?>" alt="">
+                    <img src="<?php echo $products['image']['sizes']['team_topbar_icon']; ?>" alt="">
                   </div>
                   <div class="medium-5 cell text-right">
                     <h2><?php echo $products['headline']; ?></h2>
@@ -735,7 +741,7 @@ function the_homepage_hero() {
                   <div class="medium-10 cell text-center" >
                     <div class="pad-full-small">
                       <h2><?php echo $products['headline']; ?></h2>
-                      <img src="<?php echo $products['image']['sizes']['large']; ?>" alt="">
+                      <img src="<?php echo $products['image']['sizes']['team_topbar_icon']; ?>" alt="">
                       <p><?php echo $products['body_copy']; ?></p>
                       <button type="button" class="button"><?php echo $products['button_text']; ?></button>
                     </div>
@@ -747,7 +753,7 @@ function the_homepage_hero() {
                     <button type="button" class="button"><?php echo $products['button_text']; ?></button>
                   </div>
                   <div class="medium-6 cell text-center">
-                    <img src="<?php echo $products['image']['sizes']['large']; ?>" alt="">
+                    <img src="<?php echo $products['image']['sizes']['team_topbar_icon']; ?>" alt="">
                   </div>
                 <?php endif; ?>
               </div>
@@ -793,7 +799,7 @@ function the_homepage_hero() {
                   <?php elseif ($products['product_1_background_color_or_image'] == 'color') : ?>
                     <?php if ($products['product_1_layout'] == 'left') : ?>
                       <div class="medium-6 cell text-center">
-                        <img src="<?php echo $products['product_1_image']['sizes']['large']; ?>">
+                        <img src="<?php echo $products['product_1_image']['sizes']['team_topbar_icon']; ?>">
                       </div>
                       <div class="medium-6 cell text-right">
                         <h2><?php echo $products['product_1_headline']; ?></h2>
@@ -803,7 +809,7 @@ function the_homepage_hero() {
                     <?php elseif ($products['product_1_layout'] == 'center') : ?>
                       <div class="large-12 cell text-center">
                         <h2><?php echo $products['product_1_headline']; ?></h2>
-                        <img src="<?php echo $products['product_1_image']['sizes']['large']; ?>" alt="">
+                        <img src="<?php echo $products['product_1_image']['sizes']['team_topbar_icon']; ?>" alt="">
                         <p><?php echo $products['product_1_body_copy']; ?></p>
                         <button type="button" class="button"><?php echo $products['product_1_button_text']; ?></button>
                       </div>
@@ -814,7 +820,7 @@ function the_homepage_hero() {
                         <button type="button" class="button"><?php echo $products['product_1_button_text']; ?></button>
                       </div>
                       <div class="medium-6 cell text-right text-center">
-                        <img src="<?php echo $products['product_1_image']['sizes']['large']; ?>">
+                        <img src="<?php echo $products['product_1_image']['sizes']['team_topbar_icon']; ?>">
                       </div>
                     <?php endif; ?>
                   <?php endif; ?>
@@ -848,7 +854,7 @@ function the_homepage_hero() {
                   <?php elseif ($products['product_2_background_color_or_image'] == 'color') : ?>
                     <?php if ($products['product_2_layout'] == 'left') : ?>
                       <div class="medium-6 cell text-center">
-                        <img src="<?php echo $products['product_2_image']['sizes']['large']; ?>">
+                        <img src="<?php echo $products['product_2_image']['sizes']['team_topbar_icon']; ?>">
                       </div>
                       <div class="medium-6 cell text-right">
                         <h2><?php echo $products['product_2_headline']; ?></h2>
@@ -858,7 +864,7 @@ function the_homepage_hero() {
                     <?php elseif ($products['product_2_layout'] == 'center') : ?>
                       <div class="large-12 cell text-center">
                         <h2><?php echo $products['product_2_headline']; ?></h2>
-                        <img src="<?php echo $products['product_2_image']['sizes']['large']; ?>" alt="">
+                        <img src="<?php echo $products['product_2_image']['sizes']['team_topbar_icon']; ?>" alt="">
                         <p><?php echo $products['product_2_body_copy']; ?></p>
                         <button type="button" class="button"><?php echo $products['product_2_button_text']; ?></button>
                       </div>
@@ -869,7 +875,7 @@ function the_homepage_hero() {
                         <button type="button" class="button"><?php echo $products['product_2_button_text']; ?></button>
                       </div>
                       <div class="medium-6 cell text-right text-center">
-                        <img src="<?php echo $products['product_2_image']['sizes']['large']; ?>">
+                        <img src="<?php echo $products['product_2_image']['sizes']['team_topbar_icon']; ?>">
                       </div>
                     <?php endif; ?>
                   <?php endif; ?>
@@ -918,7 +924,7 @@ function the_homepage_hero() {
                   <?php elseif ($products['product_1_background_color_or_image'] == 'color') : ?>
                     <?php if ($products['product_1_layout'] == 'left') : ?>
                       <div class="medium-6 cell text-center">
-                        <img src="<?php echo $products['product_1_image']['sizes']['large']; ?>">
+                        <img src="<?php echo $products['product_1_image']['sizes']['team_topbar_icon']; ?>">
                       </div>
                       <div class="medium-6 cell text-right">
                         <h2><?php echo $products['product_1_headline']; ?></h2>
@@ -928,7 +934,7 @@ function the_homepage_hero() {
                     <?php elseif ($products['product_1_layout'] == 'center') : ?>
                       <div class="large-12 cell text-center">
                         <h2><?php echo $products['product_1_headline']; ?></h2>
-                        <img src="<?php echo $products['product_1_image']['sizes']['large']; ?>" alt="">
+                        <img src="<?php echo $products['product_1_image']['sizes']['team_topbar_icon']; ?>" alt="">
                         <p><?php echo $products['product_1_body_copy']; ?></p>
                         <button type="button" class="button"><?php echo $products['product_1_button_text']; ?></button>
                       </div>
@@ -939,7 +945,7 @@ function the_homepage_hero() {
                         <button type="button" class="button"><?php echo $products['product_1_button_text']; ?></button>
                       </div>
                       <div class="medium-6 cell text-right text-center">
-                        <img src="<?php echo $products['product_1_image']['sizes']['large']; ?>">
+                        <img src="<?php echo $products['product_1_image']['sizes']['team_topbar_icon']; ?>">
                       </div>
                     <?php endif; ?>
                   <?php endif; ?>
@@ -974,7 +980,7 @@ function the_homepage_hero() {
                   <?php elseif ($products['product_2_background_color_or_image'] == 'color') : ?>
                     <?php if ($products['product_2_layout'] == 'left') : ?>
                       <div class="medium-6 cell text-center">
-                        <img src="<?php echo $products['product_2_image']['sizes']['large']; ?>">
+                        <img src="<?php echo $products['product_2_image']['sizes']['team_topbar_icon']; ?>">
                       </div>
                       <div class="medium-6 cell text-right">
                         <h2><?php echo $products['product_2_headline']; ?></h2>
@@ -984,7 +990,7 @@ function the_homepage_hero() {
                     <?php elseif ($products['product_2_layout'] == 'center') : ?>
                       <div class="large-12 cell text-center">
                         <h2><?php echo $products['product_2_headline']; ?></h2>
-                        <img src="<?php echo $products['product_2_image']['sizes']['large']; ?>" alt="">
+                        <img src="<?php echo $products['product_2_image']['sizes']['team_topbar_icon']; ?>" alt="">
                         <p><?php echo $products['product_2_body_copy']; ?></p>
                         <button type="button" class="button"><?php echo $products['product_2_button_text']; ?></button>
                       </div>
@@ -995,7 +1001,7 @@ function the_homepage_hero() {
                         <button type="button" class="button"><?php echo $products['product_2_button_text']; ?></button>
                       </div>
                       <div class="medium-6 cell text-right text-center">
-                        <img src="<?php echo $products['product_2_image']['sizes']['large']; ?>">
+                        <img src="<?php echo $products['product_2_image']['sizes']['team_topbar_icon']; ?>">
                       </div>
                     <?php endif; ?>
                   <?php endif; ?>

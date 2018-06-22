@@ -24,7 +24,7 @@ get_header();
 				<div class="grid-container">
 					<div class="grid-x grid-padding-x align-center">
 						<div class="large-10 cell pad-small">
-							<div class="my-account-pad white-bg margin-small"><?php the_content(); ?></div>
+							<div class="my-account-pad margin-small"><?php the_content(); ?></div>
 						</div>
 					</div>
 				</div>

@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		
 		<?php do_action( 'woocommerce_before_customer_login_form' ); ?>
 		<div class="grid-x grid-margin-x align-center">
-			<div class="large-5 cell white-bg">
+			<div class="large-5 cell white-bg red-bd-top shadow">
 				<div class="pad-full-small white-bg">
 					<h2 class="text-center h4 margin-bottom-small"><?php esc_html_e( 'Login', 'woocommerce' ); ?></h2>
 					
@@ -70,7 +70,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 			<?php if ( get_option( 'woocommerce_enable_myaccount_registration' ) === 'yes' ) : ?>
 
-				<div class="large-5 cell white-bg">
+				<div class="large-5 cell white-bg red-bd-top shadow">
 	
 					<div class="pad-full-small white-bg">
 						<h2 class="text-center h4 margin-bottom-small"><?php esc_html_e( 'Register', 'woocommerce' ); ?></h2>

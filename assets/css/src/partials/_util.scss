@@ -138,3 +138,15 @@ a.red {
 .relative {
   position: relative;
 }
+
+.shadow {
+  box-shadow: 0 15px 10px -10px rgba(0,0,0,0.15);
+}
+
+.red-bd-top {
+  border-top: 10px solid $red;
+}
+
+.red-bd-left {
+  border-left: 10px solid $red;
+}

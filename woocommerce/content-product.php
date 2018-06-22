@@ -117,30 +117,28 @@ global $wpdb, $post;
 					<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 				</h2>
 				<div class="text-center">
-					<?php if (isset($product_image_url)) : ?>
+					<?php if (has_post_thumbnail()) : ?>
+						<a href="<?php the_permalink(); ?>"><img src="<?php the_post_thumbnail_url('product_loop_image'); ?>" alt="Image of <?php the_title(); ?>"></a>
+					<?php elseif (isset($product_image_url)) : ?>
 						<a href="<?php the_permalink(); ?>"><img src="<?php echo $product_image_url; ?>" alt="Image of <?php echo $product_title; ?>"></a>
 					<?php else : ?>
-						<?php if (has_post_thumbnail()) : ?>
-							<a href="<?php the_permalink(); ?>"><img src="<?php the_post_thumbnail_url(); ?>" alt="Image of <?php the_title(); ?>"></a>
-						<?php else : ?>
-							<?php 
-							$product_leagues = array();
-							$leagues = get_field('menu_items', 'options');
-							foreach ($leagues as $league) :
-								$tax = get_taxonomy($league['item']);
-								array_push($product_leagues, $tax);
-							endforeach;
-							$product_teams = array();
-							foreach ($product_leagues as $p_league) : 
-								$team = get_the_terms(get_the_ID(), $p_league->name);
-								if ($team) :
-									array_push($product_teams, $team);
-								endif;	
-							endforeach;
-							$team_logo = get_field('team_logo', $product_teams[0][0]);
-							?>
-							<a href="<?php the_permalink(); ?>"><img class="text-center" src="<?php echo $team_logo['sizes']['large']; ?>" alt="Team logo for <?php echo $product_teams[0][0]->name; ?>"></a>
-						<?php endif; ?>
+						<?php 
+						$product_leagues = array();
+						$leagues = get_field('menu_items', 'options');
+						foreach ($leagues as $league) :
+							$tax = get_taxonomy($league['item']);
+							array_push($product_leagues, $tax);
+						endforeach;
+						$product_teams = array();
+						foreach ($product_leagues as $p_league) : 
+							$team = get_the_terms(get_the_ID(), $p_league->name);
+							if ($team) :
+								array_push($product_teams, $team);
+							endif;	
+						endforeach;
+						$team_logo = get_field('team_logo', $product_teams[0][0]);
+						?>
+						<a href="<?php the_permalink(); ?>"><img class="text-center" src="<?php echo $team_logo['sizes']['product_loop_image']; ?>" alt="Team logo for <?php echo $product_teams[0][0]->name; ?>"></a>
 					<?php endif; ?>
 				</div>
 				<div class="grid-x grid-padding-x price-row align-middle">

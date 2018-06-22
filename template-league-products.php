@@ -93,6 +93,26 @@
 			</div>
 			<div class="large-9 cell">
 				<main>
+					<form action="/" class="pad-small">
+						<div class="grid-x grid-padding-x align-right align-middle">
+							<div class="medium-shrink cell">
+								<h4 class="no-mb h5">Sort By:</h4>
+							</div>
+							<div class="medium-shrink cell">
+								<select name="sort_by" id="sort_by" class="no-mb">
+									<option value="date_desc">Date Added: Newest First</option>
+									<option value="date_asc">Date Added: Oldest First</option>
+									<option value="price_asc">Price: Low to High</option>
+									<option value="price_desc">Price: High to Low</option>
+									<option value="title_asc">Name: A to Z</option>
+									<option value="title_desc">Name: Z to A</option>
+								</select>
+							</div>
+							<div class="medium-shrink cell">
+								<input type="submit" value="Filter" class="button no-mb">
+							</div>
+						</div>
+					</form>
 					<?php team_category_products($team_object, $product_cat, $additional_queries, $meta_queries); ?>		
 				</main>
 			</div>
