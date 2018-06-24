@@ -7,6 +7,10 @@
 
 	$additional_queries = array();
 
+	if (isset($_GET['order_by'])) :
+		$order_by = $_GET['order_by'];
+	endif;
+
 	$meta_queries = array(
 		'relation' => 'AND'
 	);
@@ -66,11 +70,19 @@
 			array_push($brand_terms, $tax_brand);
 		endforeach;
 		$tax_brand_query = array(
-			'taxonomy' => 'shop_for',
+			'taxonomy' => 'brands',
 			'field' => 'id',
 			'terms' => $brand_terms
 		);
 		array_push($additional_queries, $tax_brand_query);
+	endif;
+
+	if (!empty($order_by)) :
+		$order = explode('_', $order_by);
+	else :
+		$order = array();
+		$order[] = 'date';
+		$order[] = 'desc';
 	endif;
 
 ?>
@@ -79,9 +91,42 @@
 <?php promo_banner(); ?>
 <section class="products">
 	<div class="grid-container">
-		<div class="grid-x grid-padding-x">
-			<div class="large-12 cell">
-				<p class="breadcrumbs"><a href="<?php echo get_home_url(); ?>/<?php echo $league; ?>"><?php echo strtoupper($league); ?></a> / <a href="<?php echo get_home_url(); ?>/<?php echo $league; ?>/<?php echo $team; ?>"><?php echo $team_object->name; ?></a></p>
+		<div class="grid-x grid-padding-x align-middle">
+			<div class="large-6 medium-6 cell">
+				<p class="breadcrumbs no-mb"><a href="<?php echo get_home_url(); ?>/<?php echo $league; ?>"><?php echo strtoupper($league); ?></a> / <a href="<?php echo get_home_url(); ?>/<?php echo $league; ?>/<?php echo $team; ?>"><?php echo $team_object->name; ?></a> / All Products</p>
+			</div>
+			<div class="large-6 medium-6 cell">
+				<form action="<?php echo home_url($wp->request); ?>" method="GET" class="pad-small">
+						<div class="grid-x grid-padding-x align-right align-middle">
+							<div class="medium-shrink cell">
+								<h4 class="no-mb h5">Sort By:</h4>
+							</div>
+							<div class="medium-shrink cell">
+								<select name="order_by" id="order_by" class="no-mb">
+									<option value="date_desc" <?php if (isset($_GET['order_by']) && $_GET['order_by'] == 'date_desc') : ?>selected<?php endif; ?>>Date Added: Newest First</option>
+									<option value="date_asc" <?php if (isset($_GET['order_by']) && $_GET['order_by'] == 'date_asc') : ?>selected<?php endif; ?>>Date Added: Oldest First</option>
+									<option value="price_asc" <?php if (isset($_GET['order_by']) && $_GET['order_by'] == 'price_asc') : ?>selected<?php endif; ?>>Price: Low to High</option>
+									<option value="price_desc" <?php if (isset($_GET['order_by']) && $_GET['order_by'] == 'price_desc') : ?>selected<?php endif; ?>>Price: High to Low</option>
+									<option value="title_asc" <?php if (isset($_GET['order_by']) && $_GET['order_by'] == 'title_asc') : ?>selected<?php endif; ?>>Name: A to Z</option>
+									<option value="title_desc" <?php if (isset($_GET['order_by']) && $_GET['order_by'] == 'title_desc') : ?>selected<?php endif; ?>>Name: Z to A</option>
+								</select>
+							</div>
+							<?php foreach ($_GET as $key => $value) : ?>
+								<?php if ($key !== 'order_by') : ?>
+									<?php if (is_array($value)) : ?>
+										<?php foreach ($value as $val) : ?>
+											<input type="hidden" name="<?php echo $key; ?>[]" value="<?php echo $val; ?>">
+										<?php endforeach; ?>
+									<?php else : ?>
+										<input type="hidden" name="<?php echo $key; ?>" value="<?php echo $value; ?>">
+									<?php endif; ?>
+								<?php endif; ?>
+							<?php endforeach; ?>
+							<div class="medium-shrink cell">
+								<input type="submit" value="Filter" class="button no-mb">
+							</div>
+						</div>
+					</form>
 			</div>
 		</div>
 		<div class="grid-x grid-margin-x">
@@ -95,7 +140,7 @@
 					$paged = get_query_var( 'paged' );
 
 					?>
-					<?php team_category_products($team_object, array(), $additional_queries, $meta_queries); ?>		
+					<?php team_category_products($team_object, array(), $additional_queries, $meta_queries, $order); ?>		
 				</main>
 			</div>
 		</div>

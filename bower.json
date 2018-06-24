@@ -20,6 +20,7 @@
     "select2": "^4.0.5",
     "motion-ui": "^1.2.3",
     "slick-carousel": "^1.8.1",
-    "matchHeight": "^0.7.2"
+    "matchHeight": "^0.7.2",
+    "imagesloaded": "images-loaded#^4.1.4"
   }
 }

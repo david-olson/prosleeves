@@ -241,9 +241,11 @@ function price_range_slider() {
 
     $max = $product->get_regular_price();
 
+    wp_reset_postdata();
+
     $max = round($max, 0, PHP_ROUND_HALF_UP);
 
-    if (isset($_GET['price_max']) && !empty($_GET['price_max'])) :
+  if (isset($_GET['price_max']) && !empty($_GET['price_max'])) :
       $handle_max = $_GET['price_max'];
   else :
     $handle_max = $max;
@@ -258,7 +260,7 @@ function price_range_slider() {
 
 
   ?>
-    <div class="slider" data-start="0" data-slider data-initial-start="<?php echo $handle_min; ?>" data-initial-end="<?php echo $handle_max; ?>" data-end="<?php echo $max; ?>" data-step="5">
+    <div class="slider" data-start="0" data-slider data-initial-start="<?php echo $handle_min; ?>" data-initial-end="<?php echo $handle_max; ?>" data-end="<?php echo $max; ?>">
       <span class="slider-handle" data-slider-handle role="slider" tabindex="1" aria-controls="price_min"></span>
       <span class="slider-fill" data-slider-fill></span>
       <span class="slider-handle" data-slider-handle role="slider" tabindex="1" aria-controls="price_max"></span>
@@ -648,7 +650,7 @@ function top_ten_home_list() {
  */
 
 function prosleeves_get_filtering($q) {
-  if (isset($_GET['taxonomy_product_cat']) || isset($_GET['taxonomy_shop_for']) || isset($_GET['taxonomy_brand'])) :
+  if (isset($_GET['taxonomy_product_cat']) || isset($_GET['taxonomy_shop_for']) || isset($_GET['taxonomy_brand']) || isset($_GET['order_by'])) :
     $tax_query = array(
       'relation' => 'AND'
     );
@@ -672,13 +674,25 @@ function prosleeves_get_filtering($q) {
 
     if (isset($_GET['taxonomy_brand'])) : 
       $tax_brand = array(
-        'taxonomy' => 'brand',
+        'taxonomy' => 'brands',
         'field' => 'id',
         'terms' => $_GET['taxonomy_brand'],
       );
       array_push($tax_query, $tax_brand);
     endif;
     $q->set('tax_query', $tax_query);
+    if (isset($_GET['order_by'])) :
+      $sort = explode('_', $_GET['order_by']);
+
+      if ($sort[0] == 'title' || $sort[0] == 'date') :
+        $q->set('orderby', $sort[0]);
+        $q->set('order', $sort[1]);
+      elseif ($sort[0] == 'price') :
+        $q->set('orderby', 'meta_value_num');
+        $q->set('order', $sort[1]);
+        $q->set('meta_key', '_price'); 
+      endif;
+    endif;
   endif;
   
 }
@@ -1029,7 +1043,7 @@ function the_homepage_hero() {
 function filter_post_data($data) {
   global $wpdb;
   $content_egg = $wpdb->get_results("SELECT * FROM {$wpdb->postmeta} WHERE post_id = $data and meta_key LIKE '_cegg%data%'");
-  if ( ! wp_is_post_revision( $post_id ) ){
+  if ( ! wp_is_post_revision( $post_id ) ) {
     remove_action('save_post', 'filter_post_data');
     if (!empty($content_egg)) :
       $egg_data = unserialize( $content_egg[0]->meta_value );
@@ -1317,3 +1331,20 @@ function from_our_blog() {
     endwhile; 
   endif;
 }
+
+function set_uncategorized_brand($post_id, $post) {
+  if ('publish' == $post->post_status && $post->post_type === 'product') :
+    $defaults = array(
+      'brands' => array('unassigned')
+    );
+    $taxonomies = get_object_taxonomies( $post->post_type );
+    foreach ((array) $taxonomies as $taxonomy) :
+      $terms = wp_get_post_terms($post_id, $taxonomy);
+      if (empty($terms) && array_key_exists($taxonomy, $defaults)) :
+        wp_set_object_terms( $post_id, $defaults[$taxonomy], $taxonomy);
+      endif;
+    endforeach;
+  endif;
+}
+
+add_action( 'save_post', 'set_uncategorized_brand', 100, 2 );

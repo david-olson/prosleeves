@@ -36,10 +36,6 @@ global $wpdb, $post;
 
 		if ($egg_data[0]['priceOld'] > $egg_data[0]['price']) :
 			$price_drop = true;
-			add_action('woocommerce_get_price', 'change_price', 10, 2);
-			function change_price($price, $productd) {
-				return $egg_data[0]['price'];
-			}
 		else :
 			$price_drop = false;
 		endif;
@@ -123,7 +119,7 @@ global $wpdb, $post;
 				</div>
 				<div class="grid-x grid-padding-x price-row align-middle">
 					<div class="medium-shrink cell">
-						<p class="price">$<?php echo $product->get_regular_price(); ?></p>
+						<p class="price">$<?php echo number_format($product->get_regular_price(), 2); ?></p>
 					</div>
 					<div class="medium-auto cell">
 						<?php if (!empty($product_attributes)) : ?>

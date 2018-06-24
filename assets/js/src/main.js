@@ -44,6 +44,10 @@ $(document).ready(function() {
 	 */
 	
 	$(window).on('load', function() {
+		
+	});
+
+	$('.products').imagesLoaded().done(function() {
 		$('.match-height').matchHeight({
 			byRow: false
 		});	
@@ -80,7 +84,7 @@ $(document).ready(function() {
 	}
 
 	$('article.product').css({
-		paddingBottom: ($(this).find('a.button').outerHeight() + $(this).find('p.price').outerHeight()) + 'px'
+		paddingBottom: ($(this).find('a.button').outerHeight() + $(this).find('p.price').outerHeight()) + 20 + 'px'
 	});
 
 	/**
@@ -174,6 +178,16 @@ $(document).ready(function() {
 		}
 		
 	});
+
+	/**
+	 * Team Side bar slide up
+	 * 
+	 */
+	
+	$('.slide-up').click(function() {
+		$(this).toggleClass('closed');
+		$(this).siblings('.' + $(this).data('toggle') + '-holder').slideToggle(300);
+	})
 
 
 })

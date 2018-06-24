@@ -47,6 +47,8 @@ get_header(); ?>
 		endforeach;
 	endif; 
 
+	$league = explode('_', $team[0]->taxonomy);
+
 	global $wpdb, $post;
 
 	$content_egg = $wpdb->get_results("SELECT * FROM {$wpdb->postmeta} WHERE post_id = $post->ID and meta_key LIKE '_cegg%data%'");
@@ -136,6 +138,9 @@ get_header(); ?>
 	<section class="products">
 		<div class="grid-container">
 			<div class="grid-x grid-margin-x margin-bottom-small">
+				<div class="large-12 cell">
+					<p class="breadcrumbs"><a href="<?php echo get_home_url(); ?>/<?php echo $league[0] ?>"><?php echo strtoupper($league[0]); ?></a> / <a href="<?php echo get_home_url(); ?>/<?php echo $league[0]; ?>/<?php echo $team[0]->slug; ?>"><?php echo $team[0]->name; ?></a> / <?php echo $post->post_title; ?></p>
+				</div>
 				<div class="large-12 cell white-bg">
 					<div class="pad-full-small">
 						<div class="grid-x grid-padding-x align-middle">
@@ -267,7 +272,7 @@ get_header(); ?>
 				// endforeach; 
 
 			?>
-			<?php //var_dump($content_egg); ?>
+			<?php //var_dump($egg_data); ?>
 			<div class="grid-x grid-margin-x margin-bottom-small">
 				<div class="large-12 cell">
 					<h3 class="text-center"><b>Related Products</b></h3>
