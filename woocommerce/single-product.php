@@ -174,7 +174,8 @@ get_header(); ?>
 			<div class="grid-x grid-margin-x margin-bottom-medium">
 				<div class="medium-6 cell large-order-1 medium-order-1 small-order-2 margin-bottom-small" id="main_content">
 					<div class="pad-full-small white-bg margin-bottom-small">
-						<?php wc_get_template_part('woocommerce/single-product/product-image'); ?>
+						<?php //wc_get_template_part('woocommerce/single-product/product-image'); ?>
+						<?php do_action( 'woocommerce_before_single_product_summary' ); ?>
 					</div>
 					<div class="pad-full-small white-bg margin-bottom-small">
 						<ul class="menu">

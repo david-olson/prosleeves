@@ -82,9 +82,9 @@
 					<div class="large-3 medium-6 cell">
 						<h4>On Social</h4>
 						<ul class="menu social">
-							<li><a href="/facebook"><i class="fab fa-facebook-f"></i></a></li>
-							<li><a href="/instagram"><i class="fab fa-instagram"></i></a></li>
-							<li><a href="/twitter"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="https://www.facebook.com/prosleeves411/" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href="https://twitter.com/FanSleeves" target="_blank"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="https://www.instagram.com/prosleeves/" target="_blank"><i class="fab fa-instagram"></i></a></li>
 						</ul>
 					</div>
 					<div class="large-4 medium-6 cell">

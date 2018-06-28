@@ -24,18 +24,15 @@ get_header();
 			<div class="grid-container">
 				<div class="grid-x grid-padding-x">
 					<div class="large-12 cell">
-						<ul class="menu horizontal expanded align-center">
-							<li class="menu-text">View Featured Products</li>
-							<?php $product_cat = get_terms(array(
-								'taxonomy' => 'product_cat',
-								'hide_empty' => false,
-								'number' => 5,
-								'exclude' => 15
-								)); ?>
-							<?php foreach ($product_cat as $cat) : ?>
-								<li><a href="<?php echo get_home_url(); ?>/products/<?php echo $cat->slug; ?>"><?php echo $cat->name; ?></a></li>
-							<?php endforeach; ?>
-						</ul>
+						<?php $menu_items = get_field('featured_products', 'options'); ?>
+						<?php if (count($menu_items) > 0) : ?>
+							<ul class="menu horizontal expanded align-center align-middle">
+								<li class="menu-text">View Featured Products</li>
+								<?php foreach ($menu_items as $menu) : ?>
+									<li><a class="text-center" href="<?php echo $menu['category']; ?>"><?php echo $menu['menu_title']; ?></a></li>
+								<?php endforeach; ?>
+							</ul>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>

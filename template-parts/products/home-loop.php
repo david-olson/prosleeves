@@ -1,7 +1,7 @@
 <?php
 
 global $wpdb, $post;
-	
+$product = wc_get_product($post->ID);
 
 	$content_egg = $wpdb->get_results("SELECT * FROM {$wpdb->postmeta} WHERE post_id = $post->ID and meta_key LIKE '_cegg%data%'");
 
@@ -36,8 +36,10 @@ global $wpdb, $post;
 
 		if ($egg_data[0]['priceOld'] > $egg_data[0]['price']) :
 			$price_drop = true;
+			$price = $egg_data[0]['price'];
 		else :
 			$price_drop = false;
+			$price = $product->get_regular_price();
 		endif;
 
 		$product_attributes = array();
@@ -76,11 +78,11 @@ global $wpdb, $post;
 
 	else :
 		$price_drop = false;
+		$price = $product->get_regular_price();
 	endif;
 
 	?>
 	<div class="cell product margin-bottom-small <?php if ($price_drop) : ?>price-drop<?php endif; ?>">
-		<?php $product = wc_get_product($post->ID); ?>
 		<article <?php post_class('match-height'); ?>>
 			<?php if ($price_drop) : ?>
 				<div class="price-drop-banner">
@@ -119,7 +121,11 @@ global $wpdb, $post;
 				</div>
 				<div class="grid-x grid-padding-x price-row align-middle">
 					<div class="medium-shrink cell">
-						<p class="price">$<?php echo number_format($product->get_regular_price(), 2); ?></p>
+						<?php if ($price > 0) : ?>
+							<p class="price">$<?php echo number_format($price, 2); ?></p>
+						<?php else : ?>
+							<p class="price"><small>Currently Unavailable</small></p>
+						<?php endif; ?>
 					</div>
 					<div class="medium-auto cell">
 						<?php if (!empty($product_attributes)) : ?>

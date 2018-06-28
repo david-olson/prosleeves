@@ -81,6 +81,17 @@ if (function_exists('acf_add_options_page')) {
 
   acf_add_options_page($hero_slider_args);
 
+  $featured_products_menu_args = array(
+    'page_title' => 'Featured Products',
+    'menu_title' => 'Featured Products',
+    'menu_slug' => 'featured-products',
+    'capability' => 'edit_posts',
+    'position' => 5,
+    'icon_url' => 'dashicons-cart'
+  );
+
+  acf_add_options_page($featured_products_menu_args);
+
 }
 
 add_image_size( 'team_menu_icon', 20, 20, false );

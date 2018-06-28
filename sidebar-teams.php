@@ -39,7 +39,9 @@
 			<?php endif; ?>
 			<h4 class="slide-up slide-up-shop-for" data-toggle="shop-for">Shop For</h4>
 			<hr>
-			<?php $args = array(
+			<?php 
+			/*
+			$args = array(
 				'taxonomy' => 'shop_for',
 				'hide_empty' => false,
 			); 
@@ -55,6 +57,7 @@
 			</div>
 			<h4 class="slide-up slide-up-departments" data-toggle="departments">Departments</h4>
 			<hr>
+			*/ ?>
 			<?php
 			$args = array(
 				'taxonomy' => 'product_cat',
