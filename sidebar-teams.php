@@ -37,10 +37,9 @@
 				<p>Viewing:</p> 
 				<span class="label"><a href="<?php echo get_home_url(); ?>/products"><i class="fas fa-times-circle"></i></a> <?php echo $team_object->name; ?></span>
 			<?php endif; ?>
-			<h4 class="slide-up slide-up-shop-for" data-toggle="shop-for">Shop For</h4>
+			<h4>Shop For</h4>
 			<hr>
 			<?php 
-			/*
 			$args = array(
 				'taxonomy' => 'shop_for',
 				'hide_empty' => false,
@@ -48,16 +47,15 @@
 			?>
 			<?php $shop_for = get_terms($args); ?>
 			<div class="shop-for-holder">
-				<ul class="menu vertical shop-for">
+				<ul class="menu vertical shop-for margin-bottom-small">
 					<?php foreach ($shop_for as $sf) : ?>
 						<li><label for="shop_for_<?php echo $sf->slug; ?>"><input id="shop_for_<?php echo $sf->slug; ?>" <?php if (in_array($sf->term_id, $shop_for_terms)) : ?>checked<?php endif; ?> type="checkbox" name="taxonomy_shop_for[]" value="<?php echo $sf->term_id; ?>"><?php echo $sf->name; ?></label></li>
 					<?php endforeach; ?>
 				</ul>
-				<a href="#" class="shop-for-view-more margin-bottom-small"><i class="plus-minus"></i> <span>View More</span></a>
+				<!-- <a href="#" class="shop-for-view-more margin-bottom-small"><i class="plus-minus"></i> <span>View More</span></a> -->
 			</div>
 			<h4 class="slide-up slide-up-departments" data-toggle="departments">Departments</h4>
 			<hr>
-			*/ ?>
 			<?php
 			$args = array(
 				'taxonomy' => 'product_cat',
@@ -125,10 +123,10 @@
 			<hr>
 			<?php price_range_slider(); ?>	
 		</div>
-		<?php if (isset($_GET['sort_by'])) : ?>
-			<input type="hidden" name="sort_by" value="<?php echo $_GET['sort_by']; ?>">
+		<?php if (isset($_GET['order_by'])) : ?>
+			<input type="hidden" name="order_by" value="<?php echo $_GET['order_by']; ?>">
 		<?php endif; ?>
-		<?php /* // This probably just needs to be $_GET['s'], possibly product type ?>
+		<?php// This probably just needs to be $_GET['s'], possibly product type ?>
 		<?php foreach ($_GET as $key => $value) : ?>
 			<?php if ($key == 's' || $key == 'dgwt_wcas' || $key == 'post_type') : ?>
 				<?php if (is_array($value)) : ?>
@@ -140,7 +138,6 @@
 				<?php endif; ?>
 			<?php endif; ?>
 		<?php endforeach; ?>
-		<?php */ ?>
 		<div class="grid-x">
 			<div class="large-6 cell">
 				<input type="submit" class="button expanded no-mb" value="Filter Products">

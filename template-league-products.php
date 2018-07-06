@@ -16,20 +16,20 @@
 		'relation' => 'AND'
 	);
 
-	if (isset($_GET['price_min']) && !empty($_GET['price_min'])) :
+	if (isset($_GET['min_price']) && !empty($_GET['min_price'])) :
 		$min_price_query = array(
 			'key' => '_price',
-			'value' => $_GET['price_min'],
+			'value' => $_GET['min_price'],
 			'compare' => '>=',
 			'type' => 'NUMERIC'
 		);
 		array_push($meta_queries, $min_price_query);
 	endif;
 
-	if (isset($_GET['price_max']) && !empty($_GET['price_max'])) :
+	if (isset($_GET['max_price']) && !empty($_GET['max_price'])) :
 		$max_price_query = array(
 			'key' => '_price',
-			'value' => $_GET['price_max'],
+			'value' => $_GET['max_price'],
 			'compare' => '<=',
 			'type' => 'NUMERIC'
 		);

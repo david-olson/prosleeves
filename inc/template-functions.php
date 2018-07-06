@@ -97,6 +97,7 @@ if (function_exists('acf_add_options_page')) {
 add_image_size( 'team_menu_icon', 20, 20, false );
 add_image_size('team_topbar_icon', 400, 400, false);
 add_image_size('product_loop_image', 300, 300, false);
+add_image_size('hero', 1400, 400, true);
 
 function HTMLToRGB($htmlCode)
   {
@@ -256,14 +257,14 @@ function price_range_slider() {
 
     $max = round($max, 0, PHP_ROUND_HALF_UP);
 
-  if (isset($_GET['price_max']) && !empty($_GET['price_max'])) :
-      $handle_max = $_GET['price_max'];
+  if (isset($_GET['max_price']) && !empty($_GET['max_price'])) :
+      $handle_max = $_GET['max_price'];
   else :
     $handle_max = $max;
     endif;
 
-    if (isset($_GET['price_min']) && !empty($_GET['price_min'])) :
-      $handle_min = $_GET['price_min'];
+    if (isset($_GET['min_price']) && !empty($_GET['min_price'])) :
+      $handle_min = $_GET['min_price'];
     else :
       $handle_min = 0;
     endif;
@@ -272,16 +273,16 @@ function price_range_slider() {
 
   ?>
     <div class="slider" data-start="0" data-slider data-initial-start="<?php echo $handle_min; ?>" data-initial-end="<?php echo $handle_max; ?>" data-end="<?php echo $max; ?>">
-      <span class="slider-handle" data-slider-handle role="slider" tabindex="1" aria-controls="price_min"></span>
+      <span class="slider-handle" data-slider-handle role="slider" tabindex="1" aria-controls="min_price"></span>
       <span class="slider-fill" data-slider-fill></span>
-      <span class="slider-handle" data-slider-handle role="slider" tabindex="1" aria-controls="price_max"></span>
+      <span class="slider-handle" data-slider-handle role="slider" tabindex="1" aria-controls="max_price"></span>
     </div>
     <div class="grid-x text-left">
       <div class="medium-6 cell">
-        <span class="currency">$</span> <input class="price-input" type="number" name="price_min" id="price_min">
+        <span class="currency">$</span> <input class="price-input" type="number" name="min_price" id="min_price">
       </div>
       <div class="medium-6 cell text-right">
-        <span class="currency">$</span> <input type="number" name="price_max" class="price-input" id="price_max">
+        <span class="currency">$</span> <input type="number" name="max_price" class="price-input" id="max_price">
       </div>
     </div>
   <?php
@@ -1060,6 +1061,8 @@ function filter_post_data($data) {
       $egg_data = unserialize( $content_egg[0]->meta_value );
       $egg_data = array_values($egg_data);
       $content = get_post_field('post_content', $data);
+
+      $product = wc_get_product($data);
       if (empty($content)) :
         $post = array();
         $post['ID'] = $data;
@@ -1307,6 +1310,26 @@ function filter_post_data($data) {
 
         
       endif;
+
+      if ($egg_data[0]['merchant'] == 'Amazon.com') :
+        foreach ($egg_data[0]['features'] as $feat) :
+          if ($feat['name'] == 'UPC') :
+            $upc = $feat['value'];
+          endif;
+        endforeach; 
+        
+        if (empty($product->get_sku())) :
+          update_post_meta($data, '_sku', $upc);
+        endif;
+      else :
+
+        $upc = $egg_data[0]['upc'];
+
+        if (empty($product->get_sku())) :
+          update_post_meta($data, '_sku', $upc);
+        endif; 
+
+      endif;
       
     endif;
     add_action('save_post', 'filter_post_data');
@@ -1356,6 +1379,39 @@ function set_uncategorized_brand($post_id, $post) {
       endif;
     endforeach;
   endif;
+
+  // global $wpdb;
+  // $content_egg = $wpdb->get_results("SELECT * FROM {$wpdb->postmeta} WHERE post_id = $post_id and meta_key LIKE '_cegg%data%'");
+  // $product = wc_get_product($post_id);
+
+  // if (!empty($content_egg)) :
+  //   $egg_data = unserialize( $content_egg[0]->meta_value );
+  //   $egg_data = array_values($egg_data);
+
+
+  //   if ($egg_data[0]['merchant'] == 'Amazon.com') :
+  //     foreach ($egg_data[0]['features'] as $feat) :
+  //       if ($feat['name'] == 'UPC') :
+  //         $upc = $feat['value'];
+  //       endif;
+  //     endforeach; 
+      
+  //     if (empty($product->get_sku())) :
+  //       update_post_meta($data, '_sku', $upc);
+  //     endif;
+  //   else :
+
+  //     $upc = $egg_data[0]['upc'];
+
+  //     if (empty($product->get_sku())) :
+  //       update_post_meta($data, '_sku', $upc);
+  //     endif; 
+
+  //   endif;
+
+
+  // endif;
+
 }
 
 add_action( 'save_post', 'set_uncategorized_brand', 100, 2 );

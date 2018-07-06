@@ -51,7 +51,13 @@ $(document).ready(function() {
 		$('.match-height').matchHeight({
 			byRow: false
 		});	
-	})
+	});
+
+	$(window).resize(function() {
+		$('.match-height').matchHeight({
+			byRow: false
+		});
+	});
 
 	
 

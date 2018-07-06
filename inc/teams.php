@@ -109,7 +109,7 @@ function get_first_product_image($product_cat_slug, $team) {
 			if (has_post_thumbnail()) :
 			?>
 				<img src="<?php the_post_thumbnail_url(); ?>" alt="Picture of a <?php echo $team->name; ?> clothing item.">
-			<?
+			<?php
 			else :
 				$team_image = get_field('team_logo', $team);
 				?>

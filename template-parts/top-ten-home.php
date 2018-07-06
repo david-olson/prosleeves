@@ -17,7 +17,7 @@
 				<?php endif; ?>
 			</div>
 			<div class="text-center pad-small">
-				<a href="<?php the_permalink(); ?>" class="button outline">View All</a>
+				<a href="<?php the_permalink(); ?>" class="button outline">Read</a>
 			</div>
 		</div>
 	</div>

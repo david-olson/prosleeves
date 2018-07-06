@@ -17,11 +17,23 @@
  */
 function prosleeves_woocommerce_setup() {
 	add_theme_support( 'woocommerce' );
-	add_theme_support( 'wc-product-gallery-zoom' );
-	add_theme_support( 'wc-product-gallery-lightbox' );
+	// add_theme_support( 'wc-product-gallery-zoom' );
+	// add_theme_support( 'wc-product-gallery-lightbox' );
 	add_theme_support( 'wc-product-gallery-slider' );
 }
 add_action( 'after_setup_theme', 'prosleeves_woocommerce_setup' );
+
+add_filter('woocommerce_save_account_details_required_fields', 'wc_save_account_details_required_fields' );
+function wc_save_account_details_required_fields( $required_fields ){
+    unset( $required_fields['account_display_name'] );
+    return $required_fields;
+}
+
+add_filter('woocommerce_single_product_image_thumbnail_html','wc_remove_link_on_thumbnails' );
+ 
+function wc_remove_link_on_thumbnails( $html ) {
+     return strip_tags( $html,'<div><img>' );
+}
 
 /**
  * WooCommerce specific scripts & stylesheets.

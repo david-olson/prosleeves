@@ -3,7 +3,7 @@
 global $wpdb, $post;
 $product = wc_get_product($post->ID);
 
-	$content_egg = $wpdb->get_results("SELECT * FROM {$wpdb->postmeta} WHERE post_id = $post->ID and meta_key LIKE '_cegg%data%'");
+	$content_egg = $wpdb->get_results("SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = $post->ID and meta_key LIKE '_cegg%data%'");
 
 
 	if (count($content_egg) > 0 && $content_egg !== null && $content_egg !== false) :

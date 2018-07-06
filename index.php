@@ -17,7 +17,8 @@ get_header();
 
 	<main id="content">
 		<section class="hero">
-			<?php the_homepage_hero(); ?>
+			<?php //the_homepage_hero(); ?>
+			<?php echo do_shortcode( '[rev_slider alias="homepage_slider"]' ); ?>
 		</section>
 		<?php promo_banner(); ?>
 		<section class="featured-products-menu" id="featured_products_menu">
