@@ -439,7 +439,7 @@ section.featured-products-menu {
 	}
 }
 
-header nav ul.menu li a.team-link {
+header nav ul.menu li a.team-link, div.mobile-menu ul.menu li.league .team a.team-link {
 	display: block;
 	&:before {
 		content: '';
@@ -448,7 +448,7 @@ header nav ul.menu li a.team-link {
 		height: 20px;
 		background-repeat: no-repeat;
 		vertical-align: middle;
-		margin-right: 10px;
+		margin-right: 5px;
 	}
 	&.nfl:before {
 		background-image: url('../../images/sprites/nfl_teams_sprite.png');
@@ -461,6 +461,9 @@ header nav ul.menu li a.team-link {
 	}
 	&.nhl:before {
 		background-image: url('../../images/sprites/nhl_teams_sprite.png');
+	}
+	&.ncaa:before {
+		background-image: url('../../images/sprites/college_teams_sprite.png');
 	}
 }
 

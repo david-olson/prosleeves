@@ -1473,8 +1473,9 @@ function sprite_deleted($term_id, $tt_id, $deleted_term, $object_ids) {
 
   $background = imagecreatetruecolor(20, $n);
 
-  imagesavealpha($background, true);
+  
   $color = imagecolorallocatealpha($background, 0, 0, 0, 127);
+  imagecolortransparent($background, $color); 
   imagefill($background, 0, 0, $color);
 
   $sprite = get_template_directory() . '/assets/images/sprites/' . $tax_slug . '_sprite.png';
@@ -1484,6 +1485,7 @@ function sprite_deleted($term_id, $tt_id, $deleted_term, $object_ids) {
     imagecopy($background, $tmp, 0, $tl['offset'], 0, 0, 20, 20);
     imagedestroy($tmp);
   endforeach;
+  imagesavealpha($background, true);
 
   imagepng($background, $sprite);
 
@@ -1512,6 +1514,8 @@ function create_sprite_from_logos($term_id, $tt_id) {
     array_push($team_logos, array(
       'url' => $image['sizes']['team_menu_icon'],
       'offset' => $n,
+      'width' => $image['sizes']['team_menu_icon-width'],
+      'height' => $image['sizes']['team_menu_icon-height']
     ));
     $stylesheet .= ".team-link.$tt->slug:before { background-position: 0px -".$n."px }\n";
     $n += 20;
@@ -1520,17 +1524,30 @@ function create_sprite_from_logos($term_id, $tt_id) {
 
   $background = imagecreatetruecolor(20, $n);
 
-  imagesavealpha($background, true);
   $color = imagecolorallocatealpha($background, 0, 0, 0, 127);
+  imagecolortransparent($background, $color); 
   imagefill($background, 0, 0, $color);
 
   $sprite = get_template_directory() . '/assets/images/sprites/' . $tax_slug . '_sprite.png';
 
   foreach ($team_logos as $tl) :
-    $tmp = imagecreatefrompng($tl['url']);
+    if ($tl['width'] !== 20 || $tl['height'] !== 20) : 
+      $tmp = imagecreatetruecolor(20, 20);
+      $color = imagecolorallocatealpha($tmp, 0, 0, 0, 127);
+      imagecolortransparent($tmp, $color);
+      imagefill($tmp, 0, 0, $color);
+      $tmp_pre = imagecreatefrompng($tl['url']);
+      $offset_w = (20 - $tl['width']) / 2;
+      $offset_h = (20 - $tl['height']) / 2;
+      imagecopy($tmp, $tmp_pre, $offset_w, $offset_h, 0, 0, $tl['width'], $tl['height']);
+    else :
+      $tmp = imagecreatefrompng($tl['url']);
+    endif;
     imagecopy($background, $tmp, 0, $tl['offset'], 0, 0, 20, 20);
     imagedestroy($tmp);
   endforeach;
+
+  imagesavealpha($background, true);
 
   imagepng($background, $sprite);
 

@@ -54,7 +54,7 @@
 						<?php foreach ($tax_terms as $tt) : ?>
 							<?php //var_dump($tt); ?>
 							<?php $team_logo = get_field('team_logo', 'category_'.$tt->term_id); ?>
-							<li class="team"><a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>/<?php echo $tt->slug; ?>"><img class="team-logo" src="<?php echo $team_logo['sizes']['team_menu_icon']; ?>" alt=""><?php echo $tt->name; ?></a></li>
+							<li class="team"><a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>/<?php echo $tt->slug; ?>" class="team-link <?php echo $tax->rewrite['slug']; ?> <?php echo $tax->name; ?> <?php echo $tt->slug; ?>"><?php echo $tt->name; ?></a></li>
 						<?php endforeach; ?>
 				</ul>
 			</li>
@@ -142,7 +142,7 @@
 
 											<?php //var_dump($tt); ?>
 											<?php $team_logo = get_field('team_logo', 'category_'.$tt->term_id); ?>
-											<li><a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>/<?php echo $tt->slug; ?>" class="team-link <?php echo $tax->rewrite['slug']; ?> <?php echo $tt->slug; ?>"><?php echo $tt->name; ?></a></li>
+											<li><a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>/<?php echo $tt->slug; ?>" class="team-link <?php echo $tax->rewrite['slug']; ?> <?php echo $tax->name; ?> <?php echo $tt->slug; ?>"><?php echo $tt->name; ?></a></li>
 										<?php endforeach; ?>		
 									</ul>
 								</div>
