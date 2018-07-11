@@ -208,6 +208,8 @@ header {
 	}
 }
 
+
+
 div.mobile-menu {
 	background-color: $white;
 	box-shadow: 0 0 0 !important;
@@ -434,6 +436,31 @@ section.featured-products-menu {
 				}
 			}
 		}
+	}
+}
+
+header nav ul.menu li a.team-link {
+	display: block;
+	&:before {
+		content: '';
+		display: inline-block;
+		width: 20px;
+		height: 20px;
+		background-repeat: no-repeat;
+		vertical-align: middle;
+		margin-right: 10px;
+	}
+	&.nfl:before {
+		background-image: url('../../images/sprites/nfl_teams_sprite.png');
+	}
+	&.mlb:before {
+		background-image: url('../../images/sprites/mlb_teams_sprite.png');
+	}
+	&.nba:before {
+		background-image: url('../../images/sprites/nba_teams_sprite.png');
+	}
+	&.nhl:before {
+		background-image: url('../../images/sprites/nhl_teams_sprite.png');
 	}
 }
 

@@ -1415,3 +1415,128 @@ function set_uncategorized_brand($post_id, $post) {
 }
 
 add_action( 'save_post', 'set_uncategorized_brand', 100, 2 );
+
+/**
+ * Image Sprites for Team Logos
+ * 
+ */
+
+add_action('edited_nfl_teams', 'create_sprite_from_logos', 10, 2);
+add_action('created_nfl_teams', 'create_sprite_from_logos', 10, 2);
+
+add_action('delete_nfl_teams', 'sprite_deleted', 10, 4);
+
+add_action('edited_college_teams', 'create_sprite_from_logos', 10, 2);
+add_action('created_college_teams', 'create_sprite_from_logos', 10, 2);
+
+add_action('delete_college_teams', 'sprite_deleted', 10, 4);
+
+add_action('edited_nhl_teams', 'create_sprite_from_logos', 10, 2);
+add_action('created_nhl_teams', 'create_sprite_from_logos', 10, 2);
+
+add_action('delete_nhl_teams', 'sprite_deleted', 10, 4);
+
+add_action('edited_nba_teams', 'create_sprite_from_logos', 10, 2);
+add_action('created_nba_teams', 'create_sprite_from_logos', 10, 2);
+
+add_action('delete_nba_teams', 'sprite_deleted', 10, 4);
+
+add_action('edited_mlb_teams', 'create_sprite_from_logos', 10, 2);
+add_action('created_mlb_teams', 'create_sprite_from_logos', 10, 2);
+
+add_action('delete_mlb_teams', 'sprite_deleted', 10, 4);
+
+function sprite_deleted($term_id, $tt_id, $deleted_term, $object_ids) {
+  $term = $deleted_term;
+  $tax_slug = $term->taxonomy;
+  $tax_terms = get_terms(array(
+    'taxonomy' => $tax_slug,
+    'hide_empty' => false,
+  ));
+
+  $team_logos = array();
+
+  $n = 0;
+
+  $stylesheet = '';
+
+  foreach ($tax_terms as $tt) : 
+    $image = get_field('team_logo', 'category_' . $tt->term_id);
+    array_push($team_logos, array(
+      'url' => $image['sizes']['team_menu_icon'],
+      'offset' => $n,
+    ));
+    $stylesheet .= ".team-link.$tt->slug:before { background-position: 0px -".$n."px }\n";
+    $n += 20;
+    
+  endforeach;
+
+  $background = imagecreatetruecolor(20, $n);
+
+  imagesavealpha($background, true);
+  $color = imagecolorallocatealpha($background, 0, 0, 0, 127);
+  imagefill($background, 0, 0, $color);
+
+  $sprite = get_template_directory() . '/assets/images/sprites/' . $tax_slug . '_sprite.png';
+
+  foreach ($team_logos as $tl) :
+    $tmp = imagecreatefrompng($tl['url']);
+    imagecopy($background, $tmp, 0, $tl['offset'], 0, 0, 20, 20);
+    imagedestroy($tmp);
+  endforeach;
+
+  imagepng($background, $sprite);
+
+  $stylesheet_path = get_template_directory() . '/assets/images/sprites/' . $tax_slug . '_styles.css';
+  $handle = fopen($stylesheet_path, 'w');
+  fwrite($handle, $stylesheet);
+  fclose($handle);
+}
+
+function create_sprite_from_logos($term_id, $tt_id) {
+  $term = get_term($term_id);
+  $tax_slug = $term->taxonomy;
+  $tax_terms = get_terms(array(
+    'taxonomy' => $tax_slug,
+    'hide_empty' => false,
+  ));
+
+  $team_logos = array();
+
+  $n = 0;
+
+  $stylesheet = '';
+
+  foreach ($tax_terms as $tt) : 
+    $image = get_field('team_logo', 'category_' . $tt->term_id);
+    array_push($team_logos, array(
+      'url' => $image['sizes']['team_menu_icon'],
+      'offset' => $n,
+    ));
+    $stylesheet .= ".team-link.$tt->slug:before { background-position: 0px -".$n."px }\n";
+    $n += 20;
+    
+  endforeach;
+
+  $background = imagecreatetruecolor(20, $n);
+
+  imagesavealpha($background, true);
+  $color = imagecolorallocatealpha($background, 0, 0, 0, 127);
+  imagefill($background, 0, 0, $color);
+
+  $sprite = get_template_directory() . '/assets/images/sprites/' . $tax_slug . '_sprite.png';
+
+  foreach ($team_logos as $tl) :
+    $tmp = imagecreatefrompng($tl['url']);
+    imagecopy($background, $tmp, 0, $tl['offset'], 0, 0, 20, 20);
+    imagedestroy($tmp);
+  endforeach;
+
+  imagepng($background, $sprite);
+
+  $stylesheet_path = get_template_directory() . '/assets/images/sprites/' . $tax_slug . '_styles.css';
+  $handle = fopen($stylesheet_path, 'w');
+  fwrite($handle, $stylesheet);
+  fclose($handle);
+
+}
