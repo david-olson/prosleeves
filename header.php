@@ -146,6 +146,7 @@
 										<?php endforeach; ?>		
 									</ul>
 								</div>
+								<?php /*
 								<div class="large-4 cell vertical-rule-left">
 									<h3 class="h5 red text-center">Featured Products</h3>
 									<div class="featured-product-slider slick">
@@ -181,6 +182,7 @@
 										<?php wp_reset_postdata(); ?>
 									</div>
 								</div>
+								*/ ?>
 							</div>
 						</div>
 					</li>
