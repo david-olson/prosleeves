@@ -131,7 +131,7 @@
 						<a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>" data-toggle="<?php echo $tax->name; ?>"><span><img class="league-logo" src="<?php echo $mm['menu_logo']['sizes']['team_menu_icon']; ?>" alt=""> <?php echo strtoupper($tax->rewrite['slug']); ?></span></a>
 						<div class="dropdown-pane bottom" id="<?php echo $tax->name; ?>" data-dropdown data-options="closeOnClick:true; hover: true; hoverPane: true;">
 							<div class="grid-x grid-padding-x">
-								<div class="large-8 cell">
+								<div class="large-auto cell">
 									<?php $tax_terms = get_terms(array(
 										'taxonomy' => $tax->name,
 										'hide_empty' => false
@@ -146,43 +146,43 @@
 										<?php endforeach; ?>		
 									</ul>
 								</div>
-								<?php /*
-								<div class="large-4 cell vertical-rule-left">
-									<h3 class="h5 red text-center">Featured Products</h3>
-									<div class="featured-product-slider slick">
-										<?php foreach($mm['featured_products'] as $product) : ?>
-											<div class="slide text-center">
-												<?php $image = get_the_post_thumbnail_url( $product['product']->ID, 'team_topbar_icon' ); ?>
-												<a class="text-center" href="<?php the_permalink($product['product']->ID); ?>" title="View <?php echo $product['product']->post_title; ?>">
-													<?php if (has_post_thumbnail($product['product']->ID)) : ?>
-														<img src="<?php echo $image; ?>" alt="Image of <?php echo get_the_title($product['product']->ID); ?>">
-													<?php else : ?>
-														<?php 
-														$product_leagues = array();
-														$leagues = get_field('menu_items', 'options');
-														foreach ($leagues as $league) :
-															$tax = get_taxonomy($league['item']);
-															array_push($product_leagues, $tax);
-														endforeach;
-														$product_teams = array();
-														foreach ($product_leagues as $p_league) : 
-															$team = get_the_terms($product['product']->ID, $p_league->name);
-															if ($team) :
-																array_push($product_teams, $team);
-															endif;	
-														endforeach;
-														$team_logo = get_field('team_logo', $product_teams[0][0]);
-														?>
-														<img class="text-center" src="<?php echo $team_logo['sizes']['large']; ?>" alt="Team logo for <?php echo $product_teams[0][0]->name; ?>">
-													<?php endif; ?>
-													<h2 class="text-center"><?php echo $product['product']->post_title; ?></h2>
-												</a>
-											</div>
-										<?php endforeach; ?>
-										<?php wp_reset_postdata(); ?>
+								<?php if (!empty($mm['featured_products'])) : ?>
+									<div class="large-4 cell vertical-rule-left">
+										<h3 class="h5 red text-center">Featured Products</h3>
+										<div class="featured-product-slider slick">
+											<?php foreach($mm['featured_products'] as $product) : ?>
+												<div class="slide text-center">
+													<?php $image = get_the_post_thumbnail_url( $product['product']->ID, 'team_topbar_icon' ); ?>
+													<a class="text-center" href="<?php the_permalink($product['product']->ID); ?>" title="View <?php echo $product['product']->post_title; ?>">
+														<?php if (has_post_thumbnail($product['product']->ID)) : ?>
+															<img src="<?php echo $image; ?>" alt="Image of <?php echo get_the_title($product['product']->ID); ?>">
+														<?php else : ?>
+															<?php 
+															$product_leagues = array();
+															$leagues = get_field('menu_items', 'options');
+															foreach ($leagues as $league) :
+																$tax = get_taxonomy($league['item']);
+																array_push($product_leagues, $tax);
+															endforeach;
+															$product_teams = array();
+															foreach ($product_leagues as $p_league) : 
+																$team = get_the_terms($product['product']->ID, $p_league->name);
+																if ($team) :
+																	array_push($product_teams, $team);
+																endif;	
+															endforeach;
+															$team_logo = get_field('team_logo', $product_teams[0][0]);
+															?>
+															<img class="text-center" src="<?php echo $team_logo['sizes']['large']; ?>" alt="Team logo for <?php echo $product_teams[0][0]->name; ?>">
+														<?php endif; ?>
+														<h2 class="text-center"><?php echo $product['product']->post_title; ?></h2>
+													</a>
+												</div>
+											<?php endforeach; ?>
+											<?php wp_reset_postdata(); ?>
+										</div>
 									</div>
-								</div>
-								*/ ?>
+								<?php endif; ?>
 							</div>
 						</div>
 					</li>

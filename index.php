@@ -40,6 +40,11 @@ get_header();
 		</section>
 		<section class="products" id="products">
 			<div class="grid-container">
+				<div class="grid-x grid-padding-x">
+					<div class="large-12 cell text-center">
+						<h1 class="new-products">Newest Products</h1>
+					</div>
+				</div>
 				<?php $args = array(
 					'post_type' => 'product',
 					'posts_per_page' => 10,
@@ -66,7 +71,7 @@ get_header();
 				<?php endif; ?>
 				<div class="grid-x grid-padding-x">
 					<div class="large-12 cell text-center">
-						<div class="pad-medium">
+						<div class="pad-small">
 							<a href="<?php echo get_home_url(); ?>/products" class="button large outline no-mb">View All</a>
 						</div>
 					</div>

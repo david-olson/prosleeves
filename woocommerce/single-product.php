@@ -49,16 +49,22 @@ get_header(); ?>
 
 	$league = explode('_', $team[0]->taxonomy);
 
-	global $wpdb, $post;
+	global $post;
 
-	$content_egg = $wpdb->get_results("SELECT * FROM {$wpdb->postmeta} WHERE post_id = $post->ID and meta_key LIKE '_cegg%data%'");
+	$all_post_meta = get_post_meta($post->ID);
+
+	foreach ($all_post_meta as $key => $value) :
+		if (strpos($key, '_cegg') !== false && strpos($key, 'data') !== false) :
+			$content_egg = $all_post_meta[$key];
+		endif;
+	endforeach;
 	
 
 	
 
 	if (count($content_egg) > 0) :
 		
-		$egg_data = unserialize( $content_egg[0]->meta_value );
+		$egg_data = unserialize( $content_egg[0] );
 		$egg_data = array_values($egg_data);
 
 		if (array_key_exists('title', $egg_data[0])) :
@@ -98,6 +104,7 @@ get_header(); ?>
 			$product_description = get_the_excerpt();
 		endif;
 
+/*
 		$product_attributes = array();
 
 		if ($egg_data[0]['merchant'] == 'Fanatics') :
@@ -131,6 +138,7 @@ get_header(); ?>
 				array_push($product_attributes, $temp_array);
 			endif;
 		endif;
+		*/
 
 	endif;
 	?>
@@ -223,19 +231,21 @@ get_header(); ?>
 									<div class="medium-shrink cell">
 										<p><small>Available at <?php echo $egg_data[0]['domain']; ?></small></p>
 									</div>
-									<div class="medium-auto cell">
-										<?php if (!empty($product_attributes)) : ?>
-											<ul class="menu horizontal product-benefits">
-												<?php foreach ($product_attributes as $pa) : ?>
-													<li class="menu-text">
-														<span class="has-tip" data-tooltip tabindex="1" title="<?php echo $pa['message']; ?>">
-															<i class="fa-sm fas <?php echo $pa['icon']; ?>"></i>
-														</span>
-													</li>
-												<?php endforeach; ?>
-											</ul>
-										<?php endif; ?>
-									</div>
+									<?php /*
+										<div class="medium-auto cell">
+											<?php if (!empty($product_attributes)) : ?>
+												<ul class="menu horizontal product-benefits">
+													<?php foreach ($product_attributes as $pa) : ?>
+														<li class="menu-text">
+															<span class="has-tip" data-tooltip tabindex="1" title="<?php echo $pa['message']; ?>">
+																<i class="fa-sm fas <?php echo $pa['icon']; ?>"></i>
+															</span>
+														</li>
+													<?php endforeach; ?>
+												</ul>
+											<?php endif; ?>
+										</div>
+										*/ ?>
 								</div>
 								
 							<?php else : ?>

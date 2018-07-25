@@ -204,7 +204,11 @@ function permalinks_init() {
   foreach ($mega_menu_leagues as $mm_l) :
     $tax = get_taxonomy($mm_l['item']);
     $slug = explode('_', $tax->name);
-    add_rewrite_rule("^($slug[0])?$", 'index.php?league=$matches[1]', 'top');
+    if ($slug[0] == 'college') :
+      add_rewrite_rule("^(ncaa)?$", 'index.php?league=college', 'top');
+    else :
+      add_rewrite_rule("^($slug[0])?$", 'index.php?league=$matches[1]', 'top');
+    endif;
   endforeach;
 
 }
@@ -1084,239 +1088,19 @@ function filter_post_data($data) {
         
       endif;
 
-      /**
-       * Add Extra images to gallery.
-       * 
-       */
-      
       if ($egg_data[0]['merchant'] == 'Amazon.com') :
-
-        
-        $image_list = array();
-        $n = 0;
-        foreach ($egg_data[0]['extra']['imageSet'] as $image) :
-          // $filename = $image['LargeImage'];
-          
-
-          $filename = get_the_title($data) . '_image_' . $n; 
-          $wp_upload_dir = wp_upload_dir();
-          $uploadfile = $wp_upload_dir['path'] . '/' . $filename;
-
-          require_once(ABSPATH . 'wp-admin/includes/file.php');
-
-          $timeout_seconds = 10;
-
-          $temp_file = download_url( $image['LargeImage'], $timeout_seconds );
-
-          if (!is_wp_error( $temp_file )) :
-            $filetype = wp_check_filetype( basename( $temp_file ), null );
-            $file = array(
-                    'name'     => basename($image['LargeImage']), // ex: wp-header-logo.png
-                    'type'     => filetype($temp_file),
-                    'tmp_name' => $temp_file,
-                    'error'    => 0,
-                    'size'     => filesize($temp_file),
-                );
-            $overrides = array(
-                    // Tells WordPress to not look for the POST form
-                    // fields that would normally be present as
-                    // we downloaded the file from a remote server, so there
-                    // will be no form fields
-                    // Default is true
-                    'test_form' => false,
-
-                    // Setting this to false lets WordPress allow empty files, not recommended
-                    // Default is true
-                    'test_size' => true,
-                );
-            $results = wp_handle_sideload( $file, $overrides );
-            if ( !empty( $results['error'] ) ) {
-                    // Insert any error handling here
-                } else {
-
-                  // include_once( ABSPATH . 'wp-admin/includes/image.php' );
-
-                    $filename  = $results['file']; // Full path to the file
-                    $local_url = $results['url'];  // URL to the file in the uploads dir
-                    $type      = $results['type']; // MIME type of the file
-
-                    $attachment = array(
-                        'post_mime_type' => $type,
-                        'post_title' => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
-                        'post_content' => '',
-                        'post_status' => 'inherit'
-                    );
-
-                    $attach_id = wp_insert_attachment($attachment, $filename, 0);
-
-                    // $attach_data = wp_generate_attachment_metadata( $attach_id, $filename );
-                    // wp_update_attachment_metadata( $attach_id,  $attach_data );
-
-                    array_push($image_list, $attach_id);
-                    ++$n;
-                }
+        if (empty($egg_data[0]['upc'])) :
+          foreach ($egg_data[0]['features'] as $feat) :
+            if ($feat['name'] == 'UPC') :
+              $upc = $feat['value'];
+            endif;
+          endforeach;
+        else :
+          if (stripos( $egg_data['upc'], ';' )) :
+            $upc = explode(';', $egg_data['upc']);
+            $upc = $upc[0];
           endif;
-
-          
-
-          
-        endforeach;
-
-
-        if (!empty($image_list)) :
-
-          $csl = implode(', ', $image_list);
-
-          update_post_meta( $data, '_product_image_gallery', $csl);
-
-        endif;
-      endif;
-
-      if ($egg_data[0]['domain'] == 'walmart.com') :
-        
-        $image_list = array();
-        $n = 0;
-        foreach ($egg_data[0]['extra']['imageEntities'] as $image) :
-
-          // $filename = $image['LargeImage'];
-          if ($url = parse_url($image['largeImage'])) {
-           
-           $new_url = $url['scheme'] . '://' . $url['host'] . $url['path'];
-          }
-          
-          $filename = get_the_title($data) . '_image_' . $n; 
-          $wp_upload_dir = wp_upload_dir();
-          $uploadfile = $wp_upload_dir['path'] . '/' . $filename;
-
-          require_once(ABSPATH . 'wp-admin/includes/file.php');
-
-          $timeout_seconds = 50;
-
-          $temp_file = download_url( $new_url, $timeout_seconds );
-
-          if (!is_wp_error( $temp_file )) :
-            $filetype = wp_check_filetype( basename( $temp_file ), null );
-            $file = array(
-                    'name'     => basename( $new_url), // ex: wp-header-logo.png
-                    'type'     => filetype($temp_file),
-                    'tmp_name' => $temp_file,
-                    'error'    => 0,
-                    'size'     => filesize($temp_file),
-                );
-            $overrides = array(
-                    // Tells WordPress to not look for the POST form
-                    // fields that would normally be present as
-                    // we downloaded the file from a remote server, so there
-                    // will be no form fields
-                    // Default is true
-                    'test_form' => false,
-
-                    // Setting this to false lets WordPress allow empty files, not recommended
-                    // Default is true
-                    'test_size' => true,
-                );
-            $results = wp_handle_sideload( $file, $overrides );
-            if ( !empty( $results['error'] ) ) {
-                    var_dump($results['error']);
-                    die();
-                } else {
-
-                    $filename  = $results['file']; // Full path to the file
-                    $local_url = $results['url'];  // URL to the file in the uploads dir
-                    $type      = $results['type']; // MIME type of the file
-
-                    $attachment = array(
-                        'post_mime_type' => $type,
-                        'post_title' => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
-                        'post_content' => '',
-                        'post_status' => 'inherit'
-                    );
-
-                    $attach_id = wp_insert_attachment($attachment, $filename, 0);
-
-                    array_push($image_list, $attach_id);
-                    ++$n;
-                }
-          endif;
-
-          
-
-          
-        endforeach;
-
-        if (!empty($image_list)) :
-
-          $csl = implode(', ', $image_list);
-
-          update_post_meta( $data, '_product_image_gallery', $csl);
-
-        endif;
-      endif;
-
-      
-      if ($egg_data[0]['domain'] == 'fanatics.com') :
-        $filename = get_the_title($data) . '_image_' . $n; 
-        $wp_upload_dir = wp_upload_dir();
-        $uploadfile = $wp_upload_dir['path'] . '/' . $filename;
-
-        require_once(ABSPATH . 'wp-admin/includes/file.php');
-
-        $timeout_seconds = 10;
-
-        $temp_file = download_url( $egg_data[0]['img'], $timeout_seconds );
-        if (!is_wp_error( $temp_file )) :
-          $filetype = wp_check_filetype( basename( $temp_file ), null );
-          $file = array(
-                  'name'     => basename($egg_data[0]['img']), // ex: wp-header-logo.png
-                  'type'     => filetype($temp_file),
-                  'tmp_name' => $temp_file,
-                  'error'    => 0,
-                  'size'     => filesize($temp_file),
-              );
-          $overrides = array(
-                  // Tells WordPress to not look for the POST form
-                  // fields that would normally be present as
-                  // we downloaded the file from a remote server, so there
-                  // will be no form fields
-                  // Default is true
-                  'test_form' => false,
-
-                  // Setting this to false lets WordPress allow empty files, not recommended
-                  // Default is true
-                  'test_size' => true,
-              );
-          $results = wp_handle_sideload( $file, $overrides );
-          if ( !empty( $results['error'] ) ) {
-                  // Insert any error handling here
-              } else {
-
-                  $filename  = $results['file']; // Full path to the file
-                  $local_url = $results['url'];  // URL to the file in the uploads dir
-                  $type      = $results['type']; // MIME type of the file
-
-                  $attachment = array(
-                      'post_mime_type' => $type,
-                      'post_title' => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
-                      'post_content' => '',
-                      'post_status' => 'inherit'
-                  );
-
-                  $attach_id = wp_insert_attachment($attachment, $filename, 0);
-
-                  set_post_thumbnail( $data, $attach_id );
-                  
-              }
-        endif;
-
-        
-      endif;
-
-      if ($egg_data[0]['merchant'] == 'Amazon.com') :
-        foreach ($egg_data[0]['features'] as $feat) :
-          if ($feat['name'] == 'UPC') :
-            $upc = $feat['value'];
-          endif;
-        endforeach; 
+        endif; 
         
         if (empty($product->get_sku())) :
           update_post_meta($data, '_sku', $upc);

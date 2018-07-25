@@ -99,13 +99,13 @@
 				<p class="breadcrumbs no-mb"><a  href="<?php echo get_home_url(); ?>/<?php echo $league; ?>"><?php echo strtoupper($league); ?></a> / <a href="<?php echo get_home_url(); ?>/<?php echo $league; ?>/<?php echo $team; ?>"><?php echo $team_object->name; ?></a> / <a href="<?php echo get_home_url(); ?>/<?php echo $league; ?>/<?php echo $team; ?>/products/<?php echo $category_overview->slug; ?>"><?php echo $team_object->name; ?> <?php echo $category_overview->name; ?></a></p>
 			</div>
 			<div class="large-6 medium-6 cell">
-				<form action="<?php echo home_url($wp->request); ?>" method="GET" class="pad-small">
+				<form action="<?php echo home_url($wp->request); ?>" method="GET" class="pad-small" id="orderby_form">
 						<div class="grid-x grid-padding-x align-right align-middle">
 							<div class="medium-shrink cell">
-								<h4 class="no-mb h5">Sort By:</h4>
+								<h4 class="no-mb h5">Filter:</h4>
 							</div>
 							<div class="medium-shrink cell">
-								<select name="order_by" id="order_by" class="no-mb">
+								<select name="order_by" id="order_by" class="no-mb" onchange="document.getElementById('orderby_form').submit();">
 									<option value="date_desc" <?php if (isset($_GET['order_by']) && $_GET['order_by'] == 'date_desc') : ?>selected<?php endif; ?>>Date Added: Newest First</option>
 									<option value="date_asc" <?php if (isset($_GET['order_by']) && $_GET['order_by'] == 'date_asc') : ?>selected<?php endif; ?>>Date Added: Oldest First</option>
 									<option value="price_asc" <?php if (isset($_GET['order_by']) && $_GET['order_by'] == 'price_asc') : ?>selected<?php endif; ?>>Price: Low to High</option>
@@ -125,9 +125,11 @@
 									<?php endif; ?>
 								<?php endif; ?>
 							<?php endforeach; ?>
-							<div class="medium-shrink cell">
-								<input type="submit" value="Filter" class="button no-mb">
-							</div>
+							<noscript>
+								<div class="medium-shrink cell">
+									<input type="submit" value="Filter" class="button no-mb">
+								</div>
+							</noscript>
 						</div>
 					</form>
 			</div>

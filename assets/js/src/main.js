@@ -47,7 +47,7 @@ $(document).ready(function() {
 		
 	});
 
-	$('.products').imagesLoaded().done(function() {
+	$('.products').imagesLoaded().progress(function() {
 		$('.match-height').matchHeight({
 			byRow: false
 		});	

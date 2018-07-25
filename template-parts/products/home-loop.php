@@ -1,13 +1,18 @@
 <?php
 
-global $wpdb, $post;
+global $post;
 $product = wc_get_product($post->ID);
 
-	$content_egg = $wpdb->get_results("SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = $post->ID and meta_key LIKE '_cegg%data%'");
+	$all_post_meta = get_post_meta($post->ID);
 
+	foreach ($all_post_meta as $key => $value) :
+		if (strpos($key, '_cegg') !== false && strpos($key, 'data') !== false) :
+			$content_egg = $all_post_meta[$key];
+		endif;
+	endforeach;
 
 	if (count($content_egg) > 0 && $content_egg !== null && $content_egg !== false) :
-		$egg_data = unserialize( $content_egg[0]->meta_value );
+		$egg_data = unserialize( $content_egg[0] );
 		$egg_data = array_values($egg_data);
 		if (array_key_exists('title', $egg_data[0])) :
 			$product_title = $egg_data[0]['title'];
@@ -90,10 +95,8 @@ $product = wc_get_product($post->ID);
 				</div>
 			<?php endif; ?>
 			<div class="pad-full-small">
-				<h2 class="h6<?php if ($price_drop) : ?> price-drop-pad<?php endif; ?>">
-					<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-				</h2>
-				<div class="text-center">
+				
+				<div class="text-center margin-bottom-small">
 					<?php if (has_post_thumbnail()) : ?>
 						<a href="<?php the_permalink(); ?>"><img src="<?php the_post_thumbnail_url('product_loop_image'); ?>" alt="Image of <?php the_title(); ?>"></a>
 						
@@ -119,14 +122,33 @@ $product = wc_get_product($post->ID);
 							<a href="<?php the_permalink(); ?>"><img class="text-center" src="<?php echo $team_logo['sizes']['product_loop_image']; ?>" alt="Team logo for <?php echo $product_teams[0][0]->name; ?>"></a>
 					<?php endif; ?>
 				</div>
-				<div class="grid-x grid-padding-x price-row align-middle">
-					<div class="medium-shrink cell">
+				</div>
+				<div class="grid-x price-row">
+					<div class="medium-6 cell">
+						<?php $brands = get_the_terms( $post->ID, 'brands' ); 
+							$brands_array = [];
+							if (!empty($brands)) :
+								foreach ($brands as $brand) : 
+									$brands_array[] = $brand->name;
+								endforeach;
+							endif;
+							$brands_list = implode(', ', $brands_array);
+						?>
+						<p class="price"><small><?php echo $brands_list; ?></small></p>
+					</div>
+					<div class="medium-6 cell text-right">
 						<?php if ($price > 0) : ?>
-							<p class="price">$<?php echo number_format($price, 2); ?></p>
+							<p class="price text-right">$<?php echo number_format($price, 2); ?></p>
 						<?php else : ?>
-							<p class="price"><small>Currently Unavailable</small></p>
+							<p class="price text-right"><small>Currently Unavailable</small></p>
 						<?php endif; ?>
 					</div>
+					<div class="medium-12 cell">
+						<h2 class="h6<?php if ($price_drop) : ?> price-drop-pad<?php endif; ?>">
+							<a href="<?php the_permalink(); ?>"><?php echo (strlen(get_the_title()) > 60) ? substr(get_the_title(), 0, 60).'...' : get_the_title(); ?></a>
+						</h2>
+					</div>
+					<?php /*
 					<div class="medium-auto cell">
 						<?php if (!empty($product_attributes)) : ?>
 							<ul class="menu horizontal product-benefits">
@@ -140,21 +162,22 @@ $product = wc_get_product($post->ID);
 							</ul>
 						<?php endif; ?>
 					</div>
+					*/ ?>
 				</div>
-			</div>
+			
 			<div class="grid-x button-row">
 				<div class="large-6 cell">
-					<a href="<?php the_permalink(); ?>" class="button expanded no-mb">More Details</a>
+					<a href="<?php the_permalink(); ?>" class="button secondary expanded no-mb">More Details</a>
 				</div>
 				<div class="large-6 cell relative">
 					<?php if (has_term('prosleeves', 'product_cat')) : ?>
-						<a href="/?add-to-cart=<?php the_ID(); ?>" data-quantity="1" data-product_id="<?php the_ID(); ?>" class="button secondary alternate ajax_add_to_cart add_to_cart_button no-mb expanded">Add to Cart</a>
+						<a href="/?add-to-cart=<?php the_ID(); ?>" data-quantity="1" data-product_id="<?php the_ID(); ?>" class="button alternate ajax_add_to_cart add_to_cart_button no-mb expanded">Add to Cart</a>
 					<?php else : ?>
 						<?php if (isset($product_url)) : ?>
-							<a href="<?php echo $product_url; ?>" class="button secondary expanded no-mb">Buy Now</a>
+							<a href="<?php echo $product_url; ?>" class="button expanded no-mb">Buy Now</a>
 						<?php else : ?>
 							<?php $affiliate_link = get_post_meta( get_the_ID(), '_product_url', true ); ?>
-							<a href="<?php echo $affiliate_link; ?>" class="button secondary expanded no-mb">Buy Now</a>
+							<a href="<?php echo $affiliate_link; ?>" class="button expanded no-mb">Buy Now</a>
 						<?php endif; ?>
 					<?php endif; ?>
 				</div>

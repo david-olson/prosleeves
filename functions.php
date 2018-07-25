@@ -132,7 +132,7 @@ add_action( 'widgets_init', 'prosleeves_widgets_init' );
 
 function prosleeves_scripts() {
 	$cache_buster = date('YmdHis');
-	wp_enqueue_style( 'prosleeves-style', get_template_directory_uri() . '/assets/css/build/app.min.css' );
+	wp_enqueue_style( 'prosleeves-style', get_template_directory_uri() . '/assets/css/build/app.min.css', array(), $cache_buster );
 
 	wp_enqueue_script( 'prosleeves-vendors', get_template_directory_uri() . '/assets/js/build/vendors.min.js', array(), $cache_buster, true );
 

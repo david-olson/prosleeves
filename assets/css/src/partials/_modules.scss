@@ -584,7 +584,6 @@ footer {
 	.top-ten-title {
 		text-transform: uppercase;
 		letter-spacing: 3px;
-		padding: $global-padding 0;
 	}
 	a {
 		color: $white;
@@ -605,6 +604,18 @@ footer {
 /**
  * Modules
  */
+
+/**
+ * Home
+ */
+
+.new-products {
+	margin-bottom: $global-margin * 2;
+	font-size: 1.75rem;
+	text-transform: uppercase;
+	color: $red;
+	font-weight: bold;
+}
 
  /**
  * Account Pages
@@ -729,7 +740,7 @@ footer {
 
  section.products {
  	background-color: $light-gray;
- 	padding: $global-padding * 2 0;
+ 	padding: $global-padding 0;
 
  	article.product {
  		background-color: $white;
@@ -759,21 +770,26 @@ footer {
  		}
  		img {
  			max-height: 260px;
- 			padding-bottom: $global-padding;
+ 			width: auto;
+ 			padding-bottom: $global-padding * 3;
  			@include breakpoint(small down) {
  				padding-bottom: $global-padding * 2;
  			}
+ 		}
+ 		.price {
+ 			margin-bottom: $global-margin;
  		}
  		.price-row {
  			position: absolute;
  			width: 90%;
  			left: 50%;
  			transform: translateX(-50%);
- 			bottom: 60px;
+ 			bottom: 40px;
  			font-weight: bold;
  			font-size: 1.25rem;
  			p {
- 				margin-bottom: 0;
+ 				// margin-bottom: 0;
+ 				line-height: 1;
  			}
  		}
  		.price-drop-banner {
@@ -1399,7 +1415,7 @@ footer {
  	padding: $global-padding * 2;
  	color: $white;
  	.top-ten-title {
- 		margin: $global-margin 0 $global-margin * 2 0;
+		margin-bottom: $global-margin;
  		text-transform: uppercase;
  		letter-spacing: 3px;
  		font-weight: bold;
