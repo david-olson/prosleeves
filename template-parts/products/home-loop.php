@@ -167,17 +167,17 @@ $product = wc_get_product($post->ID);
 			
 			<div class="grid-x button-row">
 				<div class="large-6 cell">
-					<a href="<?php the_permalink(); ?>" class="button secondary expanded no-mb">More Details</a>
+					<a href="<?php the_permalink(); ?>" class="button secondary expanded no-mb">MORE DETAILS</a>
 				</div>
 				<div class="large-6 cell relative">
 					<?php if (has_term('prosleeves', 'product_cat')) : ?>
-						<a href="/?add-to-cart=<?php the_ID(); ?>" data-quantity="1" data-product_id="<?php the_ID(); ?>" class="button alternate ajax_add_to_cart add_to_cart_button no-mb expanded">Add to Cart</a>
+						<a href="/?add-to-cart=<?php the_ID(); ?>" data-quantity="1" data-product_id="<?php the_ID(); ?>" class="button alternate ajax_add_to_cart add_to_cart_button no-mb expanded">ADD TO CART</a>
 					<?php else : ?>
 						<?php if (isset($product_url)) : ?>
-							<a href="<?php echo $product_url; ?>" class="button expanded no-mb">Buy Now</a>
+							<a href="<?php echo $product_url; ?>" class="button expanded no-mb">BUY NOW</a>
 						<?php else : ?>
 							<?php $affiliate_link = get_post_meta( get_the_ID(), '_product_url', true ); ?>
-							<a href="<?php echo $affiliate_link; ?>" class="button expanded no-mb">Buy Now</a>
+							<a href="<?php echo $affiliate_link; ?>" class="button expanded no-mb">BUY NOW</a>
 						<?php endif; ?>
 					<?php endif; ?>
 				</div>

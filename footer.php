@@ -51,7 +51,7 @@
 					?>
 					<div class="cell hover-up margin-bottom-small">
 						<?php //var_dump($tax); ?>
-						<a href="<?php echo get_home_url(); ?>/<?php echo $slug[0]; ?>">	
+						<a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>">	
 							<img src="<?php echo $menu_item['menu_logo']['sizes']['team_topbar_icon']; ?>" alt="">
 							<p class="text-center">Shop Now</p>
 						</a>

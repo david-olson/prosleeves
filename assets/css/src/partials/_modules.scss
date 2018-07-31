@@ -1633,3 +1633,33 @@ footer {
  		margin-bottom: 30px;
  	}
  }
+
+ /**
+  * League Teams Overview
+  */
+ 
+ article.all-team-holder {
+ 	display: flex;
+ 	align-items: center;
+ 	justify-content: center;
+ 	position: relative;
+ 	img.all-teams-logo {
+ 		max-height: 140px;
+		width: auto;
+		height: auto;
+		max-width: 75%;
+ 	}
+
+ }
+
+ .all-teams-link {
+ 	position: relative;
+ 	display: block;
+ 	padding-bottom: 3rem;
+ 	button {
+ 		position: absolute;
+ 		bottom: 0;
+ 		left: 0;
+ 		width: 100%;
+ 	}
+ }
