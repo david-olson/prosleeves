@@ -184,11 +184,14 @@ get_header(); ?>
 					<div class="pad-full-small white-bg margin-bottom-small">
 						<?php //wc_get_template_part('woocommerce/single-product/product-image'); ?>
 						<?php do_action( 'woocommerce_before_single_product_summary' ); ?>
+						<?php if (count($content_egg) > 0) : ?>
+							<p class="text-center"><small><a href="<?php echo $egg_data[0]['url']; ?>" target="_blank"><img src="/wp-content/plugins/content-egg/res/logos/<?php echo strtolower(str_replace('.', '-', $egg_data[0]['domain'])); ?>.png" style="max-width: 55px; margin-right: 10px; display: inline-block; vertical-align:middle;" alt=""> Click Here For Additional Images.</a></small></p>
+						<?php endif; ?>
 					</div>
 					<div class="pad-full-small white-bg margin-bottom-small">
 						<ul class="menu">
 							<li><a href="#description">Description</a></li>
-							<!-- <li><a href="#coupons">Coupons</a></li> -->
+							<li><a href="#coupons">Coupons</a></li>
 							<li><a href="#price-alerts">Price Alerts</a></li>
 							<li><a href="#price-history">Price History</a></li>
 							<li><a href="#reviews">Reviews/Comments</a></li>
@@ -206,6 +209,27 @@ get_header(); ?>
 						<?php the_content(); ?>
 						<hr>
 						<?php echo do_shortcode( '[ess_post]' ); ?>
+					</div>
+					<div class="pad-full-small white-bg margin-bottom-small" id="coupons">
+						<?php
+
+							if (count($content_egg) > 0) :
+								if (strpos($egg_data[0]['domain'], 'amazon') !== false) :
+									$brand_link = strtoupper(str_replace(' ', '+', $egg_data[0]['extra']['itemAttributes']['Brand']));
+									$coupon_link = "https://www.amazon.com/hz/coupons/search/?ref=as_li_ss_tl&searchText=$brand_link&linkCode=ll2&tag=prosleeves-20&linkId=e8ddfd5a60aabe0eac79850ee42e6375";
+								endif;
+								if (strpos($egg_data[0]['domain'], 'fanatics')) :
+									$coupon_link = "https://shareasale.com/r.cfm?b=31196&u=1551900&m=7124&urllink=www%2Efanatics%2Ecom%2Fcoupons%2F&afftrack=";
+								endif;
+								if (strpos($egg_data[0]['domain'], 'walmart')) : 
+									$coupon_link = "http://linksynergy.walmart.com/deeplink?id=tgjO7MORl8U&mid=2149&murl=http%3A%2F%2Fwww.walmart.com%2Fstore%2Fcoupons";
+								endif;
+
+						?>
+						<h3 class="h4 red">Check for the Latest Coupons</h3>
+						<p><strong>Check out the latest coupons for <?php echo $egg_data[0]['extra']['itemAttributes']['Brand']; ?> products.</strong></p>
+						<a href="<?php echo $coupon_link; ?>" class="button" target="_blank">Click Here</a>
+						<?php endif; ?>
 					</div>
 					<div class="pad-full-small white-bg margin-bottom-small" id="price-alerts">
 						<h3 class="h4 red">Price Alerts</h3>
