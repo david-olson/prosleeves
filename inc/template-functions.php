@@ -1341,3 +1341,192 @@ function create_sprite_from_logos($term_id, $tt_id) {
   fclose($handle);
 
 }
+
+/**
+ * Add Custom Taxonomies to WC Import
+ * 
+ */
+
+/**
+ * Register Custom taxonomies in the importer
+ *
+ * @param  array $options
+ * @return  array $options
+ */
+
+function prosleeves_map_columns($options) {
+  $options['nfl_teams'] = __('NFL Teams', 'prosleeves');
+  $options['college_teams'] = __('NCAA Teams', 'prosleeves');
+  $options['nhl_teams'] = __('NHL Teams', 'prosleeves');
+  $options['nba_teams'] = __('NBA Teams', 'prosleeves');
+  $options['mlb_teams'] = __('MLB Teams', 'prosleeves');
+  $options['brands'] = __('Brands', 'prosleeves');
+  $options['shop_for'] = __('Shop For', 'prosleeves');
+
+  return $options;
+}
+
+add_filter('woocommerce_csv_product_import_mapping_options', 'prosleeves_map_columns');
+
+/**
+ * Add automatic mapping support for custom columns
+ * 
+ * @param  array $columns
+ * @return array $columns
+ */
+
+function prosleeves_add_columns_to_mapping_screen($columns) {
+  $columns[__('NFL Teams', 'prosleeves')] = 'nfl_teams';
+  $columns[__('NCAA Teams', 'prosleeves')] = 'college_teams';
+  $columns[__('NHL Teams', 'prosleeves')] = 'nhl_teams';
+  $columns[__('NBA Teams', 'prosleeves')] = 'nba_teams';
+  $columns[__('MLB Teams', 'prosleeves')] = 'mlb_teams';
+  $columns[__('Brands', 'prosleeves')] = 'brands';
+  $columns[__('Shop For', 'prosleeves')] = 'shop_for';
+
+  return $columns;
+}
+
+add_filter('woocommerce_csv_product_import_mapping_default_columns', 'prosleeves_add_columns_to_mapping_screen');
+
+/**
+ * Decode data items and parse JSON IDs
+ *
+ * @param array $parsed_data
+ * @param  WC_Product_CSV_Importer $importer
+ *
+ * @return  array
+ */
+
+// function prosleeves_parse_taxonomy_json($parsed_data, $importer) {
+//   if (!empty($parsed_data['nfl_teams'])) {
+//     $data = json_decode($parsed_data['nfl_teams'], true);
+//     unset($parsed_data['nfl_teams']);
+
+//     if (is_array($data)) {
+//       $parsed_data['nfl_teams'] = array();
+//       foreach ($data as $term_id) {
+//         $parsed_data['nfl_teams'][] = $term_id;
+//       }
+//     }
+//   }
+
+//   if (!empty($parsed_data['college_teams'])) {
+//     $data = json_decode($parsed_data['college_teams'], true);
+//     unset($parsed_data['college_teams']);
+
+//     if (is_array($data)) {
+//       $parsed_data['college_teams'] = array();
+//       foreach ($data as $term_id) {
+//         $parsed_data['college_teams'][] = $term_id;
+//       }
+//     }
+//   }
+  
+//   if (!empty($parsed_data['nhl_teams'])) {
+//     $data = json_decode($parsed_data['nhl_teams'], true);
+//     unset($parsed_data['nhl_teams']);
+
+//     if (is_array($data)) {
+//       $parsed_data['nhl_teams'] = array();
+//       foreach ($data as $term_id) {
+//         $parsed_data['nhl_teams'][] = $term_id;
+//       }
+//     }
+//   }
+  
+//   if (!empty($parsed_data['nba_teams'])) {
+//     $data = json_decode($parsed_data['nba_teams'], true);
+//     unset($parsed_data['nba_teams']);
+
+//     if (is_array($data)) {
+//       $parsed_data['nba_teams'] = array();
+//       foreach ($data as $term_id) {
+//         $parsed_data['nba_teams'][] = $term_id;
+//       }
+//     }
+//   }
+  
+//   if (!empty($parsed_data['mlb_teams'])) {
+//     $data = json_decode($parsed_data['mlb_teams'], true);
+//     unset($parsed_data['mlb_teams']);
+
+//     if (is_array($data)) {
+//       $parsed_data['mlb_teams'] = array();
+//       foreach ($data as $term_id) {
+//         $parsed_data['mlb_teams'][] = $term_id;
+//       }
+//     }
+//   }
+  
+//   if (!empty($parsed_data['brands'])) {
+//     $data = json_decode($parsed_data['brands'], true);
+//     unset($parsed_data['brands']);
+
+//     if (is_array($data)) {
+//       $parsed_data['brands'] = array();
+//       foreach ($data as $term_id) {
+//         $parsed_data['brands'][] = $term_id;
+//       }
+//     }
+//   }
+
+//   if (!empty($parsed_data['shop_for'])) {
+//     $data = json_decode($parsed_data['shop_for'], true);
+//     unset($parsed_data['shop_for']);
+
+//     if (is_array($data)) {
+//       $parsed_data['shop_for'] = array();
+//       foreach ($data as $term_id) {
+//         $parsed_data['shop_for'][] = $term_id;
+//       }
+//     }
+//   }
+
+//   return $parsed_data;
+// }
+
+// add_filter('woocommerce_product_importer_parsed_data', 'prosleeves_parse_taxonomy_json', 10, 2);
+
+
+/**
+ * Set Taxonomy
+ *
+ * @param  array  $parsed_data
+ * @return   array
+ */
+function prosleeves_set_taxonomy($product, $data) {
+  if (is_a($product, 'WC_Product')) {
+    if (!empty($data['nfl_teams'])) {
+      wp_set_object_terms($product->get_id(), $data['nfl_teams'], 'nfl_teams');
+    }
+
+    if (!empty($data['college_teams'])) {
+      wp_set_object_terms($product->get_id(), $data['college_teams'], 'college_teams');
+    }
+
+    if (!empty($data['nhl_teams'])) {
+      wp_set_object_terms($product->get_id(), $data['nhl_teams'], 'nhl_teams');
+    }
+
+    if (!empty($data['nba_teams'])) {
+      wp_set_object_terms($product->get_id(), $data['nba_teams'], 'nba_teams');
+    }
+
+    if (!empty($data['mlb_teams'])) {
+      wp_set_object_terms($product->get_id(), $data['mlb_teams'], 'mlb_teams');
+    }
+
+    if (!empty($data['shop_for'])) {
+      wp_set_object_terms($product->get_id(), $data['shop_for'], 'shop_for');
+    }
+
+    if (!empty($data['brands'])) {
+      wp_set_object_terms($product->get_id(), $data['brands'], 'brands');
+    }
+
+  }
+  return $product;
+}
+
+add_filter('woocommerce_product_import_inserted_product_object', 'prosleeves_set_taxonomy', 10, 2);
