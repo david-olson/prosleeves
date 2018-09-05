@@ -194,7 +194,7 @@ get_header(); ?>
 							<li><a href="#coupons">Coupons</a></li>
 							<li><a href="#price-alerts">Price Alerts</a></li>
 							<li><a href="#price-history">Price History</a></li>
-							<li><a href="#reviews">Reviews/Comments</a></li>
+							<li><a href="#reviews">Reviews</a></li>
 						</ul>
 					</div>
 					<div class="pad-full-small white-bg margin-bottom-small" id="description">

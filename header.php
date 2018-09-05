@@ -108,7 +108,7 @@
 					<a href="<?php echo get_home_url(); ?>/"><img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt="Prosleeves - We've got you covered"></a>
 				</div>
 				<div class="large-9 medium-8 cell show-for-medium">
-					<h2 class="tagline">Price History, Price Alerts and Coupons for All Your Favorite Licensed Gear</h2>
+					<h2 class="tagline"><?php echo get_bloginfo( 'description' ); ?></h2>
 				</div>
 				<div class="small-4 cell show-for-small hide-for-medium text-right" ">
 					<button id="mobile_menu_toggle" class="hamburger hamburger--collapse" data-toggle="mobile_menu_toggle mobile_menu" data-toggler=".is-active" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>
