@@ -244,7 +244,7 @@ get_header(); ?>
 					</div>
 				</div>
 				<div class="medium-6 cell large-order-2 medium-order-2 small-order-1 margin-bottom-small" data-sticky-container>
-					<div class="sticky" data-sticky data-margin-top="1" data-anchor="main_content">
+					<div class="sticky" data-sticky data-margin-top="1" data-anchor="main_content" data-sticky-on="large">
 						<div class="pad-full-small white-bg " >
 							<?php wc_get_template_part('woocommerce/single-product/rating'); ?>
 							<?php if (count($content_egg) > 0) : ?>

@@ -124,7 +124,7 @@ $product = wc_get_product($post->ID);
 				</div>
 				</div>
 				<div class="grid-x price-row">
-					<div class="medium-6 cell">
+					<div class="medium-6 small-9 cell">
 						<?php $brands = get_the_terms( $post->ID, 'brands' ); 
 							$brands_array = [];
 							if (!empty($brands)) :
@@ -136,7 +136,7 @@ $product = wc_get_product($post->ID);
 						?>
 						<p class="price"><small><?php echo $brands_list; ?></small></p>
 					</div>
-					<div class="medium-6 cell text-right">
+					<div class="medium-6 small-3 cell text-right">
 						<?php if ($price > 0) : ?>
 							<p class="price text-right">$<?php echo number_format($price, 2); ?></p>
 						<?php else : ?>

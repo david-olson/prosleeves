@@ -788,6 +788,13 @@ footer {
  				// margin-bottom: 0;
  				line-height: 1;
  			}
+ 			@include breakpoint(small down) {
+ 				position: static;
+ 				left: initial;
+ 				width: calc(100% - #{$global-padding} * 2);
+ 				margin: 0 auto;
+ 				transform: translateX(0);
+ 			}
  		}
  		.price-drop-banner {
  			position: absolute;
