@@ -136,13 +136,18 @@
 										'taxonomy' => $tax->name,
 										'hide_empty' => false
 										)); ?>
-										<link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/images/sprites/<?php echo $tax->name; ?>_styles.css">
+										<?php 
+											$upload_dir = wp_upload_dir();
+										 	$upload_url = $upload_dir[ 'baseurl' ];
+										 	$upload_url = str_replace( 'http://', 'https://', $upload_url );
+										 ?>
+										<link rel="stylesheet" href="<?php echo $upload_url; ?>/assets/images/sprites/<?php echo $tax->name; ?>_styles.css">
 									<ul class="menu vertical align-left col-4 teams-menu <?php echo $tax->rewrite['slug']; ?>">
 										<?php foreach ($tax_terms as $tt) : ?>
 
 											<?php //var_dump($tt); ?>
 											<?php $team_logo = get_field('team_logo', 'category_'.$tt->term_id); ?>
-											<li><a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>/<?php echo $tt->slug; ?>" class="team-link <?php echo $tax->rewrite['slug']; ?> <?php echo $tax->name; ?> <?php echo $tt->slug; ?>"><?php echo $tt->name; ?></a></li>
+											<li><a href="<?php echo get_home_url(); ?>/<?php echo $tax->rewrite['slug']; ?>/<?php echo $tt->slug; ?>" class="team-link <?php echo $tax->rewrite['slug']; ?> <?php echo $tax->name; ?> <?php echo strtolower(str_replace(' ', '-', $tt->name)); ?> <?php echo $tt->slug; ?>"><?php echo $tt->name; ?></a></li>
 										<?php endforeach; ?>		
 									</ul>
 								</div>

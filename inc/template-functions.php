@@ -1262,7 +1262,14 @@ function sprite_deleted($term_id, $tt_id, $deleted_term, $object_ids) {
   imagecolortransparent($background, $color); 
   imagefill($background, 0, 0, $color);
 
-  $sprite = get_template_directory() . '/assets/images/sprites/' . $tax_slug . '_sprite.png';
+  $upload = wp_upload_dir();
+  $upload_dir = $upload['basedir'];
+  $upload_path = $upload_dir . '/assets/images/sprites';
+  if (!is_dir($upload_path)) :
+    wp_mkdir_p($upload_path);
+  endif;
+
+  $sprite = $upload_dir . '/assets/images/sprites/' . $tax_slug . '_sprite.png';
 
   foreach ($team_logos as $tl) :
     $tmp = imagecreatefrompng($tl['url']);
@@ -1273,13 +1280,20 @@ function sprite_deleted($term_id, $tt_id, $deleted_term, $object_ids) {
 
   imagepng($background, $sprite);
 
-  $stylesheet_path = get_template_directory() . '/assets/images/sprites/' . $tax_slug . '_styles.css';
+  $stylesheet_path = $upload_dir . '/assets/images/sprites/' . $tax_slug . '_styles.css';
   $handle = fopen($stylesheet_path, 'w');
   fwrite($handle, $stylesheet);
   fclose($handle);
 }
 
 function create_sprite_from_logos($term_id, $tt_id) {
+
+  $upload = wp_upload_dir();
+  $upload_dir = $upload['basedir'];
+  $upload_path = $upload_dir . '/assets/images/sprites';
+  if (!is_dir($upload_path)) :
+    wp_mkdir_p($upload_path);
+  endif;
   $term = get_term($term_id);
   $tax_slug = $term->taxonomy;
   $tax_terms = get_terms(array(
@@ -1301,7 +1315,10 @@ function create_sprite_from_logos($term_id, $tt_id) {
       'width' => $image['sizes']['team_menu_icon-width'],
       'height' => $image['sizes']['team_menu_icon-height']
     ));
+    
+    $tt_name_lower = strtolower(str_replace(' ', '-', $tt->name));
     $stylesheet .= ".team-link.$tt->slug:before { background-position: 0px -".$n."px }\n";
+    $stylesheet .= ".team-link.$tt_name_lower:before { background-position: 0px -".$n."px }\n";
     $n += 20;
     
   endforeach;
@@ -1312,7 +1329,7 @@ function create_sprite_from_logos($term_id, $tt_id) {
   imagecolortransparent($background, $color); 
   imagefill($background, 0, 0, $color);
 
-  $sprite = get_template_directory() . '/assets/images/sprites/' . $tax_slug . '_sprite.png';
+  $sprite = $upload_dir . '/assets/images/sprites/' . $tax_slug . '_sprite.png';
 
   foreach ($team_logos as $tl) :
     if ($tl['width'] !== 20 || $tl['height'] !== 20) : 
@@ -1335,7 +1352,7 @@ function create_sprite_from_logos($term_id, $tt_id) {
 
   imagepng($background, $sprite);
 
-  $stylesheet_path = get_template_directory() . '/assets/images/sprites/' . $tax_slug . '_styles.css';
+  $stylesheet_path = $upload_dir . '/assets/images/sprites/' . $tax_slug . '_styles.css';
   $handle = fopen($stylesheet_path, 'w');
   fwrite($handle, $stylesheet);
   fclose($handle);
