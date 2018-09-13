@@ -1243,13 +1243,19 @@ function sprite_deleted($term_id, $tt_id, $deleted_term, $object_ids) {
   $n = 0;
 
   $stylesheet = '';
-
+  $upload = wp_upload_dir();
+  $upload_dir = $upload['basedir'];
+  $upload_path = $upload_dir . '/assets/images/sprites';
+  $upload_url = $upload[ 'baseurl' ];
+  $upload_url = str_replace( 'http://', 'https://', $upload_url );
+  $stylesheet .= "header nav ul.menu li a.team-link.$tax_slug:before, div.mobile-menu ul.menu li.league .team a.team-link.$tax_slug:before { background-image: url('$upload_url/assets/images/sprites/" . $tax_slug . "_sprite.png') }\n";
   foreach ($tax_terms as $tt) : 
     $image = get_field('team_logo', 'category_' . $tt->term_id);
     array_push($team_logos, array(
       'url' => $image['sizes']['team_menu_icon'],
       'offset' => $n,
     ));
+
     $stylesheet .= ".team-link.$tt->slug:before { background-position: 0px -".$n."px }\n";
     $n += 20;
     
@@ -1262,9 +1268,7 @@ function sprite_deleted($term_id, $tt_id, $deleted_term, $object_ids) {
   imagecolortransparent($background, $color); 
   imagefill($background, 0, 0, $color);
 
-  $upload = wp_upload_dir();
-  $upload_dir = $upload['basedir'];
-  $upload_path = $upload_dir . '/assets/images/sprites';
+  
   if (!is_dir($upload_path)) :
     wp_mkdir_p($upload_path);
   endif;
@@ -1306,7 +1310,9 @@ function create_sprite_from_logos($term_id, $tt_id) {
   $n = 0;
 
   $stylesheet = '';
-
+  $upload_url = $upload[ 'baseurl' ];
+  $upload_url = str_replace( 'http://', 'https://', $upload_url );
+  $stylesheet .= "header nav ul.menu li a.team-link.$tax_slug:before, div.mobile-menu ul.menu li.league .team a.team-link.$tax_slug:before { background-image: url('$upload_url/assets/images/sprites/" . $tax_slug . "_sprite.png') }\n";
   foreach ($tax_terms as $tt) : 
     $image = get_field('team_logo', 'category_' . $tt->term_id);
     array_push($team_logos, array(
