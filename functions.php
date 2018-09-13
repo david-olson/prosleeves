@@ -121,6 +121,13 @@ function prosleeves_widgets_init() {
 		'before_title'  => '<h2 class="widget-title">',
 		'after_title'   => '</h2>',
 	) );
+	register_sidebar(array(
+		'name' => 'Footer Area',
+		'id' => 'footer_area',
+		'description' => 'Add widgets here.',
+		'before_widget' => '<div>',
+		'after_widget'  => '</div>',
+	));
 }
 add_action( 'widgets_init', 'prosleeves_widgets_init' );
 
@@ -181,3 +188,88 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 if ( class_exists( 'WooCommerce' ) ) {
 	require get_template_directory() . '/inc/woocommerce.php';
 }
+
+/**
+ * Load PW Bulk Edit Results Button
+ */
+function custom_pw_bulk_edit_results_buttons() {
+    ?>
+    <div>
+        <button id="pwbe-open-all-tabs-button" class="button button-secondary"><i class='fa fa-external-link fa-fw' aria-hidden='true'></i> <?php _e( 'Open all checked products in a new tab', 'pw-bulk-edit' ); ?></button>
+    </div>
+    <script>
+        jQuery(function() {
+            jQuery('#pwbe-open-all-tabs-button').click(function(e) {
+                jQuery('.pwbe-product-checkbox').each(function(index) {
+                    var checkbox = jQuery(this);
+                    if (checkbox.prop('checked')) {
+                        var postId = checkbox.closest('.pwbe-product-tr').find('.pwbe-product-checkbox').val();
+                        if (postId) {
+                            var url = '<?php echo admin_url('post.php?action=edit&post='); ?>' + postId;
+                            window.open(url, '_blank');
+                        }
+                    }
+                });
+
+                e.preventDefault();
+                return false;
+            });
+        });
+    </script>
+    <?php
+}
+add_action( 'pw_bulk_edit_results_buttons', 'custom_pw_bulk_edit_results_buttons' );
+
+/**
+ * Load PW Bulk Edit Column Filters
+ */
+function pw_bulk_edit_custom_columns( $columns ) {
+    $show_columns = array(
+        __( 'Product name', 'woocommerce' ),
+        __( 'Type', 'woocommerce' ),
+        __( 'Status', 'woocommerce' ),
+        __( 'Regular price', 'woocommerce' ),
+        __( 'Sale price', 'woocommerce' ),
+        __( 'Sale start date', 'woocommerce' ),
+        __( 'Sale end date', 'woocommerce' ),
+        // __( 'Product description', 'woocommerce' ),
+        // __( 'Short description', 'woocommerce' ),
+        // __( 'Variation description', 'woocommerce' ),
+        __( 'SKU', 'woocommerce' ),
+        // __( 'Vendor', 'yith' ),
+        __( 'Categories', 'woocommerce' ),
+        // __( 'Tags', 'woocommerce' ),
+        // __( 'Brands', 'woocommerce' ),
+        // __( 'Tax status', 'woocommerce' ),
+        // __( 'Tax class', 'woocommerce' ),
+        // __( 'Weight', 'woocommerce' ),
+        // __( 'Length', 'woocommerce' ),
+        // __( 'Width', 'woocommerce' ),
+        // __( 'Height', 'woocommerce' ),
+        // __( 'Shipping class', 'woocommerce' ),
+        // __( 'Manage stock', 'woocommerce' ),
+        // __( 'Stock quantity', 'woocommerce' ),
+        // __( 'Allow backorders', 'woocommerce' ),
+        // __( 'Stock status', 'woocommerce' ),
+        // __( 'Sold individually', 'woocommerce' ),
+        // __( 'Virtual', 'woocommerce' ),
+        // __( 'Downloadable', 'woocommerce' ),
+        // __( 'Download limit', 'woocommerce' ),
+        // __( 'Download expiry', 'woocommerce' ),
+        // __( 'Purchase note', 'woocommerce' ),
+        // __( 'Menu order', 'woocommerce' ),
+        // __( 'Catalog visibility', 'woocommerce' ),
+        // __( 'Featured', 'woocommerce' ),
+        __( 'ID', 'woocommerce' ),
+    );
+
+    $filtered_columns = array();
+    foreach ( $columns as $column ) {
+        if ( in_array( $column['name'], $show_columns ) ) {
+            $filtered_columns[] = $column;
+        }
+    }
+
+    return $filtered_columns;
+}
+add_filter( 'pwbe_product_columns', 'pw_bulk_edit_custom_columns' );

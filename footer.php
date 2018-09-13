@@ -88,8 +88,7 @@
 						</ul>
 					</div>
 					<div class="large-4 medium-6 cell">
-						<h4>Mission Statement</h4>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aut temporibus facilis molestias harum placeat odit soluta maiores officia praesentium? Provident asperiores quas quisquam quibusdam nisi quos, repellat obcaecati, perferendis amet! Temporibus ratione libero praesentium repudiandae illum consequatur. Ipsum, possimus.</p>
+						<?php dynamic_sidebar( 'footer_area' ); ?>
 					</div>
 				</div>
 			</div>

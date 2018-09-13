@@ -1553,3 +1553,4 @@ function prosleeves_set_taxonomy($product, $data) {
 }
 
 add_filter('woocommerce_product_import_inserted_product_object', 'prosleeves_set_taxonomy', 10, 2);
+
